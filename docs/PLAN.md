@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Status | Planning complete, M0 not started |
+| Status | **M0 and M1 complete** (`swift test` green, 22 tests). M2 blocked on fixtures — and relocated, see §2. |
 | Last updated | 2026-08-13 |
 | Scope | NFC-e receipts issued in Pará (UF code 15). Other states explicitly out of scope. |
 | Success criterion | Given a real NFC-e QR code from a Belém supermarket, reliably retrieve and parse the purchased items into structured data. Not "the app looks good." |
@@ -48,38 +48,80 @@ Development happens from Windows, but Claude Code on the web runs in an
 whatever we can test in a session runs in CI too.
 
 Present: Python 3.11, Node 22, curl, git.
-**Absent: any Swift toolchain.**
+~~**Absent: any Swift toolchain.**~~ **Resolved 2026-08-13** — Swift **6.3**
+(`swift-6.3-RELEASE-ubuntu24.04`) installed at `/opt/swift`; `swift build` and
+`swift test` both verified, with XCTest and swift-testing working.
 
-### Network egress is an allowlist, and it blocks what we need
+Two caveats for future sessions:
 
-All outbound HTTPS passes through a policy-enforcing proxy. The cloud
-environment sits at the **Trusted** access level, which covers package
-registries, GitHub, and cloud SDKs — and nothing else.
+- `/etc/profile.d/swift.sh` only applies to login shells, so commands need
+  `export PATH="/opt/swift/usr/bin:$PATH"` first.
+- The container is ephemeral, so this install does **not** persist. Move
+  `Tools/setup-swift.sh` into the environment's **setup script** so it is cached
+  (~7 days); otherwise every new session re-downloads ~1 GB.
 
-Probed on 2026-08-13:
+### Network egress is an allowlist — and the allowlist was not the whole problem
 
-| Host | Result | Consequence |
-|---|---|---|
-| `www.sefa.pa.gov.br` | 403 CONNECT denied | No live NFC-e recon |
-| `appnfc.sefa.pa.gov.br` | 403 CONNECT denied | ″ (host is a guess — see §5) |
-| `www.nfe.fazenda.gov.br` | 403 CONNECT denied | No national-portal fallback |
-| `download.swift.org` | 403 CONNECT denied | **Cannot install Swift → cannot compile or test any Swift we write** |
-| `github.com`, `api.github.com` | OK | Git workflow fine |
-| `swift.org` | OK | Docs only, not downloads |
+All outbound HTTPS passes through a policy-enforcing proxy. The environment
+originally sat at the **Trusted** access level, which covers package registries,
+GitHub, and cloud SDKs — and nothing else.
 
-**Resolution — required before M1/M2.** In the environment selector at
-claude.ai/code (cloud icon above the message box → gear icon), set
-**Network access** to **Custom** and add:
+**The allowlist has since been set to Custom** with `sefa.pa.gov.br`,
+`*.sefa.pa.gov.br`, and `download.swift.org`, plus *"Also include default list
+of common package managers"* checked. That change worked exactly as intended and
+is confirmed in place.
+
+It was **necessary but not sufficient.** Re-probed 2026-08-13 in a fresh session:
+
+| Host | Before | After allowlist | Consequence |
+|---|---|---|---|
+| `download.swift.org` | 403 CONNECT denied | **302 OK** | Swift installs. M0/M1 unblocked |
+| `*.sefa.pa.gov.br` | 403 CONNECT denied | CONNECT **200**, then **TCP reset** | **Still no live recon — see below** |
+| `www.nfe.fazenda.gov.br` | 403 CONNECT denied | 403 CONNECT denied | Not allowlisted; no national fallback |
+| `github.com`, `api.github.com` | OK | OK | Git workflow fine |
+| apt / PyPI / npm | OK | OK | Package-managers checkbox did its job |
+
+#### SEFA is unreachable from the cloud container, for a different reason
+
+The proxy now *permits* the tunnel and the connection dies past it:
 
 ```
-sefa.pa.gov.br
-*.sefa.pa.gov.br
-download.swift.org
+CONNECT appnfc.sefa.pa.gov.br:443  →  HTTP/1.1 200 Connection Established
+                                   →  Recv failure: Connection reset by peer
+port 80 → 503 "upstream connect error … latest reset reason: connection timeout"
 ```
 
-Then **check "Also include default list of common package managers"** —
-unchecked *replaces* the Trusted list rather than extending it, which would
-break npm, PyPI, and `raw.githubusercontent.com`.
+Evidence this is not an allowlist gap:
+
+- DNS resolves correctly — `www` → `200.245.188.37`, `appnfc` → `.41`,
+  `nfce` → `.47`, `app` → `.51`. All in SEFA-PA's range.
+- All four subdomains behave identically, on both port 80 and 443, while
+  `nfe.fazenda.gov.br` still returns a clean `403` — so the policy is precisely
+  as configured.
+- Fails in ~11s, so it is a refusal rather than slowness. Confirmed against the
+  real consultation endpoint from `Fixtures/para/qr/receipt-01.txt`, not just `/`.
+- Forcing TLS 1.2, disabling ALPN, and lowering the cipher security level all
+  fail identically, so it is not a TLS-negotiation mismatch with an old server.
+
+Most likely SEFA-PA filters foreign or datacenter IP ranges, which is common for
+Brazilian state fiscal portals. **This cannot be proven from inside the
+container** — there is no external vantage point to test from — so it stands as
+the leading explanation, not a settled fact.
+
+#### Why this costs less than it appears: D2 already solved it
+
+Because Core does no networking and tests run against committed fixtures (D2),
+the cloud container **never needs SEFA access for M3**. It needs the *saved
+HTML*. So the block relocates exactly one step:
+
+- **M0, M1, M3, M6 stay in the cloud** — pure logic, fixture-driven, Linux/CI parity.
+- **M2 moves to a browser on a Brazilian connection.** Open the URL from
+  `Fixtures/para/qr/*.txt`, save the complete response into `Fixtures/para/html/`,
+  and write up the transport behaviour. No Swift needed on Windows; §9 already
+  puts recon scripts in `Tools/`, where Python is fine.
+
+Do **not** invest in Remote Control or a local Swift toolchain for this. D1 was
+designed to avoid needing one, and M2's output is a saved file, not a build.
 
 Notes:
 
@@ -89,10 +131,17 @@ Notes:
   A wrong allowlist cannot break push/pull.
 - The allowlist is per-environment and personal to the account. There is no
   org-level allowlist.
-- Once Swift installs, move the install into the environment's **setup script**
-  so it is cached (~7 days) and future sessions start with the toolchain ready.
-- `appnfc.sefa.pa.gov.br` is a guess. Confirm the real host from an actual QR
-  URL before finalizing the allowlist (§5, §9).
+- Cloud environments apply wherever a cloud session is started — web, terminal,
+  mobile, and **Desktop** app — so the Desktop app gets this same environment
+  with no reconfiguration. Session handoff is one-way: `--teleport` pulls a cloud
+  session into a terminal, but a terminal session cannot be pushed to the web.
+  `--remote-control` is unrelated: it exposes a *local* CLI session for
+  monitoring from the web.
+- Side effect worth knowing: the Custom list does not include Anthropic's own
+  docs hosts. `code.claude.com` and `docs.claude.com` resolve, but
+  `docs.anthropic.com` and `claude.ai` return 403.
+- ~~`appnfc.sefa.pa.gov.br` is a guess.~~ **Confirmed** from a real receipt QR
+  on 2026-08-13. The allowlist above is correct as written.
 
 ---
 
@@ -168,11 +217,35 @@ For this project: `cUF = 15` (Pará), `mod = 65` (NFC-e). From the key alone we
 get issuer CNPJ, emission year/month, document number, series, and whether the
 receipt was issued in contingency (`tpEmis`).
 
+Both were implemented at M1 and are verified against a real receipt: the key's
+mod-11 check digit validates, and so do the issuer CNPJ's own two check digits.
+
 **Must be verified against real receipts — do not assume:** the exact
 pipe-delimited layout of the QR code's `p=` parameter. The field set differs
 between normal online emission and offline/contingency emission, and the
 governing National Technical Note has been revised more than once. Read this
 off actual Belém receipts, not off recollection.
+
+**Partially resolved 2026-08-13.** One real Belém receipt confirms the
+**QR version 2, normal online** layout — five fields:
+
+```
+chNFe | nVersao | tpAmb | cIdToken | cHashQRCode
+```
+
+Notable consequences:
+
+- There is **no `cDest` field**, so this layout carries no consumer CPF. §6's
+  stripping rule has nothing to strip here — but it still applies to the
+  rendered page and to the contingency layout.
+- `cHashQRCode` is a 40-character SHA-1. It **cannot be verified locally**: it is
+  computed with the issuer's secret contributor security code (CSC), which we do
+  not hold. Preserve it and echo it back; do not try to check it.
+- The **contingency layout is still unconfirmed**, and confirming it needs a
+  `tpEmis ≠ 1` receipt. Until one turns up, `NFCeQRPayload` reports any
+  unrecognised field count as `.unverified(fieldCount:)` — raw fields fully
+  preserved, no field names invented. Add a case when evidence arrives; do not
+  stretch the existing one to fit.
 
 ---
 
@@ -281,24 +354,30 @@ mind — but that feature is **not** built now and must not expand the MVP.
 
 ## 8. Milestones, and when the Mac is needed
 
-| # | Milestone | Where | Exit gate |
-|---|---|---|---|
-| **M0** | Unblock: network allowlist, Swift toolchain, repo skeleton | Cloud | `swift test` runs |
-| **M1** | QR payload + access-key decoder, offline, unit-tested | Cloud | tests green |
-| **M2** | Live retrieval PoC; characterize transport A/B/C/D; capture fixtures | Cloud | `NFCE-PARA-FINDINGS.md` written |
-| **M3** | HTML → `Receipt` + `[ReceiptItem]` parser against real fixtures | Cloud | **≥3 different supermarkets parse correctly** |
-| **M4** | Xcode project, SwiftUI shell, camera scan, SwiftData, dedup | **Mac** | runs on physical iPhone |
-| **M5** | Receipt review screen + monthly aggregation | Mac | |
-| **M6** | Deterministic normalization + persisted mapping | mostly Cloud | |
+| # | Milestone | Where | Exit gate | Status |
+|---|---|---|---|---|
+| **M0** | Unblock: network allowlist, Swift toolchain, repo skeleton | Cloud | `swift test` runs | ✅ **done** — Swift 6.3, package builds |
+| **M1** | QR payload + access-key decoder, offline, unit-tested | Cloud | tests green | ✅ **done** — 22 tests, real receipt |
+| **M2** | Live retrieval PoC; characterize transport A/B/C/D; capture fixtures | ~~Cloud~~ **Browser/local, BR connection** (§2) | `NFCE-PARA-FINDINGS.md` written | ⛔ blocked — SEFA unreachable from cloud |
+| **M3** | HTML → `Receipt` + `[ReceiptItem]` parser against real fixtures | Cloud | **≥3 different supermarkets parse correctly** | blocked on M2 fixtures |
+| **M4** | Xcode project, SwiftUI shell, camera scan, SwiftData, dedup | **Mac** | runs on physical iPhone | |
+| **M5** | Receipt review screen + monthly aggregation | Mac | | |
+| **M6** | Deterministic normalization + persisted mapping | mostly Cloud | | |
 
 ### The Mac is not needed until M4
 
 Everything through M3 — which is the project's actual success criterion — is
-reachable from Windows/Cloud alone.
+reachable from Windows/Cloud alone. That still holds: M2 moved off the cloud
+container, but it moved to a *browser*, not to Xcode.
 
 **Collecting test data needs no development at all.** The built-in iPhone
 Camera app reads the NFC-e QR and displays the URL. Copy it, paste it into a
 session. That is the entire data pipeline for M1–M3.
+
+M2 now needs one extra manual step, because the cloud container cannot reach
+SEFA (§2): open the URL in a browser on a Brazilian connection and save the
+complete HTML response into `Fixtures/para/html/`. That file is what unblocks
+M3 in the cloud.
 
 M3's exit gate is the gate to M4: do not start building UI until several real
 receipts from different Belém supermarkets parse correctly.
@@ -353,27 +432,48 @@ during development.
 
 ## 11. Open questions
 
-1. **Real QR host.** `appnfc.sefa.pa.gov.br` is unverified. Confirm from an
-   actual receipt URL before finalizing the allowlist.
-2. **QR `p=` layout** on current Pará receipts — normal vs. contingency.
-3. **Transport path** A/B/C/D (§5).
+1. ~~**Real QR host.**~~ **Resolved 2026-08-13.** `appnfc.sefa.pa.gov.br` is
+   correct, path `/portal/view/consultas/nfce/nfceForm.seam`. The `.seam`
+   extension is confirmed, so the JSF/Seam reasoning in §5 stands.
+2. **QR `p=` layout** — **normal online resolved** (5 fields, QR v2; see §4).
+   **Contingency still open**, and needs a `tpEmis ≠ 1` receipt to settle.
+3. **Transport path** A/B/C/D (§5). Now blocked on M2 running outside the cloud.
 4. **Item-table pagination** on large receipts.
 5. **GTIN availability.** If the public consultation exposes EAN reliably,
    normalization gets much easier and §7's mapping layer gets much smaller.
 6. **HTML parsing dependency.** Swift's built-in regex may suffice; a real HTML
    parser (e.g. SwiftSoup) would be the first dependency, justified only once
    M2 shows the markup is messy enough to need one.
+7. **Is SEFA geo-blocking, or was it down?** (New.) The reset in §2 is
+   unexplained from inside the container. Loading
+   `https://www.sefa.pa.gov.br/` from a Brazilian connection settles it. This
+   changes nothing about the plan — M2 is a browser step either way — but it is
+   worth knowing whether a future CI runner could ever reach the portal.
 
 ---
 
 ## 12. Immediate next actions
 
-- [ ] Add the three domains to the environment allowlist (§2), with the
+- [x] Add the three domains to the environment allowlist (§2), with the
       package-managers checkbox **checked**
-- [ ] Start a fresh cloud session so the new policy applies
-- [ ] Scan one receipt with the iPhone Camera app; paste the URL to confirm the
-      real host before finalizing the allowlist
-- [ ] Collect 5–10 real receipts per the diversity list in §5
-- [ ] M0: install Swift, scaffold `MarketScanCore`, get `swift test` green
-- [ ] M1: access-key + QR-payload decoder with tests
+- [x] Start a fresh cloud session so the new policy applies
+- [x] Scan one receipt with the iPhone Camera app; paste the URL to confirm the
+      real host — **host confirmed**, allowlist correct as written
+- [x] M0: install Swift, scaffold `MarketScanCore`, get `swift test` green
+- [x] M1: access-key + QR-payload decoder with tests — 22 tests green
+
+Now blocking, in order:
+
+- [ ] **Paste the saved HTML for `receipt-01`.** Open the URL in
+      `Fixtures/para/qr/receipt-01.txt` in a browser on a Brazilian connection,
+      save the complete response, and commit it to `Fixtures/para/html/`. Note
+      what it took — redirects, cookies, `ViewState`, JavaScript, CAPTCHA — since
+      that is what picks the transport path in §5. **This is the single highest-value
+      next action:** it unblocks M2 *and* M3, and reshapes §7's data model.
+- [ ] Add `Tools/setup-swift.sh` to the environment's **setup script** so
+      sessions start with Swift ready instead of re-downloading ~1 GB
+- [ ] Collect 5–10 real receipts per the diversity list in §5 — currently **1**.
+      The M3 gate needs ≥3 different supermarkets
+- [ ] Get one contingency receipt (`tpEmis ≠ 1`) if any turn up, to close the
+      second half of open question #2
 ```
