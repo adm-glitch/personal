@@ -136,9 +136,38 @@ Note that a CAPTCHA on the *manual key-entry* form would not imply one on the
 *QR-URL* path: the QR's hash parameter typically authenticates that request.
 PLAN.md §5 flags settling this distinction as an early job, and it remains open.
 
-Third-party commercial APIs for SEFAZ-PA NFC-e consultation exist, which is
-weak evidence that programmatic retrieval is feasible — path A or B rather than
-D. Not evidence about *how*, and not a dependency we intend to take.
+### Third-party consultation APIs — recon value only
+
+Commercial APIs for SEFAZ-PA NFC-e consultation exist (e.g. Infosimples). Two
+distinct uses, and only one of them is a good idea.
+
+**Worth doing: read their documented response schema.** It reveals which fields
+the Pará portal actually exposes per item — directly answering open question #5
+(GTIN/EAN availability), which is the single biggest lever on how much
+normalization §7 needs. Zero cost, zero dependency. Note that some states are
+offered in both "Resumida" and "Completa" variants, so item-level detail
+evidently varies by state; check which exists for PA before finalizing §7.
+
+Their existence is also weak evidence that programmatic retrieval is feasible at
+all — path A or B rather than D. It says nothing about *how*.
+
+**Rejected as a runtime dependency**, on four grounds already settled in the plan:
+
+- Guiding principle 4 — no dependencies without a demonstrated problem. The
+  direct path has not even been tested yet, since `appnfc` is unreachable.
+- §10 — no backend unless technically necessary, local-first, no accounts. An API
+  key cannot live safely in an iOS app, so doing it properly needs a backend
+  proxy, which §10 excludes.
+- §6 / privacy — it would send every access key, a live public handle to the
+  household's purchases, to a commercial vendor. A real regression for a personal
+  local-first app.
+- Per-consultation cost, recurring, for an app scanning many receipts a month.
+
+It also does not remove the dependency on SEFA — it relocates it behind someone
+else's scraper, which breaks when SEFA changes.
+
+Keep it as the **path D** option in §5 ("reconsider the data source"), not as
+plan A.
 
 ### Questions still open
 
