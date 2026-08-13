@@ -103,10 +103,25 @@ Evidence this is not an allowlist gap:
 - Forcing TLS 1.2, disabling ALPN, and lowering the cipher security level all
   fail identically, so it is not a TLS-negotiation mismatch with an old server.
 
-Most likely SEFA-PA filters foreign or datacenter IP ranges, which is common for
-Brazilian state fiscal portals. **This cannot be proven from inside the
-container** — there is no external vantage point to test from — so it stands as
-the leading explanation, not a settled fact.
+**A second vantage point split this into two separate problems** (2026-08-13,
+Belém desktop on a residential connection):
+
+| Host | Cloud container | Belém, Chrome |
+|---|---|---|
+| `www.sefa.pa.gov.br` | CONNECT 200, TCP reset | ✅ loads normally |
+| `appnfc.sefa.pa.gov.br` | CONNECT 200, TCP reset | ❌ `ERR_CONNECTION_TIMED_OUT` |
+
+- **The container is filtered.** Since `www` is confirmed *up* from Brazil, the
+  container's failure to reach it cannot be the server being down. Something on
+  the path drops this container specifically — most likely foreign/datacenter IP
+  ranges. Still not provable from inside, but now much better supported.
+- **`appnfc` has its own, unrelated problem.** It times out from a Brazilian
+  connection that loads `www` fine, so geography explains nothing here. Most
+  likely an outage — consumers have to be able to scan these codes — in which
+  case it recovers on its own.
+
+Full evidence and the candidate endpoints to try instead are in
+`docs/NFCE-PARA-FINDINGS.md`.
 
 #### Why this costs less than it appears: D2 already solved it
 
@@ -464,12 +479,18 @@ during development.
 
 Now blocking, in order:
 
-- [ ] **Paste the saved HTML for `receipt-01`.** Open the URL in
-      `Fixtures/para/qr/receipt-01.txt` in a browser on a Brazilian connection,
-      save the complete response, and commit it to `Fixtures/para/html/`. Note
-      what it took — redirects, cookies, `ViewState`, JavaScript, CAPTCHA — since
-      that is what picks the transport path in §5. **This is the single highest-value
-      next action:** it unblocks M2 *and* M3, and reshapes §7's data model.
+- [ ] **Reach the portal at all.** The QR's host `appnfc` times out from both
+      vantage points tried so far, while `www.sefa.pa.gov.br` loads fine from
+      Brazil. Work down the candidate endpoint list in
+      `docs/NFCE-PARA-FINDINGS.md` §2 — starting with
+      `https://www.sefa.pa.gov.br/nfce/consulta`, which is on the host known to
+      work. If `appnfc` is simply having an outage, retrying the original QR URL
+      later is the cheapest fix of all.
+- [ ] **Then: save the HTML for `receipt-01`** into `Fixtures/para/html/`, and
+      write down what it took — redirects, cookies, `ViewState`, JavaScript,
+      CAPTCHA. That narrative picks the transport path in §5. **This is the
+      single highest-value next action once reachable:** it unblocks M2 *and* M3,
+      and reshapes §7's data model.
 - [ ] Add `Tools/setup-swift.sh` to the environment's **setup script** so
       sessions start with Swift ready instead of re-downloading ~1 GB
 - [ ] Collect 5–10 real receipts per the diversity list in §5 — currently **1**.
