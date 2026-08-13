@@ -23,6 +23,40 @@ struct NFCeQRPayloadTests {
         ))
     }
 
+    @Test("every captured receipt matches the confirmed layout", arguments: Fixture.allQRs)
+    func allCapturedReceiptsParse(qr: String) throws {
+        let payload = try NFCeQRPayload(qrContents: qr)
+
+        // Holds across issuers and PDV vendors, which is what makes the v2
+        // online layout safe to rely on rather than a one-store coincidence.
+        #expect(payload.host == "appnfc.sefa.pa.gov.br")
+        #expect(payload.path == "/portal/view/consultas/nfce/nfceForm.seam")
+        #expect(payload.qrVersion == "2")
+        #expect(payload.environment == .production)
+        #expect(payload.cIdToken == "1")
+        #expect(payload.isLayoutConfirmed)
+        #expect(payload.fields.count == 5)
+        #expect(payload.hash?.count == 40)
+
+        #expect(payload.accessKey.isNFCe)
+        #expect(payload.accessKey.isPara)
+        #expect(!payload.accessKey.isContingencyEmission)
+    }
+
+    @Test("preserves the hash case rather than normalising it")
+    func preservesHashCase() throws {
+        // Observed on real receipts: one issuer emits uppercase hex, another
+        // lowercase. Both are stored verbatim (guiding principle 2), so any
+        // future comparison against a hash must be case-insensitive.
+        let upper = try NFCeQRPayload(qrContents: Fixture.realQR)
+        let lower = try NFCeQRPayload(qrContents: Fixture.realQR2)
+
+        #expect(upper.hash == "44772474E995A5D08E243CFB0DC51279C5E6AE9D")
+        #expect(lower.hash == "3956e45fcd27cb399e21c4406ca6e571a63c00c6")
+        #expect(lower.hash == lower.hash?.lowercased())
+        #expect(upper.hash == upper.hash?.uppercased())
+    }
+
     @Test("keeps the raw payload and source URL verbatim")
     func preservesRawForm() throws {
         let payload = try NFCeQRPayload(qrContents: Fixture.realQR)

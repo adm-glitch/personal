@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Status | **M0 and M1 complete** (`swift test` green, 22 tests). M2 blocked on fixtures — and relocated, see §2. |
+| Status | **M0 and M1 complete** (`swift test` green, 26 tests, 2 real receipts). M2 blocked: the QR's host is unreachable — see §2. |
 | Last updated | 2026-08-13 |
 | Scope | NFC-e receipts issued in Pará (UF code 15). Other states explicitly out of scope. |
 | Success criterion | Given a real NFC-e QR code from a Belém supermarket, reliably retrieve and parse the purchased items into structured data. Not "the app looks good." |
@@ -372,7 +372,7 @@ mind — but that feature is **not** built now and must not expand the MVP.
 | # | Milestone | Where | Exit gate | Status |
 |---|---|---|---|---|
 | **M0** | Unblock: network allowlist, Swift toolchain, repo skeleton | Cloud | `swift test` runs | ✅ **done** — Swift 6.3, package builds |
-| **M1** | QR payload + access-key decoder, offline, unit-tested | Cloud | tests green | ✅ **done** — 22 tests, real receipt |
+| **M1** | QR payload + access-key decoder, offline, unit-tested | Cloud | tests green | ✅ **done** — 26 tests, 2 real receipts |
 | **M2** | Live retrieval PoC; characterize transport A/B/C/D; capture fixtures | ~~Cloud~~ **Browser/local, BR connection** (§2) | `NFCE-PARA-FINDINGS.md` written | ⛔ blocked — SEFA unreachable from cloud |
 | **M3** | HTML → `Receipt` + `[ReceiptItem]` parser against real fixtures | Cloud | **≥3 different supermarkets parse correctly** | blocked on M2 fixtures |
 | **M4** | Xcode project, SwiftUI shell, camera scan, SwiftData, dedup | **Mac** | runs on physical iPhone | |
@@ -493,8 +493,8 @@ Now blocking, in order:
       and reshapes §7's data model.
 - [ ] Add `Tools/setup-swift.sh` to the environment's **setup script** so
       sessions start with Swift ready instead of re-downloading ~1 GB
-- [ ] Collect 5–10 real receipts per the diversity list in §5 — currently **1**.
-      The M3 gate needs ≥3 different supermarkets
+- [ ] Collect 5–10 real receipts per the diversity list in §5 — currently **2**.
+      The M3 gate needs ≥3 different supermarkets — **2 of 3 captured**
 - [ ] Get one contingency receipt (`tpEmis ≠ 1`) if any turn up, to close the
       second half of open question #2
 ```

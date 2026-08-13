@@ -8,7 +8,7 @@ is currently unreachable.
 |---|---|
 | Status | QR layout resolved. Transport **unresolved** — `appnfc` host unreachable |
 | Last updated | 2026-08-13 |
-| Fixtures | 1 QR (`Fixtures/para/qr/receipt-01.txt`), 0 HTML |
+| Fixtures | 2 QR, 0 HTML. **2 of the 3 supermarkets** the M3 gate needs |
 
 ---
 
@@ -33,17 +33,21 @@ Five pipe-delimited fields — **QR code version 2, normal online emission**:
 chNFe | nVersao | tpAmb | cIdToken | cHashQRCode
 ```
 
-From `receipt-01`:
+| Field | `receipt-01` | `receipt-02` | Meaning |
+|---|---|---|---|
+| `chNFe` | `1526083167…541020` | `1526080399…912250` | 44-digit access key |
+| `nVersao` | `2` | `2` | QR layout version |
+| `tpAmb` | `1` | `1` | production |
+| `cIdToken` | `1` | `1` | which CSC signed the QR |
+| `cHashQRCode` | `4477…AE9D` (**upper**) | `3956…00c6` (**lower**) | SHA-1, 40 hex chars |
 
-| Field | Value | Meaning |
-|---|---|---|
-| `chNFe` | `15260831671814000858651020005478671102541020` | 44-digit access key |
-| `nVersao` | `2` | QR layout version |
-| `tpAmb` | `1` | production |
-| `cIdToken` | `1` | which CSC signed the QR |
-| `cHashQRCode` | `44772474E995A5D08E243CFB0DC51279C5E6AE9D` | SHA-1, 40 hex chars |
+**Confirmed across two different issuers**, so the layout is a property of the
+state's QR generation rather than one store's PDV vendor.
 
-Two consequences worth acting on:
+Consequences worth acting on:
+
+- **The hash's hex case varies by issuer.** One receipt uppercase, the other
+  lowercase. Stored verbatim; **compare case-insensitively**.
 
 - **No `cDest` field**, so this layout carries no consumer CPF. PLAN.md §6's
   stripping rule has nothing to strip *in this layout* — it still applies to the
@@ -54,21 +58,25 @@ Two consequences worth acting on:
 
 ### The access key
 
-Decoded offline, no network required. Both check-digit systems validate — the
-key's own mod-11 digit and the issuer CNPJ's two digits.
+Decoded offline, no network required. For both receipts, both check-digit
+systems validate — the key's own mod-11 digit and the issuer CNPJ's two digits.
 
-| Field | Value |
-|---|---|
-| `cUF` | `15` — Pará |
-| `AAMM` | `2608` — August 2026 |
-| CNPJ | `31.671.814/0008-58` |
-| `mod` | `65` — NFC-e |
-| série | `102` |
-| `nNF` | `547867` |
-| `tpEmis` | `1` — normal online, not contingency |
-| `cDV` | `0` — validates |
+| Field | `receipt-01` | `receipt-02` |
+|---|---|---|
+| `cUF` | `15` — Pará | `15` |
+| `AAMM` | `2608` — August 2026 | `2608` |
+| CNPJ | `31.671.814/0008-58` | `03.995.515/0225-60` |
+| `mod` | `65` — NFC-e | `65` |
+| série | `102` | `21` |
+| `nNF` | `547867` | `132569` |
+| `tpEmis` | `1` — normal online | `1` |
+| `cNF` | `10254102` | `00191225` — **leading zeros** |
+| `cDV` | `0` — validates | `0` — validates |
 
-Implemented in `AccessKey` and `NFCeQRPayload`, 22 tests green.
+`cNF` leading with zeros is why it is modelled as a `String`: an `Int` would
+silently destroy them, and they are part of the fiscal record.
+
+Implemented in `AccessKey` and `NFCeQRPayload`, 26 tests green.
 
 ### Still unresolved about the QR
 

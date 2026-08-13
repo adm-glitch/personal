@@ -15,6 +15,21 @@ enum Fixture {
         %7C44772474E995A5D08E243CFB0DC51279C5E6AE9D
         """
 
+    /// Access key from `Fixtures/para/qr/receipt-02.txt` — a *different* Belém
+    /// store, so it exercises the layout against a second issuer and PDV vendor.
+    static let realKey2 = "15260803995515022560650210001325691001912250"
+
+    /// QR contents for `receipt-02`. Note the hash arrives lowercase here and
+    /// uppercase in ``realQR``.
+    static let realQR2 = """
+        https://appnfc.sefa.pa.gov.br/portal/view/consultas/nfce/nfceForm.seam\
+        ?p=15260803995515022560650210001325691001912250%7C2%7C1%7C1\
+        %7C3956e45fcd27cb399e21c4406ca6e571a63c00c6
+        """
+
+    /// Every QR captured so far, for checks that should hold across all of them.
+    static let allQRs = [realQR, realQR2]
+
     /// Rebuilds a key with one digit replaced, fixing up the check digit so the
     /// result is still structurally valid. Lets us exercise field combinations
     /// we have no real receipt for.
@@ -49,6 +64,36 @@ struct AccessKeyTests {
         #expect(key.emissionTypeCode == 1)
         #expect(key.numericCode == "10254102")
         #expect(key.checkDigit == 0)
+    }
+
+    @Test("decodes a second store's key, with leading zeros intact")
+    func decodesSecondStore() throws {
+        let key = try AccessKey(Fixture.realKey2)
+
+        #expect(key.ufCode == "15")
+        #expect(key.emissionYear == 2026)
+        #expect(key.emissionMonth == 8)
+        #expect(key.issuerCNPJ == "03995515022560")
+        #expect(key.formattedIssuerCNPJ == "03.995.515/0225-60")
+        #expect(key.model == "65")
+        #expect(key.series == 21)
+        #expect(key.number == 132_569)
+        #expect(key.emissionTypeCode == 1)
+        // Real evidence that cNF has to stay a String: this one leads with two
+        // zeros, which an Int would silently destroy.
+        #expect(key.numericCode == "00191225")
+        #expect(key.checkDigit == 0)
+    }
+
+    @Test("the two captured receipts are from different issuers")
+    func capturedReceiptsAreDistinctStores() throws {
+        let first = try AccessKey(Fixture.realKey)
+        let second = try AccessKey(Fixture.realKey2)
+
+        // The M3 gate needs ≥3 different supermarkets, so guard against
+        // accidentally counting the same store twice.
+        #expect(first.issuerCNPJ != second.issuerCNPJ)
+        #expect(first != second)
     }
 
     @Test("derives the flags the app actually branches on")

@@ -25,20 +25,30 @@ The repository is private, so there is no sanitized/raw split.
 
 ## Inventory
 
-| File | Store | Notable | Layout |
-|---|---|---|---|
-| `qr/receipt-01.txt` | *unidentified until M2 retrieval* | — | QR v2, online |
+| File | Issuer CNPJ | Série / nNF | Notable | Layout |
+|---|---|---|---|---|
+| `qr/receipt-01.txt` | `31.671.814/0008-58` | 102 / 547867 | uppercase hash | QR v2, online |
+| `qr/receipt-02.txt` | `03.995.515/0225-60` | 21 / 132569 | **lowercase** hash; `cNF` has leading zeros | QR v2, online |
 
-Decoded from `receipt-01`: Pará (`cUF=15`), August 2026, NFC-e (`mod=65`),
-normal online emission (`tpEmis=1`), issuer CNPJ `31.671.814/0008-58`,
-série 102, nNF 547867. Key mod-11 check digit and the CNPJ's own check digits
-both validate.
+Both are Pará (`cUF=15`), August 2026, NFC-e (`mod=65`), normal online emission
+(`tpEmis=1`), `tpAmb=1`, `cIdToken=1`. Every access key's mod-11 digit and every
+issuer CNPJ's own check digits validate. Store names stay unknown until M2
+retrieval — the QR carries only the CNPJ.
+
+Two things these two receipts settled between them:
+
+- The v2 online layout **holds across issuers and PDV vendors**, so it is not a
+  one-store coincidence.
+- The hash's hex **case varies by issuer** — uppercase in one, lowercase in the
+  other. Stored verbatim, so compare case-insensitively.
+- `cNF` can lead with zeros (`00191225`), which is why it is a `String` and not
+  an `Int`.
 
 ## Still needed for the M3 gate
 
 §5 calls for these on purpose, because the parser edge cases live in them:
 
-- [ ] receipts from **≥3 different Belém supermarkets** (only 1 QR so far)
+- [ ] receipts from **≥3 different Belém supermarkets** — **2 of 3** so far
 - [ ] one **weighed item** — kg to 3 decimal places
 - [ ] one **discount**, per-item and/or receipt-level
 - [ ] one **large** receipt, to see whether the item table paginates

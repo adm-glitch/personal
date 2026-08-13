@@ -109,11 +109,15 @@ public struct NFCeQRPayload: Hashable, Sendable {
         return nil
     }
 
-    /// `cHashQRCode` — the QR's signature.
+    /// `cHashQRCode` — the QR's signature, 40 hex characters.
     ///
     /// Cannot be verified locally: it is computed with the issuer's secret
     /// contributor security code (CSC), which we do not hold. Preserved as
     /// evidence and because the portal expects it echoed back.
+    ///
+    /// - Important: The hex case varies by issuer — captured receipts show both
+    ///   uppercase and lowercase. It is stored exactly as scanned, so **compare
+    ///   it case-insensitively**.
     public var hash: String? {
         if case let .version2Online(_, hash) = layout { return hash }
         return nil
