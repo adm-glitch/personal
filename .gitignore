@@ -1,0 +1,13 @@
+# Source data: ~1.5 GB, all re-fetchable via pipeline/fetch.sh
+data/*.zip
+data/*.gpkg
+data/*.json
+!data/*.admin.json
+# regenerable duplicate: gen_muni's uniform sim. The published panel used
+# gen_admin.py, kept as data/belem-published.admin.json
+data/belem.admin.json
+# Built artifacts
+*_app.html
+*_admin.html
+mockups/*_main.js
+mockups/harness/*_main.js
