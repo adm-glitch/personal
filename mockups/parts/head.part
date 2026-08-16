@@ -212,6 +212,24 @@ button.more:focus-visible{opacity:1}
 .rohdr b{color:var(--ink-2);font-weight:600}
 .row.ro{cursor:default}
 .row.ro .num{color:var(--ink-2)}
+/* ---- diagnostic overlay: testing instrument, not part of the field UI ---- */
+.dbg{position:absolute;inset:0;z-index:60;display:none;flex-direction:column;
+  background:var(--surface);overflow-y:auto;font-family:var(--font-mono);font-size:11px}
+.dbg.on{display:flex}
+.dbg .dh{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;
+  padding:11px 13px;background:var(--ink);color:var(--surface);font-family:var(--font-sans);
+  font-size:13px;font-weight:600}
+.dbg .dh button{background:transparent;border:0;color:var(--surface);font-size:16px;cursor:pointer}
+.dbg .dsec{padding:9px 13px 4px;font-size:9.5px;letter-spacing:.09em;color:var(--muted);
+  border-bottom:1px solid var(--hair)}
+.dbg .dr{display:flex;justify-content:space-between;gap:10px;padding:5px 13px;
+  border-bottom:1px solid var(--hair)}
+.dbg .dr b{font-weight:500;color:var(--ink-2)}
+.dbg .dr i{font-style:normal;color:var(--ink);text-align:right;word-break:break-all}
+.dbg .dr.w i{color:var(--warn);font-weight:600}
+.dbg .dbtn{margin:9px 13px;padding:8px;border-radius:5px;font-family:var(--font-sans);
+  font-size:12px;border:1px solid var(--hair-strong);background:var(--surface-2);
+  color:var(--ink);cursor:pointer}
 .donebar{padding:11px 13px;background:var(--surface-3);border-bottom:1px solid var(--hair)}
 .donebar button{width:100%;font-family:var(--font-sans);font-size:13px;font-weight:600;padding:10px;
   border-radius:5px;border:1px solid var(--focus);background:var(--focus);color:#fff;cursor:pointer}
@@ -335,6 +353,7 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:11px;max-width:74ch;li
         <div class="list" id="list"></div>
       </div>
       <div class="toast" id="toast"><span class="ok">✓</span><span id="toast-t"></span></div>
+      <div class="dbg" id="dbg" aria-hidden="true"></div>
       <div class="drawer" id="drawer" aria-hidden="true">
         <div class="dhead">
           <div class="who"><b>Rai Nascimento</b><span>agente · Terra Firme / Montese</span></div>

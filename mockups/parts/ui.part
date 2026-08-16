@@ -428,6 +428,97 @@ function renderPanels(){
 }
 function renderAll(){ renderSheet(); renderPanels(); draw(); }
 
+/* ================= diagnóstico =================
+   A testing instrument, not part of the field UI. Everything here reads APIs the
+   WebView already exposes, so it behaves identically in the browser mockup and
+   inside the APK; the two web fallbacks (getBattery, userAgent) are the ones
+   Capacitor's Device plugin should replace once packaged. */
+const NAV=typeof navigator!=='undefined'?navigator:{};
+const UA=NAV.userAgent||'';
+const uaModel=(/;\s*([^;)]+?)\s+Build\//.exec(UA)||[])[1]
+            ||(/\(Linux;[^)]*?;\s*([^;)]+)\)/.exec(UA)||[])[1]||'—';
+const uaAndroid=(/Android\s([\d.]+)/.exec(UA)||[])[1]||'—';
+const uaWebView=((/Chrome\/([\d.]+)/.exec(UA)||[])[1]||'').split('.')[0]||'—';
+let dbgOn=false, fps=0, frames=0, lastFpsT=0, drawMs=0, drawN=0;
+let bat=null, bat0=0, batT0=Date.now(), stEst=null;
+let fixN=0, ttff=null, lastFix=null, geoErr='';
+{ const _draw=draw;                       // time every real frame, cost only when open
+  draw=function(){ const t=Date.now(); _draw.apply(null,arguments);
+                   drawMs=Date.now()-t; drawN++; }; }
+if(NAV.getBattery) try{ NAV.getBattery().then(b=>{ bat=b; bat0=b.level; batT0=Date.now(); }); }catch(e){}
+function dbgGeo(){
+  if(!NAV.geolocation) { geoErr='geolocation indisponível'; return; }
+  const t0=Date.now(); geoErr='';
+  NAV.geolocation.getCurrentPosition(
+    p=>{ fixN++; lastFix=p; if(ttff===null) ttff=((Date.now()-t0)/1000).toFixed(1); dbgPaint(); },
+    e=>{ geoErr=(e&&e.message)||('erro '+(e&&e.code)); dbgPaint(); },
+    {enableHighAccuracy:true,timeout:30000,maximumAge:0});
+}
+const dRow=(k,v,w)=>'<div class="dr'+(w?' w':'')+'"><b>'+k+'</b><i>'+v+'</i></div>';
+function dbgPaint(){
+  const el=document.getElementById('dbg'); if(!el||!dbgOn) return;
+  const m=(typeof performance!=='undefined'&&performance.memory)?performance.memory:null;
+  const mb=x=>(x/1048576).toFixed(1)+' MB', C=window.__CITY||{};
+  let marked=0; for(let i=0;i<NF;i++) if(fstat[i]) marked++;
+  let h='<div class="dh">Diagnóstico<button id="dbg-x">✕</button></div>';
+  h+='<div class="dsec">APARELHO</div>'
+   + dRow('modelo',uaModel)
+   + dRow('android',uaAndroid+' · webview '+uaWebView, uaWebView!=='—'&&+uaWebView<80)
+   + dRow('RAM aprox.',NAV.deviceMemory?NAV.deviceMemory+' GB':'não exposto',NAV.deviceMemory&&NAV.deviceMemory<=2)
+   + dRow('núcleos',NAV.hardwareConcurrency||'—')
+   + dRow('tela',innerWidth+'×'+innerHeight+' @'+(window.devicePixelRatio||1)+'x');
+  h+='<div class="dsec">MEMÓRIA JS</div>'
+   + (m? dRow('heap em uso',mb(m.usedJSHeapSize),m.usedJSHeapSize/m.jsHeapSizeLimit>0.7)
+        +dRow('heap total',mb(m.totalJSHeapSize))+dRow('limite',mb(m.jsHeapSizeLimit))
+       : dRow('heap','performance.memory indisponível'));
+  h+='<div class="dsec">RENDER</div>'
+   + dRow('fps',fps||'—',fps&&fps<20)+dRow('último draw',drawMs+' ms',drawMs>32)
+   + dRow('frames',drawN)+dRow('decode do payload',(C.decodeMs!==undefined?C.decodeMs:'—')+' ms');
+  h+='<div class="dsec">GPS</div>'
+   + dRow('modo do app',gmode)+dRow('precisão simulada',(gps&&gps.acc!==undefined)?gps.acc+' m':'—')
+   + dRow('fixes reais',fixN)+dRow('TTFF',ttff!==null?ttff+' s':'—');
+  h+= lastFix
+     ? dRow('precisão real',Math.round(lastFix.coords.accuracy)+' m',lastFix.coords.accuracy>30)
+      +dRow('coords',lastFix.coords.latitude.toFixed(5)+', '+lastFix.coords.longitude.toFixed(5))
+      +dRow('idade do fix',Math.round((Date.now()-lastFix.timestamp)/1000)+' s')
+     : dRow('fix real',geoErr||'aguardando…',!!geoErr);
+  h+='<button class="dbtn" id="dbg-gps">Pedir fix agora</button>';
+  h+='<div class="dsec">BATERIA</div>';
+  if(bat){ const dt=(Date.now()-batT0)/3600000, drop=(bat0-bat.level)*100;
+    h+=dRow('nível',Math.round(bat.level*100)+'%',bat.level<0.2)
+     + dRow('carregando',bat.charging?'sim':'não')
+     + dRow('consumo',dt>0.03?(drop/dt).toFixed(1)+' %/h':'medindo…')
+     + dRow('sessão',dt<1?Math.round(dt*60)+' min':dt.toFixed(1)+' h'); }
+  else h+=dRow('bateria','API indisponível — usar Device plugin no APK');
+  h+='<div class="dsec">REDE E ARMAZENAMENTO</div>'
+   + dRow('online',NAV.onLine===false?'não':'sim',NAV.onLine===false);
+  const c=NAV.connection;
+  if(c) h+=dRow('conexão',(c.effectiveType||'—')+(c.downlink?' · '+c.downlink+' Mb/s':'')+(c.rtt?' · '+c.rtt+' ms':''));
+  if(stEst) h+=dRow('armazenamento',(stEst.usage/1048576).toFixed(1)+' / '+(stEst.quota/1048576).toFixed(0)+' MB');
+  h+='<div class="dsec">APLICAÇÃO</div>'
+   + dRow('payload',MAPMB)+dRow('domicílios',NA.toLocaleString('pt-BR'))
+   + dRow('faces / quadras',NF.toLocaleString('pt-BR')+' / '+NQ.toLocaleString('pt-BR'))
+   + dRow('faces marcadas',marked)+dRow('na fila',queued);
+  el.innerHTML=h;
+  const x=document.getElementById('dbg-x'); if(x) x.onclick=()=>dbgToggle(false);
+  const g=document.getElementById('dbg-gps'); if(g) g.onclick=()=>{ geoErr=''; dbgGeo(); };
+}
+function dbgTick(){
+  if(!dbgOn) return;
+  frames++; const now=Date.now();
+  if(now-lastFpsT>=1000){ fps=Math.round(frames*1000/(now-lastFpsT)); frames=0; lastFpsT=now; dbgPaint(); }
+  if(typeof requestAnimationFrame==='function') requestAnimationFrame(dbgTick);
+}
+function dbgToggle(v){
+  dbgOn=v;
+  const el=document.getElementById('dbg'); if(el) el.classList.toggle('on',v);
+  if(!v) return;
+  lastFpsT=Date.now(); frames=0;
+  if(NAV.storage&&NAV.storage.estimate) try{ NAV.storage.estimate().then(e=>{stEst=e;dbgPaint();}); }catch(e){}
+  dbgPaint(); dbgGeo();
+  if(typeof requestAnimationFrame==='function') requestAnimationFrame(dbgTick);
+}
+
 /* ================= drawer ================= */
 function renderDrawer(){
   let conv=0,seen=0;
@@ -440,14 +531,17 @@ function renderDrawer(){
                             ['⚑','Avisar o coordenador','área insegura',false]]],
                ['APARELHO',[['⬒','Mapa offline',MUNI+' · '+MAPMB,false],
                             ['◐','Economia de bateria',gmode==='hi'?'desligada':'ligada',false]]],
-               ['CONTA',[['◯','Privacidade — o que é registrado','',false],['?','Ajuda','',false],['⏻','Sair','',false]]]];
+               ['CONTA',[['◯','Privacidade — o que é registrado','',false],['?','Ajuda','',false],['⏻','Sair','',false]]],
+               ['TESTE',[['◈','Diagnóstico','RAM · GPS · bateria · render',false]]]];
   let h='';
   for(const [g,rows] of items){ h+='<div class="dgrp">'+g+'</div>';
     for(const [ic,nm,note,hot] of rows)
       h+='<div class="ditem'+(nm.startsWith('Avisar')?' warn':'')+'"><span class="ic">'+ic+'</span>'+nm+
          (note?'<span class="n'+(hot?' hot':'')+'">'+note+'</span>':'')+'</div>'; }
   document.getElementById('dbody').innerHTML=h;
-  document.querySelectorAll('#dbody .ditem').forEach(d=>d.onclick=()=>toast('mockup'));
+  document.querySelectorAll('#dbody .ditem').forEach(d=>d.onclick=()=>{
+    if((d.textContent||'').indexOf('Diagnóstico')>=0){ drawerOpen(false); dbgToggle(true); return; }
+    toast('mockup'); });
 }
 function drawerOpen(v){
   document.getElementById('drawer').classList.toggle('on',v);

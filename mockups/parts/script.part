@@ -158,7 +158,7 @@ const qcode=new Array(NQ), qlbl=new Array(NQ);
 })();
 document.getElementById('loc-v').textContent=MUNI+' carregada';
 console.log('decoded in',Date.now()-t0,'ms');
-window.__CITY={NA,NF,NQ,NR,NU,bairros:BN.length};
+window.__CITY={NA,NF,NQ,NR,NU,bairros:BN.length,decodeMs:Date.now()-t0};
 /*__APP__*/
 })();
 </script>

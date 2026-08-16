@@ -26,7 +26,8 @@ dup={k:v for k,v in collections.Counter(ids).items() if v>1}
 if dup: fail.append(f"duplicate ids {dup}")
 types={}
 for m in re.finditer(r'<(\w+)[^>]*?(?<![-\w])id="([^"]+)"', head): types[m.group(2)]=m.group(1)
-DYN={'blk','add-in','add-ok','add-cancel','add-place','add-unit','pick-x','pick-here','nextq','zlvl'}
+DYN={'blk','add-in','add-ok','add-cancel','add-place','add-unit','pick-x','pick-here','nextq','zlvl',
+     'dbg-x','dbg-gps','dbg-copy'}
 for u in set(re.findall(r"getElementById\('([^']+)'\)", script)):
     if u not in types and u not in DYN: fail.append(f"missing id {u}")
 if fail: print("CHECKS FAILED:",fail); raise SystemExit(1)
