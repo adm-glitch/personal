@@ -1,30 +1,12 @@
-import zipfile, json, collections, math, os, gzip, sqlite3, struct, random, unicodedata
+"""The hand-tuned Belém admin payload: a per-bairro priority table instead of
+gen_muni's uniform random, so the published panel looks like a real campaign.
+Both are fake — the shape is the deliverable, not the values."""
+import zipfile, json, collections, math, os, gzip, sqlite3, struct, random, unicodedata, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from geo import rings, pip, load_setores, indexed_locator, setor_shells
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def d(*p): return os.path.join(ROOT,'data',*p)
 random.seed(7)
-def rings(blob):
-    env=(blob[3]>>1)&0x07; off=8+{0:0,1:32,2:48,3:48,4:64}[env]
-    w=blob[off:]; en='<' if w[0]==1 else '>'
-    gt=struct.unpack(en+'I',w[1:5])[0]%1000; pos=5; out=[]
-    def rd(pos):
-        nr=struct.unpack(en+'I',w[pos:pos+4])[0]; pos+=4; rs=[]
-        for _ in range(nr):
-            npt=struct.unpack(en+'I',w[pos:pos+4])[0]; pos+=4
-            v=struct.unpack(en+f'{npt*2}d',w[pos:pos+npt*16]); pos+=npt*16
-            rs.append(list(zip(v[0::2],v[1::2])))
-        return rs,pos
-    if gt==3: r,pos=rd(pos); out.append(r)
-    elif gt==6:
-        nn=struct.unpack(en+'I',w[pos:pos+4])[0]; pos+=4
-        for _ in range(nn): pos+=5; r,pos=rd(pos); out.append(r)
-    return out
-def pip(x,y,r):
-    ins=False;n=len(r);j=n-1
-    for i in range(n):
-        xi,yi=r[i];xj,yj=r[j]
-        if ((yi>y)!=(yj>y)) and x<(xj-xi)*(y-yi)/(yj-yi+1e-18)+xi: ins=not ins
-        j=i
-    return ins
 con=sqlite3.connect(d('PA_bairros.gpkg'))
 BA=[]
 for nm,g in con.execute("select NM_BAIRRO, geom from PA_bairros_CD2022 where CD_MUN='1501402'"):
@@ -47,8 +29,11 @@ res=[f for f in json.loads(z.open('qg_810_endereco_Munic1501402.json').read())['
 QID={};Q=[]
 def qid(s,n):
     kk=(s,int(n))
-    if kk not in QID: QID[kk]=len(Q); Q.append({'pts':[],'apts':[],'hh':0,'len':0.0,'setor':s,'num':int(n)})
+    if kk not in QID: QID[kk]=len(Q); Q.append({'pts':[],'apts':[],'hh':0,'len':0.0,'setor':s,'num':int(n),
+                                               'sv':collections.Counter()})
     return QID[kk]
+SET=load_setores(d('PA_setores.gpkg'),'PA','1501402') if os.path.exists(d('PA_setores.gpkg')) else []
+setor_at=indexed_locator(SET) if SET else (lambda x,y:None)
 def flen(g):
     return sum(math.hypot((g[i+1][0]-g[i][0])*111320*math.cos(math.radians(g[i][1])),(g[i+1][1]-g[i][1])*110574) for i in range(len(g)-1))
 for f in faces:
@@ -60,6 +45,8 @@ for f in res:
     p=f['properties']; q=qid(p['COD_SETOR'],p['NUM_QUADRA'])
     c=f['geometry']['coordinates']
     Q[q]['apts'].append((round(c[0]*1e6),round(c[1]*1e6))); Q[q]['hh']+=1
+    si=setor_at(c[0],c[1])
+    if si is not None: Q[q]['sv'][si]+=1
 def hull(pts):
     pts=sorted(set(pts))
     if len(pts)<3: return pts
@@ -85,7 +72,8 @@ for q in Q:
     b=which(cxm/1e6,cym/1e6)
     OUTQ.append({'h':h,'c':[cxm,cym],'hh':q['hh'],'len':round(q['len']),
                  'b':bi(BA[b]['nm'] if b is not None else 'Sem bairro'),'geo':1 if h else 0,
-                 'num':q['num'],'setor':q['setor'][-5:]})
+                 'num':q['num'],'setor':q['setor'][-5:],
+                 '_si':(q['sv'].most_common(1)[0][0] if q['sv'] else setor_at(cxm/1e6,cym/1e6))})
 print("quadras:",len(OUTQ),"bairros:",len(bairros))
 
 # ---------- simulate a campaign three weeks in ----------
@@ -120,8 +108,8 @@ for b in BA:
 # daily series + canvassers
 days=[]
 base=sum(tot.values())
-for d in range(21):
-    days.append(int(base*( (d+1)/21 )**1.35 ))
+for day in range(21):                 # not `d` — that is the data-path helper
+    days.append(int(base*( (day+1)/21 )**1.35 ))
 crew=[]
 NAMES=['Rai','Dhara','Iracema','Benedito','Maruan','Cleide','Josivaldo','Nayara','Ubiratã','Sâmia',
        'Reginaldo','Tainá','Elivelton','Marizete','Jocelino','Adriana']
@@ -129,7 +117,23 @@ for i,n in enumerate(NAMES):
     doors=int(random.uniform(280,1450)); conv=int(doors*random.uniform(0.42,0.68))
     crew.append({'n':n,'d':doors,'c':conv,'q':int(random.uniform(3,22))})
 crew.sort(key=lambda c:-c['d'])
-out={'b':bairros,'bb':BB,'q':OUTQ,'days':days,'crew':crew}
-json.dump(out,open(d('belem-published.admin.json'),'w'),separators=(',',':'))
-raw=open('admin.json','rb').read()
-print("admin.json:",round(len(raw)/1024),"KB gzip:",round(len(gzip.compress(raw,9))/1024),"KB")
+# ---------- setores: the gap-free painting unit ----------
+ST=[]
+if SET:
+    ST,OWNER=setor_shells(SET)
+    for q in OUTQ:
+        si=q['_si']
+        if si is None: continue
+        t=OWNER[si]; t['hh']+=q['hh']; t['len']+=q['len']; t['nq']+=1; t['_b'][q['b']]+=max(1,q['hh'])
+        for j in range(5): t['s'][j]+=q['s'][j]
+    for t in ST:
+        t['b']=t['_b'].most_common(1)[0][0] if t['_b'] else 0; del t['_b']
+    print("setores:",len(ST),"parts:",sum(len(t['g']) for t in ST),
+          "| quadras with no setor:",sum(1 for q in OUTQ if q['_si'] is None))
+for q in OUTQ: del q['_si']
+
+out={'b':bairros,'bb':BB,'q':OUTQ,'st':ST,'days':days,'crew':crew,'muni':'Belém','mesh':True}
+dst=d('belem-published.admin.json')
+json.dump(out,open(dst,'w'),separators=(',',':'))
+raw=open(dst,'rb').read()
+print("belem-published.admin.json:",round(len(raw)/1024),"KB gzip:",round(len(gzip.compress(raw,9))/1024),"KB")

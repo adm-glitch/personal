@@ -21,8 +21,11 @@ echo "== Base de Faces de Logradouros ($UF) =="
 [ -f "${UF}_faces.zip" ] || curl -# -o "${UF}_faces.zip" \
   "$GEO/recortes_para_fins_estatisticos/malha_de_setores_censitarios/censo_2022/base_de_faces_de_logradouros_versao_2022_censo_demografico/json/${UF}_faces_de_logradouros_2022_json.zip"
 
-echo "== Malha de bairros e distritos ($UF) =="
+echo "== Malha de setores, bairros e distritos ($UF) =="
 B=$GEO/organizacao_do_territorio/malhas_territoriais/malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2022
+# Setores are the only IBGE mesh that tiles the whole municipality with no gaps, and
+# they carry NM_BAIRRO and SITUACAO. They are the coverage-painting unit — see docs/03.
+[ -f "${UF}_setores.gpkg" ]   || curl -# -o "${UF}_setores.gpkg"   "$B/setores/gpkg/UF/${UF}/${UF}_setores_CD2022.gpkg"
 [ -f "${UF}_bairros.gpkg" ]   || curl -# -o "${UF}_bairros.gpkg"   "$B/bairros/gpkg/UF/${UF}/${UF}_bairros_CD2022.gpkg"
 [ -f "${UF}_distritos.gpkg" ] || curl -# -o "${UF}_distritos.gpkg" "$B/distritos/gpkg/UF/${UF}/${UF}_distritos_CD2022.gpkg"
 

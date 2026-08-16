@@ -48,13 +48,39 @@ submitted a bairro division** — in Pará, 25 of 144. Belém has 72. Vigia has 
 When absent, fall back to `distritos/` (national coverage) plus CNEFE's
 `DSC_LOCALIDADE`. This is the single biggest portability gotcha.
 
-### 4. OpenStreetMap — the navigable street network
+### 4. Malha de setores censitários CD2022 — the only gap-free sub-bairro mesh
+```
+https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/
+  malhas_de_setores_censitarios__divisoes_intramunicipais/censo_2022/setores/gpkg/UF/{UF}/
+  {UF}_setores_CD2022.gpkg
+```
+**All 27 UFs, all 5,570 municipalities, no exceptions** — unlike the bairro mesh.
+PA is 45 MB. Belém 2,085 rows / 2,068 setores; Vigia 104.
+
+Per setor: `CD_SETOR`, `SITUACAO` (Urbana/Rural), `AREA_KM2`, `NM_BAIRRO`, `NM_DIST`,
+`NM_SUBDIST`, plus the region hierarchy. It **tiles the municipality with no gaps**,
+which is why it is the coverage-painting unit — see `03-decisions.md`.
+
+> **Join it spatially, not by code.** CNEFE's `COD_SETOR` is 16 chars with a `P` suffix;
+> stripping it still leaves 259 of Belém's 1,798 codes absent from the mesh (21% of
+> households). The numbering diverges. Point-in-polygon places 99.95%. See `02-findings.md`.
+
+Same directory, not yet used: `Area_efetivamente_domiciliada_e_densidade_ajustada_dos_
+Setores_Censitarios.xlsx` — inhabited area per setor, which would stop a large half-empty
+setor reading as a big unwalked hole.
+
+### 5. OpenStreetMap — the navigable street network
 Overpass, per municipality bbox:
 ```
 [out:json][timeout:300][bbox:{S},{W},{N},{E}];(way["highway"];);out geom;
 ```
 Belém: 27,476 ways, 5,905 distinct names, **0.46 MB gzipped**. Road coverage is good
 everywhere; **building** coverage is not — see findings.
+
+> OSM is **not** a higher-resolution street map than IBGE's face base. Belém: 15,292
+> named OSM ways vs 38,718 named IBGE faces; 3,693 OSM pedestrian ways (footway + path +
+> living_street) vs 10,114 IBGE passagem/vila faces. Vigia: 1,518 ways, **14% named,
+> 7 pedestrian ways in the whole municipality**. Keep OSM as the navigational backdrop.
 
 ## Secondary / evaluated and rejected
 

@@ -67,4 +67,27 @@ console.log('  after 1 click:', els.get('lvl').textContent, '|', els.get('maph-n
 els.get('lvl').onclick();
 console.log('  after 2 clicks:', els.get('lvl').textContent, '|', els.get('maph-n').textContent);
 console.log('  rank rows now:', (txt('rank').match(/class="rrow/g)||[]).length);
+
+const D=JSON.parse(data);
+if(D.st && D.st.length){
+  console.log('\n--- setor layer paints the whole territory ---');
+  const nst=D.st.length, parts=D.st.reduce((s,t)=>s+t.g.length,0);
+  // button is on 'setor'; walk round to 'bairro', clear, then step into 'setor' so the
+  // fill count belongs to exactly one setor-level draw
+  els.get('lvl').onclick();                 // -> quadra
+  els.get('lvl').onclick();                 // -> auto
+  els.get('lvl').onclick();                 // -> bairro
+  for(const k in calls) delete calls[k];
+  els.get('lvl').onclick();                 // -> setor
+  const fills=calls.fill||0;
+  // a couple of parts sit outside the fitted viewport and are culled — allow for that
+  console.log('  setores:', nst, '| parts:', parts, '| filled at setor level:', fills,
+              '('+(parts-fills)+' culled off-screen)');
+  if(fills < parts*0.9) { console.log('FAIL: setor level filled only', fills, 'of', parts, 'parts'); process.exit(1); }
+  const rank=txt('rank');
+  if(!/Setor …/.test(rank)) { console.log('FAIL: setor level rank list has no setor rows'); process.exit(1); }
+  els.get('lvl').onclick();                 // -> quadra, must not throw with ST present
+  console.log('  quadra level over setor fill:', els.get('maph-n').textContent);
+  els.get('lvl').onclick();                 // back to auto
+}
 console.log('\nPASS');

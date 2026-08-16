@@ -223,6 +223,9 @@ tbody tr:last-child td{border-bottom:0}
 "use strict";
 const D=JSON.parse(document.getElementById('data').textContent);
 const Q=D.q, BN=D.b;
+/* Setores tile the municipality with no gaps. They are the only unit that can paint
+   the whole territory — quadra hulls leave 10.8% of Belém with nothing to fill. */
+const ST=D.st||[], HASST=ST.length>0;
 const MUNI=D.muni||'Belém', MESH=D.mesh!==false;
 const UNIT=MESH?'Bairros':'Localidades', UNIT1=MESH?'bairros':'localidades';
 document.title='Mutirão '+MUNI+' — painel de cobertura';
@@ -292,6 +295,10 @@ for(let b=0;b<BN.length;b++){ let a=1e18,c=1e18,e=-1e18,f=-1e18;
   for(let i=0;i<Q.length;i++) if(Q[i].b===b){ const t=qbb[i];
     if(t[0]<a)a=t[0]; if(t[1]<c)c=t[1]; if(t[2]>e)e=t[2]; if(t[3]>f)f=t[3]; }
   bbb.push([a,c,e,f]); }
+/* t.g is a list of parts, each [outer, hole...] */
+const sbb=ST.map(t=>{ let a=1e18,b=1e18,c=-1e18,d=-1e18;
+  for(const pt of t.g) for(const p of pt[0]){ if(p[0]<a)a=p[0]; if(p[0]>c)c=p[0]; if(p[1]<b)b=p[1]; if(p[1]>d)d=p[1]; }
+  return [a,b,c,d]; });
 let vx0,vy0,vx1,vy1;
 function viewport(){ const m=60/(KX*k); vx0=wx(0)-m; vx1=wx(W)+m; vy0=wy(H)-m*KX; vy1=wy(0)+m*KX; }
 const vis=b=>!(b[2]<vx0||b[0]>vx1||b[3]<vy0||b[1]>vy1);
@@ -302,14 +309,45 @@ function fillFor(o){
 }
 function drawShape(pts){ ctx.beginPath();
   pts.forEach((p,i)=>i?ctx.lineTo(sx(p[0]),sy(p[1])):ctx.moveTo(sx(p[0]),sy(p[1]))); ctx.closePath(); }
-function useQuadras(){ return level==='quadra' || (level==='auto' && zoom()>2.4); }
+/* Zoom ladder. With a setor mesh the middle rung is a real tessellation, so the
+   coordinator never sees a map of disconnected specks; quadras stay for the last rung
+   where they are big enough on screen to hit with a cursor. */
+function lvlOf(){
+  if(level!=='auto') return (level==='setor'&&!HASST)?'bairro':level;
+  if(!HASST) return zoom()>2.4?'quadra':'bairro';
+  if(zoom()>7)   return 'quadra';
+  if(zoom()>1.5) return 'setor';
+  return 'bairro';
+}
+function useQuadras(){ return lvlOf()==='quadra'; }
+/* One path per part, holes wound the other way — nonzero winding cuts them out. */
+function pathPoly(pt){ ctx.beginPath();
+  for(const r of pt){ r.forEach((p,i)=>i?ctx.lineTo(sx(p[0]),sy(p[1])):ctx.moveTo(sx(p[0]),sy(p[1]))); ctx.closePath(); } }
+function drawSetores(valOf){
+  for(let i=0;i<ST.length;i++){
+    const t=ST[i]; if(!vis(sbb[i]))continue;
+    ctx.fillStyle=fillFor(valOf(t));
+    for(const pt of t.g){ pathPoly(pt); ctx.fill(); }
+    ctx.strokeStyle=T.surface; ctx.lineWidth=t.sit?0.7:0.4; ctx.globalAlpha=t.sit?1:0.55;
+    for(const pt of t.g){ pathPoly(pt); ctx.stroke(); }
+    ctx.globalAlpha=1;
+    if(selKind==='s'&&sel===i){ ctx.strokeStyle=T.focus; ctx.lineWidth=2.4;
+      for(const pt of t.g){ pathPoly(pt); ctx.stroke(); } }
+  }
+}
 function draw(){
   if(!fitted)return;
   ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.fillStyle=T.surface; ctx.fillRect(0,0,W,H); viewport();
   ctx.lineJoin='round';
-  if(useQuadras()){
+  const LVN=lvlOf();
+  if(LVN==='setor'){
+    drawSetores(t=>t);
+  } else if(LVN==='quadra'){
+    /* quadras ride on top of the setor fill, so the 10.8% with no outline sit on a
+       painted background instead of a hole */
+    if(HASST){ ctx.globalAlpha=0.45; drawSetores(t=>t); ctx.globalAlpha=1; }
     for(let i=0;i<Q.length;i++){
       const q=Q[i]; if(!vis(qbb[i]))continue;
       if(q.h.length>=3){ drawShape(q.h); ctx.fillStyle=fillFor(q); ctx.fill();
@@ -321,7 +359,10 @@ function draw(){
       if(selKind==='q'&&sel===i&&q.h.length>=3){ drawShape(q.h); ctx.strokeStyle=T.focus; ctx.lineWidth=2.4; ctx.stroke(); }
     }
   } else if(!MESH){
-    for(let i=0;i<Q.length;i++){
+    /* No bairro mesh (most of Brazil). Localidades have no polygon of their own, so
+       paint each setor with its localidade's value — the territory still fills. */
+    if(HASST) drawSetores(t=>t.hh?bAgg[t.b]:t);   /* empty setor keeps "sem registro" */
+    else for(let i=0;i<Q.length;i++){
       const q=Q[i]; if(!vis(qbb[i]))continue;
       const a=bAgg[q.b];
       if(q.h.length>=3){ drawShape(q.h); ctx.fillStyle=fillFor(a); ctx.fill(); }
@@ -362,7 +403,8 @@ function draw(){
       if(v){ ctx.font='700 11px '+T.mono; ctx.strokeText(v,X,Y+7); ctx.fillStyle=T.ink2; ctx.fillText(v,X,Y+7); }
     }
   }
-  document.getElementById('maph-n').textContent=(useQuadras()?'quadras · ':UNIT1+' · ')+METLAB[metric];
+  document.getElementById('maph-n').textContent=
+    ({quadra:'quadras · ',setor:'setores censitários · ',bairro:UNIT1+' · '}[lvlOf()])+METLAB[metric];
 }
 function legend(){
   const el=document.getElementById('legend');
@@ -376,7 +418,8 @@ function legend(){
   for(let i=1;i<=7;i++) h+='<i style="background:var(--seq-'+i+')"></i>';
   h+='<span class="c">100%</span></div>';
   h+='<div class="cat" style="margin-top:6px"><i style="background:var(--seq-0)"></i>sem registro</div>';
-  h+='<div class="cat"><i style="border:1.5px dashed var(--warn);background:transparent"></i>quadra sem contorno</div>';
+  if(lvlOf()==='quadra')
+    h+='<div class="cat"><i style="border:1.5px dashed var(--warn);background:transparent"></i>quadra sem contorno</div>';
   el.innerHTML=h;
 }
 /* ---------- hover ---------- */
@@ -395,8 +438,25 @@ function hitQuadra(X,Y){
   }
   return -1;
 }
+function inRing(X,Y,g){
+  let ins=false;
+  for(let a=0,c=g.length-1;a<g.length;c=a++){
+    const xi=g[a][0],yi=g[a][1],xj=g[c][0],yj=g[c][1];
+    if(((yi>Y)!==(yj>Y)) && X<(xj-xi)*(Y-yi)/(yj-yi+1e-9)+xi) ins=!ins;
+  }
+  return ins;
+}
+function hitSetor(X,Y){
+  for(let i=0;i<ST.length;i++){
+    const b=sbb[i]; if(X<b[0]||X>b[2]||Y<b[1]||Y>b[3])continue;
+    for(const pt of ST[i].g)
+      if(inRing(X,Y,pt[0]) && !pt.slice(1).some(h=>inRing(X,Y,h))) return i;
+  }
+  return -1;
+}
 function hitBairro(X,Y){
-  if(!MESH){ const i=hitQuadra(X,Y); return i<0?-1:Q[i].b; }
+  if(!MESH){ if(HASST){ const s=hitSetor(X,Y); return s<0?-1:ST[s].b; }
+             const i=hitQuadra(X,Y); return i<0?-1:Q[i].b; }
   for(const bb of D.bb){ if(!vis(bbb[bb.b]))continue;
     for(const g of bb.g){
       let ins=false;
@@ -422,10 +482,15 @@ cv.addEventListener('mousemove',e=>{
   if(drag){tip.classList.remove('on');return;}
   const rc=cv.getBoundingClientRect(), px=e.clientX-rc.left, py=e.clientY-rc.top;
   const X=wx(px),Y=wy(py);
-  if(useQuadras()){ const i=hitQuadra(X,Y);
+  const LVN=lvlOf();
+  if(LVN==='quadra'){ const i=hitQuadra(X,Y);
     if(i<0){tip.classList.remove('on');return;}
     const q=Q[i];
     tip.innerHTML=tipHTML(q,'Quadra '+String(q.num).padStart(3,'0'),BN[q.b]+' · setor …'+q.setor+(q.geo?'':' · sem contorno'));
+  } else if(LVN==='setor'){ const i=hitSetor(X,Y);
+    if(i<0){tip.classList.remove('on');return;}
+    const t=ST[i];
+    tip.innerHTML=tipHTML(t,'Setor …'+t.cd,(t.hh?BN[t.b]+' · ':'')+t.nq+' quadras'+(t.sit?'':' · rural'));
   } else { const b=hitBairro(X,Y);
     if(b<0){tip.classList.remove('on');return;}
     const a=bAgg[b];
@@ -439,7 +504,9 @@ cv.addEventListener('click',e=>{
   if(moved){moved=false;return;}
   const rc=cv.getBoundingClientRect();
   const X=wx(e.clientX-rc.left),Y=wy(e.clientY-rc.top);
-  if(useQuadras()){ const i=hitQuadra(X,Y); if(i>=0){ sel=i; selKind='q'; } }
+  const LVN=lvlOf();
+  if(LVN==='quadra'){ const i=hitQuadra(X,Y); if(i>=0){ sel=i; selKind='q'; } }
+  else if(LVN==='setor'){ const i=hitSetor(X,Y); if(i>=0){ sel=i; selKind='s'; } }
   else { const b=hitBairro(X,Y); if(b>=0){ sel=b; selKind='b'; } }
   renderRank(); draw();
 });
@@ -458,21 +525,23 @@ cv.addEventListener('wheel',e=>{ e.preventDefault();
 
 /* ---------- ranked list ---------- */
 function renderRank(){
-  const q=useQuadras();
-  document.getElementById('rank-h').childNodes[0].nodeValue=q?'Quadras ':UNIT+' ';
+  const LVN=lvlOf(), q=LVN==='quadra', s=LVN==='setor';
+  document.getElementById('rank-h').childNodes[0].nodeValue=q?'Quadras ':s?'Setores ':UNIT+' ';
   const rows = q ? Q.map((o,i)=>({o,i,kind:'q'})).filter(r=>vis(qbb[r.i])).slice(0,4000)
+             : s ? ST.map((o,i)=>({o,i,kind:'s'})).filter(r=>vis(sbb[r.i])).slice(0,4000)
                  : live.map(a=>({o:a,i:a.b,kind:'b'}));
   if(sortBy==='metric') rows.sort((a,b)=>value(b.o)-value(a.o));
   else if(sortBy==='size') rows.sort((a,b)=>b.o.hh-a.o.hh);
   else rows.sort((a,b)=>(b.o.hh-reached(b.o))-(a.o.hh-reached(a.o)));
-  const show=rows.slice(0,q?250:80);
-  document.getElementById('rank-n').textContent=rows.length.toLocaleString('pt-BR')+(q?' na vista':'');
+  const show=rows.slice(0,(q||s)?250:80);
+  document.getElementById('rank-n').textContent=rows.length.toLocaleString('pt-BR')+((q||s)?' na vista':'');
   let h='';
   for(const r of show){
     const v=value(r.o), st=metric==='dom'?domClass(r.o):stepOf(v);
     const col=metric==='dom'?(st<0?'var(--seq-0)':'var('+DOMVAR[st]+')'):'var(--seq-'+st+')';
-    const nm=r.kind==='b'?BN[r.i]:'Quadra '+String(r.o.num).padStart(3,'0');
+    const nm=r.kind==='b'?BN[r.i]:r.kind==='s'?'Setor …'+r.o.cd:'Quadra '+String(r.o.num).padStart(3,'0');
     const sub=r.kind==='b'?(r.o.quadras+' quadras · '+r.o.hh.toLocaleString('pt-BR')+' dom.')
+             :r.kind==='s'?((r.o.hh?BN[r.o.b]+' · ':'')+r.o.nq+' quadras · '+r.o.hh.toLocaleString('pt-BR')+' dom.'+(r.o.sit?'':' · rural'))
                           :(BN[r.o.b]+' · '+r.o.hh+' dom.'+(r.o.geo?'':' · sem contorno'));
     h+='<div class="rrow'+(selKind===r.kind&&sel===r.i?' sel':'')+'" data-k="'+r.kind+'" data-i="'+r.i+'">'+
        '<span class="nm">'+nm+'<small>'+sub+'</small></span>'+
@@ -482,9 +551,9 @@ function renderRank(){
   document.getElementById('rank').innerHTML=h;
   document.querySelectorAll('#rank .rrow').forEach(el=>el.onclick=()=>{
     sel=+el.dataset.i; selKind=el.dataset.k;
-    const o = selKind==='q'?Q[sel]:null;
-    if(o){ cx=o.c[0]; cy=o.c[1]; if(zoom()<3) k=k0*6; }
-    else { const bb=bbb[sel]; cx=(bb[0]+bb[2])/2; cy=(bb[1]+bb[3])/2;
+    if(selKind==='q'){ const o=Q[sel]; cx=o.c[0]; cy=o.c[1]; if(zoom()<3) k=k0*6; }
+    else { const bb = selKind==='s'?sbb[sel]:bbb[sel];
+           cx=(bb[0]+bb[2])/2; cy=(bb[1]+bb[3])/2;
            k=Math.min(k0*90,Math.min((W-40)/((bb[2]-bb[0])*KX),(H-40)/(bb[3]-bb[1]))); }
     renderRank(); draw();
   });
@@ -587,9 +656,10 @@ document.getElementById('m-dom').onclick=()=>setMetric('dom');
 for(let i=0;i<5;i++){ const b=document.getElementById('t'+i);
   b.onclick=()=>{ on[i]=!on[i]; b.setAttribute('aria-pressed',String(on[i]));
     renderKPIs(); renderRank(); renderPrio(); renderAudit(); draw(); }; }
-const LV=['auto','bairro','quadra'], LVL={auto:'automático',bairro:UNIT1,quadra:'quadras'};
+const LV=HASST?['auto','bairro','setor','quadra']:['auto','bairro','quadra'];
+const LVL={auto:'automático',bairro:UNIT1,setor:'setores',quadra:'quadras'};
 document.getElementById('lvl').onclick=function(){
-  level=LV[(LV.indexOf(level)+1)%3]; this.textContent='Nível: '+LVL[level];
+  level=LV[(LV.indexOf(level)+1)%LV.length]; this.textContent='Nível: '+LVL[level];
   renderRank(); draw(); };
 for(const [id,v] of [['s-metric','metric'],['s-size','size'],['s-gap','gap']])
   document.getElementById(id).onclick=()=>{ sortBy=v;

@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 FULL=${1:-}
 
 need() { [ -f "data/$1" ] || { echo "MISSING data/$1 — run: bash pipeline/fetch.sh"; exit 1; }; }
-need PA_faces.zip; need PA_bairros.gpkg; need PA_distritos.gpkg
+need PA_faces.zip; need PA_bairros.gpkg; need PA_distritos.gpkg; need PA_setores.gpkg
 need cnefe_1508209.json.zip; need roads_1508209.json
 
 run() {  # code name cnefe roads prefix nblab
@@ -26,6 +26,10 @@ run 1508209 "Vigia" cnefe_1508209.json.zip roads_1508209.json vigia "55 localida
 if [ "$FULL" = "--full" ]; then
   need cnefe_1501402.json.zip; need roads_1501402.json
   run 1501402 "Belém" cnefe_1501402.json.zip roads_1501402.json belem "71 bairros"
+  echo "── Belém, hand-tuned published payload ─────────────"
+  python3 pipeline/gen_admin.py
+  ADATA=data/belem-published.admin.json node mockups/harness/ah.mjs | tail -1
+  echo
 fi
 
 echo "OK — payloads regenerated, artifacts rebuilt, harnesses green."

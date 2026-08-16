@@ -6,6 +6,7 @@ data/*.json
 # regenerable duplicate: gen_muni's uniform sim. The published panel used
 # gen_admin.py, kept as data/belem-published.admin.json
 data/belem.admin.json
+__pycache__/
 # Built artifacts
 *_app.html
 *_admin.html

@@ -36,6 +36,96 @@ Best: Jurunas 0.3%, Batista Campos 0.6%, Sacramenta 2.1%, Umarizal 2.2%.
 > A 6-bairro window around Terra Firme showed 23%. That was a **local peak**, not the
 > city figure. Citywide is 14.3%.
 
+## The setor mesh — the painting unit
+
+Measured Aug 2026, when the coverage panel's quadra hulls proved unpaintable.
+
+| | Belém | Vigia |
+|---|---|---|
+| Setores in mesh | 2,085 rows / **2,068 setores** | **104** |
+| Urbanos / rurais | 2,029 / 46 (10 null) | 69 / 35 |
+| Setores holding households | 1,798 | 88 |
+| Households per urban setor | median **290**, p10 148, p90 439, max 969 | median **190**, p90 381 |
+| Urban setor area km² | median **0.047** (≈215 m square), p90 0.174, max 13.5 | median 0.099, p90 1.19 |
+| Multipart setores / holes | 5 (max 6 parts) / 45 | 0 / 3 |
+| `NM_BAIRRO` present | **71 bairros** | none |
+
+**Spatial join, not code join.** CNEFE `COD_SETOR` is 16 chars ending in `P`. Stripped,
+**259 of Belém's 1,798 codes are absent from the mesh — 110,078 households, 21%**. The
+numbering genuinely diverges; the missing codes are in no PA municipality at all.
+Point-in-polygon works:
+
+| | placed | unplaced | ambiguous (in 2 setores) |
+|---|---|---|---|
+| Belém | 528,424 | **262 (0.05%)** | **0** |
+| Vigia | 19,243 | 11 (0.06%) | **0** |
+
+Zero ambiguity confirms the mesh has no overlaps. Simplification (quantise to ~1 m, drop
+exactly-collinear vertices) reproduces Belém's area to **0.002%** — 1,059.41 km² against
+1,059.39 km² raw. Payload cost: 41,574 vertices, admin JSON 2,714 → 2,731 KB.
+
+> IBGE's `AREA_KM2` column **sums to 1,477 km² for Belém**, not 1,059. A multipart setor
+> is stored as one row per part and every part repeats the whole setor's area. Sum the
+> geometry, not the column.
+
+## Polygonising the street network — measured, and it does not work
+
+The obvious idea — derive quadra polygons by noding the line network and extracting the
+faces of the planar graph — was built (`pipeline/polygonize.py`) and measured. It fails,
+for a reason no tolerance tuning fixes.
+
+| source | closed cells | households placed | purity¹ | cells per quadra | 1 quadra per cell |
+|---|---|---|---|---|---|
+| **Belém, IBGE kerbs** | 6,361 | **28.4%** | 76.9% | 2.14 | 27% |
+| Belém, OSM only | 15,842 | 88.8% | 67.2% | 3.87 | **16%** |
+| Belém, both | 37,517 | 91.0% | 71.6% | **5.79** | 34% |
+| **Vigia, IBGE kerbs** | 279 | **17.8%** | 89.1% | 1.55 | 50% |
+| Vigia, OSM only | 675 | 68.4% | 70.9% | 2.41 | 31% |
+| Vigia, both | 1,614 | 70.1% | 74.3% | 3.52 | 49% |
+
+¹ share of placed households sitting in their cell's modal IBGE quadra.
+
+**The kerb base is 91% tree, not mesh.** Belém: 74,694 nodes, 69,433 edges, **11,622
+connected components**. Cyclomatic number = 69,433 − 74,694 + 11,622 = **6,361**, exactly
+the interior cells found. It is a forest of disconnected strokes plus 6,361 stray loops.
+Lines that do not meet cannot bound anything.
+
+**Not a snapping artefact.** Vigia, node-merge tolerance swept:
+
+| tolerance | cells | households placed | purity |
+|---|---|---|---|
+| 0.5 m | 283 | 18.1% | 88.5% |
+| 2 m | 286 | 18.2% | 88.4% |
+| 5 m | 291 | 18.8% | 88.0% |
+| **10 m** | 508 | 44.8% | **71.2%** |
+
+10 m only "closes" rings by fusing kerbs that are genuinely distinct — it is wider than
+most passagens, and purity collapses accordingly.
+
+**Mixing the two sources is the worst option.** IBGE digitises kerbs, OSM digitises
+centrelines; parallel offset lines a few metres apart slice every block into slivers.
+Belém both-sources: **5.79 cells per quadra**.
+
+**OSM alone closes but does not align.** Only 132 components in Belém — it is a properly
+connected network — but its cells average 3.77 IBGE quadras and 28% swallow five or more.
+It is a superblock mesh, and 11.2% of households still fall outside every cell.
+
+## Faces per quadra — the abstraction that saves nothing
+
+Measured when face selection was proposed for replacement by street-name selection.
+
+| | Belém | Vigia |
+|---|---|---|
+| Faces per quadra | median **4**, mean 5.0 | median 4, mean 3.9 |
+| Distinct street names per quadra (faces base) | mean 3.9 | mean 3.4 |
+| CNEFE street names per quadra | mean 3.7 | mean 3.2 |
+| **Collapse factor faces → street-in-quadra** | **1.30×** | **1.16×** |
+| Quadras where one name covers every face | 8% | 10% |
+
+Quadra 001's 13 faces is an outlier, not the norm. Grouping faces by street name turns a
+four-row list into a three-row list. The friction is that `CD_FACE` is a meaningless
+integer, not that there are too many rows.
+
 ## Duplicate street numbers
 
 Of 276,834 distinct numbered rua+número pairs, **27,759 (10.0%)** appear in more than one quadra.

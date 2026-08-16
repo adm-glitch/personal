@@ -16,6 +16,49 @@ Every decision here is settled unless `04-open-questions.md` says otherwise.
   unique) plus a campaign code (`TF-24`) assigned geographically per bairro.
   Freeze the codes at campaign start; regenerating renumbers them.
 - **`face_id` is derived and nullable**, not primary — the CNEFE↔faces join is 85.6%.
+- **Setor is the sixth level, above quadra**, and it is spatial, not a code join.
+
+## The coverage-painting unit
+
+**Setores censitários paint the map. Quadras stay the work unit.**
+
+A coordinator cannot read a map of disconnected specks, and "this area holds 75% of the
+households in the region" is not a sentence a decision maker will accept. Quadra convex
+hulls cannot tile: 10.8% of Belém quadras (13.7% of Vigia) have no geometry at all, and
+those that do are hulls of kerb strokes with street corridors falling between them.
+
+The censo-2022 setor mesh is the only IBGE product below bairro level that **tiles the
+municipality with no gaps, for all 5,570 municipalities**. Belém 2,068 setores at a median
+290 households and ~215 m across; Vigia 104. It also carries `NM_BAIRRO` and
+`SITUACAO` (urbana/rural).
+
+- **Join spatially.** `COD_SETOR` does not reconcile with `CD_SETOR` — 21% of Belém
+  households sit on a code the mesh has never heard of. Point-in-polygon places 99.95%
+  with zero ambiguity.
+- **Zoom ladder is bairro → setor → quadra.** At quadra zoom the setor fill stays
+  underneath at 45% alpha, so the outline-less 10.8% sit on painted ground, not a hole.
+- **Where there is no bairro mesh** (most of Brazil, including Vigia), setores are painted
+  with their localidade's value. That is the first time those municipalities get a filled
+  map at all — `DSC_LOCALIDADE` has no polygon of its own.
+- Simplification quantises to ~1 m and drops exactly-collinear vertices. Both steps are a
+  pure function of the coordinate, so a shared edge simplifies identically on both sides
+  and the mesh stays gap-free. **Per-ring simplification would open hairline slivers.**
+- Holes and multipart setores are carried. 28 Belém setores enclose an enclave; painting
+  over it would hide a whole setor.
+- Admin payload only. The field payload stays at 3.7 MB — canvassers work the table.
+
+### Rejected: deriving quadra polygons from the road network
+
+Built and measured (`pipeline/polygonize.py`), then rejected. **The IBGE kerb base is 91%
+tree, not mesh** — 11,622 connected components in Belém, so only 28.4% of households land
+inside any closed cell. Loosening the node tolerance to 10 m closes rings only by fusing
+distinct passagens, and purity falls from 88% to 71%. OSM alone does close, but its cells
+average 3.77 quadras and 28% swallow five or more. Mixing kerbs with centrelines is worst
+of all — parallel offset lines slice every block into slivers, 5.79 cells per quadra.
+
+The script stays in the repo as the evidence. Re-run it before anyone proposes this again.
+It would also make the block mesh an ODbL derived database, which a campaign app does not
+want.
 
 ## Statuses
 

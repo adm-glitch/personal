@@ -1,7 +1,13 @@
 """Build the field payload (.bin.gz) and the admin aggregate for one municipality.
 Falls back from the IBGE bairro mesh to CNEFE's DSC_LOCALIDADE when the
-municipality has no official bairro division — most of Brazil does not."""
+municipality has no official bairro division — most of Brazil does not.
+
+The admin aggregate also carries the censo-2022 setor mesh, which is the only IBGE
+product that tiles a municipality with no gaps below bairro level. It is the coverage
+painting unit: quadra hulls leave 10.8% of Belém (13.7% of Vigia) unpaintable."""
 import zipfile, json, collections, math, os, gzip, struct, sqlite3, unicodedata, sys, random
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from geo import load_setores, indexed_locator, setor_shells
 
 MUN, NAME, CNEFE, ROADS, OUT = sys.argv[1:6]
 random.seed(11)
@@ -133,6 +139,30 @@ for q in Q:
     q['c']=(sum(p[0] for p in ps)//len(ps), sum(p[1] for p in ps)//len(ps)) if ps else (0,0)
 print(f"  top-level units: {len(bairros)}")
 
+# ---- setor mesh: the gap-free painting unit ----
+# CNEFE's COD_SETOR does NOT join to the mesh's CD_SETOR (259 of Belém's 1,798 codes
+# are absent, 21% of households) — the numbering diverges. The spatial join does work:
+# 99.95% of households fall in exactly one setor, with no overlaps. See docs/02.
+SET=load_setores(d(UF+'_setores.gpkg'), UF, MUN) if os.path.exists(d(UF+'_setores.gpkg')) else []
+for q in Q: q['si']=None
+if SET:
+    setor_at=indexed_locator(SET)
+    votes=collections.defaultdict(collections.Counter)
+    for a in A:
+        i=setor_at(a['x']/1e6,a['y']/1e6)
+        if i is not None: votes[a['q']][i]+=1
+    orphan=0
+    for qi,q in enumerate(Q):
+        if votes[qi]: q['si']=votes[qi].most_common(1)[0][0]
+        else:
+            q['si']=setor_at(q['c'][0]/1e6,q['c'][1]/1e6)
+            if q['si'] is None: orphan+=1
+    placed=sum(sum(v.values()) for v in votes.values())
+    print(f"  setores {len(SET)} ({sum(1 for s in SET if s['sit']=='Urbana')} urbanos) | "
+          f"households placed {placed}/{len(A)} ({placed/len(A)*100:.2f}%) | quadras with no setor {orphan}")
+else:
+    print(f"  setor mesh {UF}_setores.gpkg absent — admin panel falls back to quadra hulls")
+
 out=bytearray(); out.extend(b'BLM3')
 CLS={'motorway':0,'motorway_link':0,'trunk':1,'trunk_link':1,'primary':2,'primary_link':2,
      'secondary':3,'secondary_link':3,'tertiary':4,'tertiary_link':4,'residential':5,
@@ -236,6 +266,22 @@ for q in AQ:
     au=int(rest*0.6); rc=int(rest*0.18); ix=int(rest*0.12)
     q['s']=[talked,au,rc,ix,max(0,rest-au-rc-ix)]
     for i,v in enumerate(q['s']): tot[i]+=v
+ST=[]
+if SET:
+    ST,OWNER=setor_shells(SET)
+    for qi,q in enumerate(AQ):
+        si=Q[qi]['si']
+        if si is None: continue
+        t=OWNER[si]; t['hh']+=q['hh']; t['len']+=q['len']; t['nq']+=1; t['_b'][q['b']]+=max(1,q['hh'])
+        for j in range(5): t['s'][j]+=q['s'][j]
+    for t in ST:
+        t['b']=t['_b'].most_common(1)[0][0] if t['_b'] else 0; del t['_b']
+        t['len']=round(t['len'])
+    pts=sum(len(r) for t in ST for p in t['g'] for r in p)
+    print(f"  setor polygons: {len(ST)} setores, {sum(len(t['g']) for t in ST)} parts, "
+          f"{sum(len(p)-1 for t in ST for p in t['g'])} holes | {pts} vertices | "
+          f"{sum(1 for t in ST if not t['hh'])} with no household")
+
 BB=[]
 if USE_MESH:
     for bidx,nm in enumerate(bairros):
@@ -252,6 +298,6 @@ crew=[]
 for n in NAMES:
     d=int(random.uniform(180,900)); crew.append({'n':n,'d':d,'c':int(d*random.uniform(0.4,0.68)),'q':int(random.uniform(2,14))})
 crew.sort(key=lambda c:-c['d'])
-json.dump({'b':bairros+([] if USE_MESH else ['(divisa do município)']),'bb':BB,'q':AQ,'days':days,'crew':crew,
+json.dump({'b':bairros+([] if USE_MESH else ['(divisa do município)']),'bb':BB,'q':AQ,'st':ST,'days':days,'crew':crew,
            'muni':NAME,'mesh':USE_MESH},open(OUT+'.admin.json','w'),separators=(',',':'))
 print(f"  admin: {os.path.getsize(OUT+'.admin.json')/1024:.0f} KB | reached {sum(tot.values()):,} of {sum(q['hh'] for q in AQ):,}")

@@ -15,9 +15,11 @@ That deadline drives every scope decision. See `docs/04-open-questions.md`.
 
 Ship the whole municipality as **one gzipped binary** (Belém: 3.7 MB; Vigia: 211 KB),
 decode into **typed arrays** in the browser, render with **Canvas 2D**. Hierarchy is
-**bairro → quadra → face → endereço → domicílio**. The *table* is the primary interface
-and the map is confirmation, because 14% of Belém households sit on a kerb IBGE never drew.
-Work is keyed on IBGE's `COD_UNICO_ENDERECO`, never on street+number.
+**bairro → setor → quadra → face → endereço → domicílio**. The *table* is the primary
+interface and the map is confirmation, because 14% of Belém households sit on a kerb IBGE
+never drew. Work is keyed on IBGE's `COD_UNICO_ENDERECO`, never on street+number.
+The coordinator's map paints **setores censitários**, the only IBGE mesh that tiles a
+municipality with no gaps — quadra hulls leave 10.8% of Belém unpaintable.
 
 ## Repo layout
 
@@ -28,6 +30,8 @@ Work is keyed on IBGE's `COD_UNICO_ENDERECO`, never on street+number.
 | `docs/03-decisions.md` | design decisions, rationale, and what was rejected |
 | `docs/04-open-questions.md` | what is still undecided |
 | `pipeline/gen_muni.py` | builds field + admin payloads for **any of the 5,570 municipalities** |
+| `pipeline/geo.py` | GPKG blob reader, point-in-polygon, local metric projection |
+| `pipeline/polygonize.py` | the road-derived block mesh experiment — **a measured negative result**, kept as evidence |
 | `mockups/parts/` | the four source fragments the field app is assembled from |
 | `mockups/build_muni.py` | assembles a field-app HTML from parts + payload |
 | `mockups/harness/` | headless test harnesses (node, no browser) |

@@ -38,6 +38,14 @@ splits opposite sides of the same passagem. Changes turf sizes. **Not yet decide
 nº 74". Needs a different affordance — position along the kerb ("3ª casa depois da
 esquina"), a photo, or a canvasser-supplied name. **Belém at 8.3% is workable; Vigia is not.**
 
+### 3b. Naming faces so a canvasser can pick one
+Grouping faces by street name was measured and **does not simplify anything** — 1.30×
+collapse in Belém, 1.16× in Vigia, four rows becoming three (`02-findings.md`). So the
+face list stays, but `CD_FACE` must not be what the canvasser reads. Proposed and **not
+yet built**: label every row `Passagem São Jorge — lado ímpar · 12 casas`, drop the face
+number from the UI while keeping it as the key, and for the 10.8% of quadras with no
+geometry let the address list itself be the face. Needs a design pass.
+
 ### 4. Duplicate-flag rule
 The mockup ships `<50 m` (13,490 households). The analysis says **same setor & <20 m**
 (3,344, 0.63%) is the reviewable set. Changing it means regenerating the payload —
