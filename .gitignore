@@ -12,3 +12,14 @@ __pycache__/
 *_admin.html
 mockups/*_main.js
 mockups/harness/*_main.js
+
+# Android shell
+app/node_modules/
+app/www/
+app/android/build/
+app/android/app/build/
+app/android/.gradle/
+app/android/local.properties
+app/android/capacitor-cordova-android-plugins/
+app/android/app/src/main/assets/public/
+*.apk

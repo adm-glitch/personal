@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mutirao</string>
+    <string name="title_activity_main">Mutirao</string>
+    <string name="package_name">com.atipica.mutirao</string>
+    <string name="custom_url_scheme">com.atipica.mutirao</string>
+</resources>
