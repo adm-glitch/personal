@@ -102,16 +102,24 @@ const qRange=new Map();
 { let s=0;
   for(let i=1;i<=NA;i++){ if(i===NA||aq[i]!==aq[s]){ qRange.set(aq[s],[s,i]); s=i; } } }
 
-/* rolling counters — recomputing over 528k rows per frame is not an option */
-const ST_={PEND:0,CONTATO:1,AUSENTE:2,RECUSOU:3,INEXISTENTE:4,NAOLOC:5,NAOAUT:6,INACESS:7,FECHADO:8};
-const STLAB=['','falei','ausente','recusou','não existe','não achei','não autorizado','inacessível','fechado'];
-const RESOLVED=new Uint8Array(9); [1,3,4,6,7,8].forEach(v=>RESOLVED[v]=1);
-const BULK=[[6,'Não autorizado (condomínio, portaria)'],[7,'Inacessível (segurança, ameaça)'],
-            [8,'Fechado / abandonado'],[2,'Ninguém em casa (toda a área)']];
-const stat=new Uint8Array(NA);
-const seenF=new Int32Array(NF), doneF=new Int32Array(NF);
+/* ================= coverage state =================
+   Coverage is recorded on the FACE, never on a household. Nothing below is keyed to a
+   door or a person: the household list is read-only context. The tallies are counters
+   on the face, so "falei 7" is a number, not seven records — which is what keeps this
+   out of LGPD Art. 11 entirely. Recomputing over 528k rows per frame is not an option,
+   so the roll-ups stay incremental. */
+const FLAB=['pendente','percorrida','parcial','inacessível','não autorizado','não existe'];
+const FRES=new Uint8Array(6); [1,3,4,5].forEach(v=>FRES[v]=1);   // parcial stays pending
+const FACTS=[[1,'Percorrida — passei em todas'],
+             [2,'Parcial — falta voltar aqui'],
+             [3,'Inacessível (segurança, alagamento)'],
+             [4,'Não autorizado (condomínio, portaria)'],
+             [5,'Não existe / sem moradia']];
+const fstat=new Uint8Array(NF), ftalk=new Int16Array(NF), fabs=new Int16Array(NF);
+/* household-weighted, so every existing seen/total display keeps its meaning */
 const seenQ=new Int32Array(NQ), doneQ=new Int32Array(NQ);
 const seenB=new Int32Array(BN.length), doneB=new Int32Array(BN.length);
+const seenQF=new Int32Array(NQ);                    // faces touched, for "3/8 faces"
 const totF=new Int32Array(NF), totQ=new Int32Array(NQ), totB=new Int32Array(BN.length);
 for(const [kk,[s,e]] of aRange){
   const fi=faceIdx.get(kk); if(fi===undefined) continue;
@@ -119,14 +127,14 @@ for(const [kk,[s,e]] of aRange){
 }
 const censusQ=new Int32Array(NQ), censusB=new Int32Array(BN.length);
 for(let i=0;i<NF;i++){ censusQ[fq[i]]+=fr[i]; censusB[qb[fq[i]]]+=fr[i]; }
-function setStat(i,v){
-  const old=stat[i]; if(old===v) return;
-  const fi=faceIdx.get(fkey(aq[i],af[i])); if(fi===undefined){ stat[i]=v; return; }
-  const q=fq[fi], b=qb[q];
-  const ds=(v!==0?1:0)-(old!==0?1:0), dd=RESOLVED[v]-RESOLVED[old];
-  seenF[fi]+=ds; seenQ[q]+=ds; seenB[b]+=ds;
-  doneF[fi]+=dd; doneQ[q]+=dd; doneB[b]+=dd;
-  stat[i]=v;
+function setFace(fi,v){
+  const old=fstat[fi]; if(old===v) return;
+  const q=fq[fi], b=qb[q], hh=totF[fi];
+  const ds=(v!==0?1:0)-(old!==0?1:0), dd=FRES[v]-FRES[old];
+  seenQ[q]+=ds*hh; seenB[b]+=ds*hh; doneQ[q]+=dd*hh; doneB[b]+=dd*hh;
+  seenQF[q]+=ds;
+  if(v===0){ ftalk[fi]=0; fabs[fi]=0; }
+  fstat[fi]=v;
 }
 let added=0, queued=0;
 

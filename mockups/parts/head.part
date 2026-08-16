@@ -169,15 +169,49 @@ section{margin-top:clamp(34px,5vw,56px)}
 button.more{background:transparent;border:0;color:var(--muted);font-size:15px;line-height:1;
   padding:2px 4px;cursor:pointer;opacity:0;flex:none}
 button.more:focus-visible{opacity:1}
-.bulk{background:var(--surface);border-bottom:1px solid var(--hair);padding:10px 13px 12px}
-.bulk .bh{font-size:11.5px;color:var(--ink-2);margin-bottom:8px;line-height:1.35}
-.bulk .bh b{color:var(--warn)}
-.bulk .bh span{color:var(--muted);font-family:var(--font-mono);font-size:10.5px}
-.bulk button{display:block;width:100%;text-align:left;font-family:var(--font-sans);font-size:12.5px;
-  font-weight:560;padding:9px 11px;margin-bottom:5px;border-radius:5px;
+/* ---- face-level coverage: status chip, tallies, tier affordances ---- */
+.chip{flex:none;font-family:var(--font-mono);font-size:9px;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 5px;border-radius:3px;white-space:nowrap;
+  border:1px solid var(--hair-strong);color:var(--muted);background:var(--surface-2)}
+.chip.s1{color:var(--s-contact);border-color:var(--s-contact)}
+.chip.s2{color:var(--s-noanswer);border-color:var(--s-noanswer)}
+.chip.s3,.chip.s4{color:var(--s-none);border-color:var(--s-none)}
+.chip.s5{color:var(--muted)}
+.tal{display:block;font-family:var(--font-mono);font-size:10px;color:var(--s-contact);margin-top:1px}
+.tierb{font-family:var(--font-mono);font-size:8px;letter-spacing:.06em;color:var(--muted);
+  border:1px solid var(--hair-strong);border-radius:3px;padding:0 3px;vertical-align:1px}
+.tierbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 13px;
+  background:var(--surface-3);border-bottom:1px solid var(--hair)}
+.tierbar>span{font-size:10.5px;color:var(--muted);margin-right:2px}
+.tierbar button{font-family:var(--font-mono);font-size:10px;padding:3px 7px;border-radius:4px;
+  border:1px solid var(--hair-strong);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.tierbar button.on{border-color:var(--focus);color:var(--focus);font-weight:600}
+.tierbar>i{flex-basis:100%;font-style:normal;font-family:var(--font-mono);font-size:9.5px;color:var(--muted)}
+.acts.face{background:var(--surface);border-bottom:1px solid var(--hair);padding:9px 13px 11px}
+.acts.face button.full{display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+  font-family:var(--font-sans);font-size:12.5px;font-weight:560;padding:9px 11px;margin-bottom:5px;
+  border-radius:5px;border:1px solid var(--hair-strong);background:var(--surface-2);
+  color:var(--ink);cursor:pointer}
+.acts.face button.full:hover{border-color:var(--focus)}
+.acts.face button.full.on{border-color:var(--focus);box-shadow:inset 0 0 0 1px var(--focus)}
+.acts.face button.clr{width:100%;font-family:var(--font-sans);font-size:11.5px;padding:7px;
+  border-radius:5px;border:1px dashed var(--hair-strong);background:transparent;
+  color:var(--muted);cursor:pointer}
+.tally{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:8px 0 7px}
+.tally>span{flex-basis:100%;font-size:10.5px;color:var(--muted)}
+.tally .tw{display:flex;align-items:center;gap:5px}
+.tally .tw b{font-size:11px;font-weight:560;color:var(--ink-2)}
+.tally .tw i{font-style:normal;font-family:var(--font-mono);font-size:12px;min-width:18px;
+  text-align:center;color:var(--ink)}
+.tally .tw button{width:24px;height:24px;border-radius:4px;font-size:13px;line-height:1;
   border:1px solid var(--hair-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
-.bulk button:hover{border-color:var(--warn)}
-.bulk button.cancel{color:var(--muted);font-weight:500;margin-bottom:0}
+.facehdr{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;
+  background:var(--surface-2);border-bottom:1px solid var(--hair)}
+.rohdr{padding:7px 13px;font-size:10.5px;color:var(--muted);background:var(--surface-3);
+  border-bottom:1px solid var(--hair)}
+.rohdr b{color:var(--ink-2);font-weight:600}
+.row.ro{cursor:default}
+.row.ro .num{color:var(--ink-2)}
 .donebar{padding:11px 13px;background:var(--surface-3);border-bottom:1px solid var(--hair)}
 .donebar button{width:100%;font-family:var(--font-sans);font-size:13px;font-weight:600;padding:10px;
   border-radius:5px;border:1px solid var(--focus);background:var(--focus);color:#fff;cursor:pointer}

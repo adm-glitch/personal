@@ -27,7 +27,13 @@ class El{
     this._qs=this._qs||new Map(); const key=this._html+'||'+sel;
     if(this._qs.has(key)) return this._qs.get(key);
     const out=[]; const mk=(re,k)=>{let m;while((m=re.exec(this._html))){const e=new El('x','div');e.dataset[k]=m[1];out.push(e);} };
-    if(sel.includes('data-nav')) mk(/data-nav="(\w+)"/g,'nav');
+    if(sel.includes('data-tgt')) mk(/data-tgt="(\w+)"/g,'tgt');
+    else if(sel.includes('data-tier')) mk(/data-tier="(\d+)"/g,'tier');
+    else if(sel.includes('data-fs')) mk(/data-fs="(\d+)"/g,'fs');
+    else if(sel.includes('data-tly')){ let m; const re=/data-tly="(\w+)" data-d="(-?\d+)"/g;
+      while((m=re.exec(this._html))){ const e=new El('x','button');
+        e.dataset.tly=m[1]; e.dataset.d=m[2]; out.push(e); } }
+    else if(sel.includes('data-nav')) mk(/data-nav="(\w+)"/g,'nav');
     else if(sel.includes('data-pickq')) mk(/data-pickq="(\d+)"/g,'pickq');
     else if(sel.includes('data-pickf')) mk(/data-pickf="(\d+)"/g,'pickf');
     else if(sel.includes('data-b]')) mk(/data-b="(\d+)"/g,'b');
@@ -89,7 +95,34 @@ L().querySelectorAll('.row[data-b]')[big>=0?big:0].onclick();
 console.log('  quadra rows:', N(/data-q="/g), '| SEM CONTORNO:', N(/SEM CONTORNO/g));
 console.log('  estou-aqui buttons:', N(/data-pickq=/g));
 L().querySelectorAll('.row[data-q]')[0].onclick();
-console.log('  face rows:', N(/data-face="/g), '| ghost faces:', N(/SEM LINHA NO MAPA/g));
+console.log('  work rows:', N(/data-tgt="/g), '| ghost faces:', N(/SEM LINHA NO MAPA/g));
+
+/* ---- face-level coverage: the unit is the face, never the door ---- */
+console.log('\n--- face-level marking ---');
+const px=els.get('pick-x'); if(px&&px.onclick) px.onclick();          // leave picking mode
+L().querySelectorAll('.crumbbar span[data-nav]')[0].onclick();        // back to city root
+L().querySelectorAll('.row[data-b]')[0].onclick();
+L().querySelectorAll('.row[data-q]')[0].onclick();
+console.log('  tier bar:', N(/tierbar/g)>0, '| tier badges:', N(/tierb/g));
+const rows0=L().querySelectorAll('.row[data-tgt]');
+console.log('  rows offered:', rows0.length);
+rows0[0].onclick();                                                   // open action panel
+console.log('  action panel:', N(/acts face/g)>0, '| status buttons:', N(/data-fs=/g),
+            '| tally steppers:', N(/data-tly=/g));
+const EV={stopPropagation(){},preventDefault(){}};                    // a real click has one
+L().querySelectorAll('.acts button[data-fs]')[0].onclick(EV);        // mark percorrida
+console.log('  after marking -> chips:', N(/class="chip/g),
+            '| percorrida:', N(/percorrida/g)>0);
+/* forcing tier 3 must re-present the same quadra grouped by street */
+const tb=L().querySelectorAll('.tierbar button[data-tier]');
+if(tb.length>=4){ tb[3].onclick(EV);
+  console.log('  tier 3 forced -> street rows:', L().querySelectorAll('.row[data-tgt]').length,
+              '| all g-targets:', /data-tgt="g/.test(L().innerHTML));
+  const tgt3=L().querySelectorAll('.row[data-tgt]');
+  if(tgt3.length){ tgt3[0].onclick();
+    console.log('  tier-3 row opens panel:', N(/acts face/g)>0,
+                '| marks every trecho of the street'); }
+  L().querySelectorAll('.tierbar button[data-tier]')[0].onclick(EV); }
 
 console.log('\n--- citywide data-quality panel ---');
 for(const id of ['g-bairros','g-nogeo','g-ghost','g-ghostaddr','g-dup'])

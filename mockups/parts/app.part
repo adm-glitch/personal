@@ -86,10 +86,15 @@ function placesOf(q,f){
   }
   placeCache.set(kk,v); return v;
 }
-const pSeen=p=>p.ids.reduce((s,i)=>s+(stat[i]?1:0),0);
-const pDone=p=>p.ids.reduce((s,i)=>s+RESOLVED[stat[i]],0);
-const pPend=p=>p.ids.reduce((s,i)=>s+(stat[i]?0:1),0);
+/* a household counts as seen because its FACE was walked, never because anyone
+   recorded that door — these derive, they do not store */
+const fstatOf=p=>{ const fi=faceIdx.get(fkey(p.q,p.f)); return fi===undefined?0:fstat[fi]; };
+const pSeen=p=>fstatOf(p)!==0?p.ids.length:0;
+const pDone=p=>FRES[fstatOf(p)]?p.ids.length:0;
+const pPend=p=>fstatOf(p)===0?p.ids.length:0;
 const isGhost=fi=>foff[fi+1]===foff[fi];
+/* coverage colour for a face status */
+const FCOL=v=>v===1?T.contact:v===2?T.partial:v===5?T.muted:T.none;
 
 /* ================= state ================= */
 let curB=null, curQ=null, curF=null, workQ=null, workF=null, locSource='gps';
@@ -171,22 +176,25 @@ function draw(){
     ctx.strokeStyle=col; ctx.lineWidth=pass===0?RW[rc[i]]*Math.min(1,z/3)+1.2:RW[rc[i]]*Math.min(1,z/3);
     poly(rgAll,roff[i],roff[i+1]); ctx.stroke();
   }
+  /* the face carries the coverage colour — it is the unit that gets marked */
   if(z>1.6) for(let i=0;i<NF;i++){            // kerb faces
     if(isGhost(i)||!visBB(fbb,i*4))continue;
-    const isCur=fq[i]===curQ&&ff[i]===curF;
+    const isCur=fq[i]===curQ&&ff[i]===curF, fv=fstat[i];
     ctx.globalAlpha=fq[i]===curQ?1:0.55;
-    ctx.strokeStyle=isCur?T.focus:(seenF[i]>0?T.cov4:T.hairS);
-    ctx.lineWidth=isCur?4.5:(seenF[i]>0?2.6:1);
+    ctx.strokeStyle=isCur?T.focus:(fv?FCOL(fv):T.hairS);
+    ctx.lineWidth=isCur?4.5:(fv?3.2:1);
     poly(fgAll,foff[i],foff[i+1]); ctx.stroke(); ctx.globalAlpha=1;
   }
+  /* households stay neutral: they are context and density, not state. Keeping them
+     visible is what makes the 14% on a lineless face reachable at all. */
   if(curQ!==null && z>2){                      // pins, current quadra only
     const rg=qRange.get(curQ);
     if(rg) for(let i=rg[0];i<rg[1];i++){
       const X=sx(ax[i]),Y=sy(ay[i]);
       if(X<-6||X>W+6||Y<-6||Y>H+6)continue;
-      ctx.beginPath(); ctx.arc(X,Y,Math.min(5,2+z*0.25),0,6.2832);
-      ctx.fillStyle=stat[i]?(RESOLVED[stat[i]]?T.contact:T.partial):T.surface;
-      ctx.fill(); ctx.strokeStyle=stat[i]?T.contact:T.none; ctx.lineWidth=1.3; ctx.stroke();
+      ctx.beginPath(); ctx.arc(X,Y,Math.min(4.5,2+z*0.22),0,6.2832);
+      ctx.fillStyle=T.surface; ctx.fill();
+      ctx.strokeStyle=T.none; ctx.lineWidth=1.1; ctx.stroke();
     }
   }
   ctx.setLineDash([7,4]); ctx.lineCap='butt';   // official bairro limits

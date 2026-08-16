@@ -10,11 +10,42 @@ const GAPS=(function(){
 /* ================= stats ================= */
 const qStats=q=>({faces:(qFaces.get(q)||[]).length, seen:seenQ[q], done:doneQ[q],
                   total:totQ[q], census:censusQ[q],
-                  untouched:(qFaces.get(q)||[]).filter(fi=>seenF[fi]===0&&totF[fi]>0).length});
+                  untouched:(qFaces.get(q)||[]).filter(fi=>fstat[fi]===0&&totF[fi]>0).length});
 const bStats=b=>({quadras:(bQuadras.get(b)||[]).length, seen:seenB[b], done:doneB[b],
                   total:totB[b], census:censusB[b]});
 const fLabel=(q,f)=>{ const i=faceIdx.get(fkey(q,f)); return i===undefined?'—':ST[fs[i]]; };
 const qLabel=q=>qcode[q], qName=q=>qlbl[q];
+
+/* ================= presentation tiers =================
+   What the canvasser can physically identify decides how the quadra is presented.
+     1  the face has a line on the map      → tap the row or the line
+     2  no line, but the quadra has an outline → row only, dots show where
+     3  the quadra has no geometry at all   → group by street; one tap marks the
+        whole street, because with no geometry the trechos are indistinguishable
+        on the ground and pretending otherwise is false precision.
+   tierForce lets the mockup pin a tier so the same quadra can be compared. */
+let tierForce=0;
+const tierOfFace=(q,fi)=>!qgeo[q]?3:(isGhost(fi)?2:1);
+function tierOfQuadra(q){
+  if(tierForce) return tierForce;
+  if(!qgeo[q]) return 3;
+  const rows=qFaces.get(q)||[];
+  return rows.length&&rows.every(isGhost)?2:1;
+}
+/* tier 3 collapses a quadra's faces into one row per street name */
+function streetGroups(q){
+  const m=new Map();
+  for(const fi of (qFaces.get(q)||[])){
+    const nm=ST[fs[fi]]; let g=m.get(nm);
+    if(!g){ g={name:nm, rows:[], hh:0, census:0}; m.set(nm,g); }
+    g.rows.push(fi); g.hh+=totF[fi]; g.census+=fr[fi];
+  }
+  return [...m.values()].sort((a,b)=>b.hh-a.hh||a.name.localeCompare(b.name));
+}
+const gStat=g=>{ const v=fstat[g.rows[0]];
+  return g.rows.every(fi=>fstat[fi]===v)?v:2; };      // mixed reads as parcial
+const gTalk=g=>g.rows.reduce((s,fi)=>s+ftalk[fi],0);
+const gAbs=g=>g.rows.reduce((s,fi)=>s+fabs[fi],0);
 
 /* ================= GPS ================= */
 let gmode='hi',gps=null,walkT=null,seg=0,tt=0,route=null;
@@ -122,26 +153,38 @@ function changeChip(label){
 }
 /* ================= sheet ================= */
 const listEl=document.getElementById('list');
-function targetIds(kind,id){
-  if(kind==='place') return id.ids.slice();
-  if(kind==='face'){ const r=aRange.get(fkey(curQ,id)); if(!r)return[];
-    const o=[]; for(let i=r[0];i<r[1];i++)o.push(i); return o; }
-  const r=qRange.get(id); if(!r)return[];
-  const o=[]; for(let i=r[0];i<r[1];i++)o.push(i); return o;
+/* a target is 'f<row>' (one face) or 'g<i>' (a tier-3 street group) */
+function targetRows(t){
+  if(!t) return [];
+  if(t[0]==='f') return [+t.slice(1)];
+  const g=streetGroups(curQ)[+t.slice(1)];
+  return g?g.rows:[];
 }
-const pendOf=(k,i)=>targetIds(k,i).filter(x=>stat[x]===0).length;
-function bulkHTML(what,n){
-  let h='<div class="bulk"><div class="bh">Marcar de uma vez · <b>'+n+' pendentes</b><br><span>'+what+'</span></div>';
-  for(const [v,l] of BULK) h+='<button data-bulk-s="'+v+'">'+l+'</button>';
-  return h+'<button class="cancel" data-bulk-s="-1">Cancelar</button></div>';
+const FDOT=v=>v===1?'background:var(--s-contact)':v===2?'background:var(--s-noanswer)'
+            :v===5?'background:var(--muted)':'background:var(--s-none)';
+const chip=v=>v?'<span class="chip s'+v+'">'+FLAB[v]+'</span>':'';
+const tallyTxt=(t,a)=>(t||a)?'<span class="tal">'+(t?'falei '+t:'')+(t&&a?' · ':'')+(a?'ausente '+a:'')+'</span>':'';
+/* one action panel, shared by a face row (tiers 1–2) and a street row (tier 3) */
+function faceActionsHTML(target,cur,talk,abs){
+  let h='<div class="acts face" data-acts="'+target+'">';
+  for(const [v,l] of FACTS)
+    h+='<button class="full'+(cur===v?' on':'')+'" data-fs="'+v+'">'+
+       '<span class="d" style="'+FDOT(v)+'"></span>'+l+'</button>';
+  h+='<div class="tally"><span>Opcional — quantas portas</span>'+
+     '<div class="tw"><b>falei</b><button data-tly="talk" data-d="-1">−</button><i>'+talk+
+     '</i><button data-tly="talk" data-d="1">+</button></div>'+
+     '<div class="tw"><b>ausente</b><button data-tly="abs" data-d="-1">−</button><i>'+abs+
+     '</i><button data-tly="abs" data-d="1">+</button></div></div>';
+  if(cur) h+='<button class="clr" data-fs="0">Limpar registro</button>';
+  return h+'</div>';
 }
-function actionsHTML(sub){
-  return '<div class="acts'+(sub?' sub':'')+'">'+
-   '<button data-s="1"><span class="d" style="background:var(--s-contact)"></span>Falei</button>'+
-   '<button data-s="2"><span class="d" style="background:var(--s-noanswer)"></span>Ausente</button>'+
-   '<button data-s="3"><span class="d" style="background:var(--s-noanswer);box-shadow:0 0 0 1.5px var(--ink)"></span>Recusou</button>'+
-   '<button data-s="4"><span class="d" style="background:var(--s-none)"></span>Não existe</button>'+
-   '<button data-s="5" class="full"><span class="d" style="border:1.5px dashed var(--muted)"></span>Não localizei — voltar depois</button></div>';
+/* the tier selector — mockup-only, so the same quadra can be read three ways */
+function tierBarHTML(q){
+  const auto=tierOfQuadra(q);
+  let h='<div class="tierbar"><span>Apresentação</span>';
+  for(const [v,l] of [[0,'auto'],[1,'1 · linha'],[2,'2 · sem linha'],[3,'3 · por rua']])
+    h+='<button class="'+(tierForce===v?'on':'')+'" data-tier="'+v+'">'+l+'</button>';
+  return h+'<i>tier '+auto+(tierForce?' forçado':' automático')+'</i></div>';
 }
 function crumb(){
   const p=['<span data-nav="root">'+MUNI+'</span>'];
@@ -157,7 +200,8 @@ function renderSheet(){
   if(picking){ gt.childNodes[0].nodeValue='Onde você está?'; gs.textContent='bairro › quadra › face'; }
   else if(level()==='face'){ const i=faceIdx.get(fkey(curQ,curF));
     gt.childNodes[0].nodeValue=fLabel(curQ,curF);
-    gs.textContent=(i!==undefined?seenF[i]+'/'+totF[i]:'0/0')+' visitados · censo '+(i!==undefined?fr[i]:0); }
+    gs.textContent=(i!==undefined?FLAB[fstat[i]]+' · '+totF[i]+' domicílios':'—')+
+                   ' · censo '+(i!==undefined?fr[i]:0); }
   else if(level()==='quadra'){ const s=qStats(curQ);
     gt.childNodes[0].nodeValue=qName(curQ); gs.textContent=qLabel(curQ)+' · '+s.faces+' faces · '+s.seen+'/'+s.total; }
   else if(level()==='bairro'){ const s=bStats(curB);
@@ -194,21 +238,38 @@ function renderSheet(){
          '<br><span class="sm">'+qLabel(q)+' · '+s.faces+' faces · '+s.census+' dom.</span></span>'+
          '<span class="minibar"><i style="width:'+(s.total?s.seen/s.total*100:0).toFixed(0)+'%"></i></span>'+
          '<span class="fr">'+s.seen+'/'+s.total+'</span>'+
-         (picking?'<button class="pickb" data-pickq="'+q+'">estou aqui</button>'
-                 :'<button class="more" data-bulk="quadra" data-id="'+q+'" aria-label="ações">⋯</button>')+'</div>';
-      if(bulkOn&&bulkOn.kind==='quadra'&&bulkOn.id===q) h+=bulkHTML(qName(q)+' inteira',pendOf('quadra',q));
+         (picking?'<button class="pickb" data-pickq="'+q+'">estou aqui</button>':'')+'</div>';
     }
   } else if(lv==='quadra'){
-    for(const fi of (qFaces.get(curQ)||[])){
-      const f=ff[fi], here=isWorking(curQ,f);
-      h+='<div class="row swipe'+(here?' here':'')+'" data-face="'+f+'"><span class="cmp"><b class="rn">'+ST[fs[fi]]+'</b>'+
-         (here?' <span class="hereb">AQUI</span>':'')+
-         (isGhost(fi)?' <span class="tiny">SEM LINHA NO MAPA</span>':(fr[fi]<=3?' <span class="tiny">PEQUENA · '+fr[fi]+'</span>':''))+'</span>'+
-         '<span class="minibar"><i style="width:'+(totF[fi]?seenF[fi]/totF[fi]*100:0).toFixed(0)+'%"></i></span>'+
-         '<span class="fr">'+seenF[fi]+'/'+totF[fi]+'</span>'+
-         (picking?'<button class="pickb" data-pickf="'+f+'">estou aqui</button>'
-                 :'<button class="more" data-bulk="face" data-id="'+f+'" aria-label="ações">⋯</button>')+'</div>';
-      if(bulkOn&&bulkOn.kind==='face'&&bulkOn.id===f) h+=bulkHTML('toda a face '+ST[fs[fi]],pendOf('face',f));
+    const tier=tierOfQuadra(curQ);
+    if(!picking) h+=tierBarHTML(curQ);
+    if(tier===3){
+      /* no geometry anywhere in this quadra: the street is the only unit anyone
+         standing here can name, so it is the unit they mark */
+      streetGroups(curQ).forEach((g,gi)=>{
+        const tgt='g'+gi, v=gStat(g), open=actionOn===tgt, fi0=g.rows[0];
+        h+='<div class="row swipe'+(open?' open':'')+'" data-tgt="'+tgt+'"><span class="cmp">'+
+           '<b class="rn">'+g.name+'</b> <span class="tierb">T3</span>'+
+           '<br><span class="sm">'+g.hh+' domicílios · '+g.rows.length+' trecho'+
+           (g.rows.length>1?'s':'')+'</span>'+tallyTxt(gTalk(g),gAbs(g))+'</span>'+chip(v)+
+           (picking?'<button class="pickb" data-pickf="'+ff[fi0]+'">estou aqui</button>'
+                   :'<button class="more" data-face="'+ff[fi0]+'" aria-label="ver domicílios">▸</button>')+'</div>';
+        if(open) h+=faceActionsHTML(tgt,v,ftalk[fi0],fabs[fi0]);
+      });
+    } else {
+      for(const fi of (qFaces.get(curQ)||[])){
+        const f=ff[fi], here=isWorking(curQ,f), tgt='f'+fi, v=fstat[fi], open=actionOn===tgt;
+        const ft=tierForce||tierOfFace(curQ,fi);
+        h+='<div class="row swipe'+(here?' here':'')+(open?' open':'')+'" data-tgt="'+tgt+'">'+
+           '<span class="cmp"><b class="rn">'+ST[fs[fi]]+'</b>'+
+           (here?' <span class="hereb">AQUI</span>':'')+' <span class="tierb">T'+ft+'</span>'+
+           (isGhost(fi)?' <span class="tiny">SEM LINHA NO MAPA</span>':'')+
+           '<br><span class="sm">'+totF[fi]+' domicílios · censo '+fr[fi]+'</span>'+
+           tallyTxt(ftalk[fi],fabs[fi])+'</span>'+chip(v)+
+           (picking?'<button class="pickb" data-pickf="'+f+'">estou aqui</button>'
+                   :'<button class="more" data-face="'+f+'" aria-label="ver domicílios">▸</button>')+'</div>';
+        if(open) h+=faceActionsHTML(tgt,v,ftalk[fi],fabs[fi]);
+      }
     }
     const s=qStats(curQ);
     if(!picking&&s.untouched===0&&s.total>0){
@@ -218,37 +279,34 @@ function renderSheet(){
   } else {
     if(picking) h+='<div class="confirmbar"><button id="pick-here">✓ Estou aqui — '+fLabel(curQ,curF)+
                    '</button><span>'+qName(curQ)+' · '+qLabel(curQ)+'</span></div>';
+    const cfi=faceIdx.get(fkey(curQ,curF));
+    if(cfi!==undefined&&!picking){
+      const v=fstat[cfi], tgt='f'+cfi;
+      h+='<div class="facehdr"><span class="cmp"><b class="rn">'+ST[fs[cfi]]+'</b>'+
+         ' <span class="tierb">T'+(tierForce||tierOfFace(curQ,cfi))+'</span>'+
+         '<br><span class="sm">'+totF[cfi]+' domicílios · censo '+fr[cfi]+'</span>'+
+         tallyTxt(ftalk[cfi],fabs[cfi])+'</span>'+chip(v)+'</div>';
+      h+=faceActionsHTML(tgt,v,ftalk[cfi],fabs[cfi]);
+      h+='<div class="rohdr">Domicílios nesta face — <b>apenas consulta</b>, '+
+         'a cobertura é registrada na face</div>';
+    }
+    /* read-only from here down: the canvasser never marks a door */
     for(const p of placesOf(curQ,curF)){
-      const sn=pSeen(p), tot=p.ids.length, dup=p.ids.some(isDup);
+      const tot=p.ids.length, dup=p.ids.some(isDup);
       if(tot>1){
-        h+='<div class="row swipe'+(openPlace===p?' open':'')+'" data-place="'+p.ids[0]+'">'+
+        h+='<div class="row ro'+(openPlace===p?' open':'')+'" data-place="'+p.ids[0]+'">'+
            '<span class="num">'+(p.n||'s/n')+'</span><span class="cmp">'+tot+' domicílios'+
            (dup?' <span class="tiny">Nº REPETIDO PERTO</span>':'')+'</span>'+
-           '<span class="badge'+(sn===0?'':(sn===tot?' full':' part'))+'">'+sn+'/'+tot+'</span>'+
-           '<button class="more" data-bulk="place" data-id="'+p.ids[0]+'" aria-label="ações">⋯</button></div>';
-        if(bulkOn&&bulkOn.kind==='place'&&bulkOn.id===p.ids[0])
-          h+=bulkHTML('todos os '+tot+' domicílios do nº '+(p.n||'s/n'),pendOf('place',p));
-        if(openPlace===p){
-          for(const i of p.ids){
-            h+='<div class="row sub'+(RESOLVED[stat[i]]?' done':'')+'" data-addr="'+i+'">'+
-               '<span class="num">'+(ANUM.get(i)||'s/n')+'</span><span class="cmp">'+(ACMP.get(i)||'—')+'</span>'+
-               (stat[i]?'<span class="st">'+STLAB[stat[i]]+'</span>':'')+'</div>';
-            if(actionOn===i) h+=actionsHTML(true);
-          }
-          h+= addForm&&addForm.kind==='unit'?formHTML('unit')
-            :'<button class="addbtn sub" id="add-unit">+ Adicionar domicílio neste endereço</button>';
-        }
+           '<span class="badge">'+tot+'</span></div>';
+        if(openPlace===p) for(const i of p.ids)
+          h+='<div class="row sub ro"><span class="num">'+(ANUM.get(i)||'s/n')+
+             '</span><span class="cmp">'+(ACMP.get(i)||'—')+'</span></div>';
       } else {
-        const i=p.ids[0];
-        h+='<div class="row'+(RESOLVED[stat[i]]?' done':'')+'" data-addr="'+i+'">'+
-           '<span class="num">'+(p.n||'s/n')+'</span><span class="cmp">'+(ACMP.get(i)||'')+
-           (dup?' <span class="tiny">Nº REPETIDO PERTO</span>':'')+'</span>'+
-           (stat[i]?'<span class="st">'+STLAB[stat[i]]+'</span>':'')+'</div>';
-        if(actionOn===i) h+=actionsHTML(false);
+        h+='<div class="row ro"><span class="num">'+(p.n||'s/n')+'</span><span class="cmp">'+
+           (ACMP.get(p.ids[0])||'')+(dup?' <span class="tiny">Nº REPETIDO PERTO</span>':'')+
+           '</span></div>';
       }
     }
-    h+= addForm&&addForm.kind==='place'?formHTML('place')
-      :'<button class="addbtn" id="add-place">+ Adicionar endereço nesta face</button>';
   }
   listEl.innerHTML=h; wire();
 }
@@ -280,7 +338,26 @@ function wire(){
   if(ph) ph.onclick=()=>{ setWork(curQ,curF,'manual'); toast('Você está em '+fLabel(workQ,workF)); renderLoc(); renderAll(); };
   listEl.querySelectorAll('.row[data-b]').forEach(r=>r.onclick=()=>{goTo(+r.dataset.b,null,null);renderAll();});
   listEl.querySelectorAll('.row[data-q]').forEach(r=>r.onclick=()=>{goTo(curB,+r.dataset.q,null);renderAll();});
-  listEl.querySelectorAll('.row[data-face]').forEach(r=>r.onclick=()=>{goTo(curB,curQ,+r.dataset.face);renderAll();});
+  listEl.querySelectorAll('button[data-face]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    goTo(curB,curQ,+b.dataset.face); actionOn=null; renderAll();});
+  listEl.querySelectorAll('.tierbar button[data-tier]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    tierForce=+b.dataset.tier; actionOn=null; renderAll();});
+  /* the row itself opens the action panel — marking is the primary gesture now */
+  listEl.querySelectorAll('.row[data-tgt]').forEach(r=>r.onclick=()=>{
+    if(picking) return;
+    const t=r.dataset.tgt; actionOn=actionOn===t?null:t; openPlace=null; renderSheet();});
+  listEl.querySelectorAll('.acts button[data-fs]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const rows=targetRows(actionOn); if(!rows.length)return;
+    const v=+b.dataset.fs;
+    rows.forEach(r=>setFace(r,v)); queued+=rows.length;
+    toast(rows.length>1?(rows.length+' trechos — '+FLAB[v]):FLAB[v]);
+    actionOn=null; renderAll();});
+  listEl.querySelectorAll('.acts button[data-tly]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const rows=targetRows(actionOn); if(!rows.length)return;
+    const fi=rows[0], arr=b.dataset.tly==='talk'?ftalk:fabs;
+    arr[fi]=Math.max(0,Math.min(999,arr[fi]+(+b.dataset.d)));
+    if(!fstat[fi]&&arr[fi]>0) rows.forEach(r=>setFace(r,2));   // a tally implies presence
+    renderSheet();});
   listEl.querySelectorAll('button[data-pickq]').forEach(b=>b.onclick=e=>{e.stopPropagation();
     setWork(+b.dataset.pickq,null,'manual'); curF=null; toast(qLabel(workQ)+' — escolha a face'); renderLoc(); renderAll();});
   listEl.querySelectorAll('button[data-pickf]').forEach(b=>b.onclick=e=>{e.stopPropagation();
@@ -295,37 +372,17 @@ function wire(){
       r.style.transform='translateX('+dx+'px)'; r.style.background=dx>55?'var(--surface-3)':''; });
     const end=()=>{ if(sx0===null)return; r.style.transform='';r.style.background='';
       const open=dx>55; sx0=null;
-      if(open&&!picking){
-        const kind=r.dataset.face!==undefined?'face':(r.dataset.place!==undefined?'place':'quadra');
-        let id;
-        if(kind==='face') id=+r.dataset.face;
-        else if(kind==='place') id=placesOf(curQ,curF).find(p=>p.ids[0]===+r.dataset.place);
-        else id=+r.dataset.q;
-        bulkOn={kind,id}; actionOn=null;addForm=null; renderSheet();
+      /* swipe is a shortcut to the same panel a tap opens — there is no separate
+         bulk path any more, because marking the face IS the operation */
+      if(open&&!picking&&r.dataset.tgt!==undefined){
+        actionOn=r.dataset.tgt; openPlace=null; renderSheet();
       } };
     r.addEventListener('pointerup',end); r.addEventListener('pointercancel',end);
     r.addEventListener('pointerleave',()=>{if(sx0!==null){r.style.transform='';r.style.background='';sx0=null;}});
   });
-  listEl.querySelectorAll('button.more').forEach(b=>b.onclick=e=>{e.stopPropagation();
-    const kind=b.dataset.bulk;
-    const id=kind==='place'?placesOf(curQ,curF).find(p=>p.ids[0]===+b.dataset.id):+b.dataset.id;
-    bulkOn={kind,id}; actionOn=null;addForm=null; renderSheet();});
-  listEl.querySelectorAll('.bulk button[data-bulk-s]').forEach(b=>b.onclick=e=>{e.stopPropagation();
-    const v=+b.dataset.bulkS;
-    if(v<0){bulkOn=null;renderSheet();return;}
-    const ids=targetIds(bulkOn.kind,bulkOn.id).filter(i=>stat[i]===0);
-    ids.forEach(i=>setStat(i,v)); queued+=ids.length;
-    toast(ids.length+' domicílios marcados — '+STLAB[v]); bulkOn=null; renderAll();});
   listEl.querySelectorAll('.row[data-place]').forEach(r=>r.onclick=()=>{
     const p=placesOf(curQ,curF).find(x=>x.ids[0]===+r.dataset.place);
-    openPlace=openPlace===p?null:p; actionOn=null;addForm=null;bulkOn=null; renderAll();});
-  listEl.querySelectorAll('.row[data-addr]').forEach(r=>r.onclick=()=>{
-    const i=+r.dataset.addr; actionOn=actionOn===i?null:i; addForm=null; renderSheet();});
-  listEl.querySelectorAll('.acts button[data-s]').forEach(b=>b.onclick=e=>{e.stopPropagation();
-    if(actionOn===null)return;
-    const i=actionOn,v=+b.dataset.s; setStat(i,v); queued++;
-    toast('nº '+(ANUM.get(i)||'s/n')+(ACMP.get(i)?' · '+ACMP.get(i):'')+' — '+STLAB[v]);
-    actionOn=null; renderAll();});
+    openPlace=openPlace===p?null:p; renderSheet();});
   const ap=document.getElementById('add-place'); if(ap) ap.onclick=()=>{addForm={kind:'place'};renderSheet();fi();};
   const au=document.getElementById('add-unit'); if(au) au.onclick=()=>{addForm={kind:'unit'};renderSheet();fi();};
   const cn=document.getElementById('add-cancel'); if(cn) cn.onclick=()=>{addForm=null;renderSheet();};
@@ -374,7 +431,7 @@ function renderAll(){ renderSheet(); renderPanels(); draw(); }
 /* ================= drawer ================= */
 function renderDrawer(){
   let conv=0,seen=0;
-  for(let i=0;i<NA;i++){ if(stat[i]){seen++; if(stat[i]===1)conv++;} }
+  for(let i=0;i<NF;i++){ if(fstat[i]){ seen+=totF[i]; conv+=ftalk[i]; } }
   const items=[['ENVIO',[['⇅','Fila de envio',queued+' aguardando',queued>0],
                          ['↻','Enviar agora','última: 17:41',false],
                          ['⤓','Exportar registros (CSV)','se o envio falhar',false]]],
@@ -424,15 +481,17 @@ document.getElementById('walk').onclick=function(){
 document.getElementById('fill').onclick=()=>{
   if(workQ===null){toast('Defina um local primeiro');return;}
   const rows=qFaces.get(workQ)||[];
-  rows.slice(0,Math.max(1,rows.length-2)).forEach(fi2=>{
-    const r=aRange.get(fkey(workQ,ff[fi2])); if(!r)return;
-    for(let i=r[0];i<r[1];i++) if(stat[i]===0){ setStat(i,(i%7===0)?3:1); queued++; }
+  rows.slice(0,Math.max(1,rows.length-2)).forEach((fi2,n)=>{
+    if(fstat[fi2]!==0) return;
+    setFace(fi2,(n%9===0)?3:1);
+    ftalk[fi2]=Math.round(totF[fi2]*0.55); fabs[fi2]=Math.round(totF[fi2]*0.2);
+    queued++;
   });
   toast(qLabel(workQ)+' quase concluída'); renderAll();
 };
 document.getElementById('reset').onclick=()=>{
-  for(let i=0;i<NA;i++) if(stat[i]) setStat(i,0);
-  queued=0;added=0;openPlace=null;actionOn=null;addForm=null;bulkOn=null;picking=false;
+  for(let i=0;i<NF;i++) if(fstat[i]) setFace(i,0);
+  queued=0;added=0;openPlace=null;actionOn=null;addForm=null;bulkOn=null;picking=false;tierForce=0;
   locSource='gps'; workQ=null;workF=null;curQ=null;curF=null;curB=null; setMode('hi');
 };
 let mdrag=null,mmoved=false;
