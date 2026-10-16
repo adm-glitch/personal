@@ -1,0 +1,175 @@
+:root {
+  --bg: #fffaf2;
+  --ink: #1f2a44;
+  --muted: #5f6b85;
+  --line: #e6dccb;
+  --card: #ffffff;
+  --blue: #3f8fd9;
+  --blue-soft: #d9ecff;
+  --orange: #f08a3c;
+  --orange-soft: #ffe6d1;
+  --green: #5aa36b;
+  --shadow: 0 1px 3px rgb(31 42 68 / 0.08), 0 6px 18px rgb(31 42 68 / 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141a28;
+    --ink: #eef2fa;
+    --muted: #a3aec4;
+    --line: #2c3650;
+    --card: #1c2436;
+    --blue-soft: #1f3654;
+    --orange-soft: #4a2e1a;
+    --shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.45 Nunito, system-ui, sans-serif;
+}
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Google-classic: the box sits in the middle until there are results. */
+  padding-top: max(18vh, 72px);
+  transition: padding-top 0.25s ease;
+}
+body.searching main { padding-top: 24px; }
+
+.brand { text-align: center; }
+.wordmark {
+  margin: 0;
+  font: 600 clamp(2.4rem, 9vw, 4rem)/1 Fredoka, Nunito, sans-serif;
+  letter-spacing: -0.01em;
+  transition: font-size 0.25s ease;
+}
+.wordmark span:nth-child(4n + 1) { color: var(--blue); }
+.wordmark span:nth-child(4n + 2) { color: var(--orange); }
+.wordmark span:nth-child(4n + 3) { color: var(--green); }
+.wordmark span:nth-child(4n) { color: #e0b43a; }
+body.searching .wordmark { font-size: 1.9rem; }
+.tagline { margin: 10px 0 24px; color: var(--muted); }
+body.searching .tagline { display: none; }
+body.searching .brand { margin-bottom: 14px; }
+
+.search {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  padding: 0 18px;
+  transition: border-color 0.15s;
+}
+.search:focus-within { border-color: var(--blue); }
+.search .icon { width: 22px; height: 22px; fill: var(--muted); flex: none; }
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 15px 12px;
+}
+.search input::-webkit-search-cancel-button { cursor: pointer; }
+.spinner {
+  width: 18px; height: 18px; flex: none;
+  border: 2.5px solid var(--blue-soft);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  opacity: 0;
+  animation: spin 0.7s linear infinite;
+}
+body.loading .spinner { opacity: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.examples {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center;
+  margin-top: 18px; color: var(--muted); font-size: 0.95rem;
+}
+.examples button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--blue-soft);
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+}
+.examples button:hover { background: var(--orange-soft); }
+body.searching .examples { display: none; }
+
+.status { margin: 14px 0 6px; min-height: 1.2em; color: var(--muted); font-size: 0.95rem; align-self: flex-start; }
+
+.results { list-style: none; margin: 0 0 32px; padding: 0; width: 100%; display: grid; gap: 10px; }
+.results li {
+  display: grid;
+  grid-template-columns: 136px 1fr;
+  gap: 14px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: var(--shadow);
+  animation: rise 0.22s ease both;
+}
+.results li.top { grid-template-columns: 1fr; border-color: var(--blue); }
+.results li.top img { aspect-ratio: 16 / 9; width: 100%; }
+.results img {
+  display: block;
+  width: 136px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--blue-soft);
+}
+.results .se {
+  display: inline-block;
+  font: 600 0.85rem/1 Fredoka, Nunito, sans-serif;
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-radius: 999px;
+  padding: 5px 10px;
+  margin-bottom: 6px;
+}
+.results li.top .se { font-size: 1.05rem; padding: 7px 13px; color: #fff; background: var(--blue); }
+.results h2 { margin: 0; font: 600 1.1rem/1.2 Fredoka, Nunito, sans-serif; }
+.results li.top h2 { font-size: 1.45rem; }
+.results .meta { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+
+footer {
+  padding: 18px 16px 22px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+footer a { color: inherit; }
+
+@media (max-width: 420px) {
+  .results li { grid-template-columns: 104px 1fr; gap: 10px; }
+  .results img { width: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

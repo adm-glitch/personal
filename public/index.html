@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qual episódio?</title>
+  <meta name="description" content="Escreva o que você lembra de um episódio de Bluey e veja a temporada e o número.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐶</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="brand">
+      <h1 class="wordmark" aria-label="Qual episódio?">
+        <span>Q</span><span>u</span><span>a</span><span>l</span>&nbsp;<span>e</span><span>p</span><span>i</span><span>s</span><span>ó</span><span>d</span><span>i</span><span>o</span><span>?</span>
+      </h1>
+      <p class="tagline">Escreva o que você lembra de um episódio de Bluey.</p>
+    </header>
+
+    <form class="search" role="search" onsubmit="return false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 9.5 16a6.5 6.5 0 0 0 4.2-1.6l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+      <input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="200"
+             placeholder="o do pacote na festa…" aria-label="O que você lembra do episódio">
+      <span class="spinner" aria-hidden="true"></span>
+    </form>
+
+    <div class="examples" id="examples">
+      <span>Tente:</span>
+      <button type="button">o do pacote</button>
+      <button type="button">câmera na loja</button>
+      <button type="button">xilofone mágico</button>
+      <button type="button">acampamento</button>
+    </div>
+
+    <p class="status" id="status" aria-live="polite"></p>
+    <ol class="results" id="results"></ol>
+  </main>
+
+  <footer>
+    Projeto de fã, sem vínculo com Ludo Studio, BBC Studios ou Disney. Bluey © Ludo Studio.
+    Dados e imagens: <a href="https://www.tvmaze.com/shows/41821/bluey">TVMaze</a> (CC BY-SA) ·
+    resumos para a busca: <a href="https://blueypedia.fandom.com">Blueypedia</a> (CC BY-SA) ·
+    busca com <a href="https://typesafe.ai">Jev</a>.
+  </footer>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
