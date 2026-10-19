@@ -163,7 +163,7 @@ for (const s of [1, 2, 3]) {
 }
 for (const r of rows) {
   const c = cards.get(r.id);
-  if (c) Object.assign(r, { pt: c.pt, card: c.card, aliases: c.aliases });
+  if (c) Object.assign(r, { pt: c.pt, card: c.card, aliases: c.aliases, coisas: c.coisas ?? [] });
 }
 
 await mkdir("data/sources", { recursive: true });
@@ -172,6 +172,6 @@ for (const r of rows) delete r.longPlot;
 await writeFile("data/episodes.json", JSON.stringify({ built: new Date().toISOString(), sources: ["api.tvmaze.com", "blueypedia.fandom.com"], episodes: rows }, null, 1) + "\n");
 // What the page displays: no plots.
 await mkdir("public", { recursive: true });
-await writeFile("public/episodes.json", JSON.stringify(rows.map(({ id, season, number, title, pt, aliases, airdate, image, still }) => ({ id, season, number, title, pt, aliases, airdate, image, still }))) + "\n");
+await writeFile("public/episodes.json", JSON.stringify(rows.map(({ id, season, number, title, pt, aliases, coisas, airdate, image, still }) => ({ id, season, number, title, pt, aliases, coisas, airdate, image, still }))) + "\n");
 console.log(`${rows.length} episodes, ${rows.length - missing.length} with Blueypedia plots, ${cards.size} pt-BR cards, ~${Math.round(rows.reduce((n, r) => n + r.plot.length, 0) / 4)} plot tokens`);
 if (missing.length) console.log("no wiki page:", missing.join(", "));

@@ -10,7 +10,8 @@ export function catalogue(episodes, { plotChars = 0 } = {}) {
     .map((e) => {
       if (!e.card) return `${e.id} | ${e.title} | ${e.plot}`;
       const plot = plotChars ? ` | ${e.plot.slice(0, plotChars)}` : "";
-      return `${e.id} | ${e.pt} / ${e.title} | ${e.card} | lembram como: ${e.aliases.join("; ")}${plot}`;
+      const coisas = e.coisas?.length ? ` | coisas: ${e.coisas.join(", ")}` : "";
+      return `${e.id} | ${e.pt} / ${e.title} | ${e.card} | lembram como: ${e.aliases.join("; ")}${coisas}${plot}`;
     })
     .join("\n");
 }
@@ -27,7 +28,8 @@ export function buildRequest(episodes, state, query, model = "jev-latest") {
           memory,
           question:
             "A parent or child is trying to find a Bluey episode from a vague memory of it, written in `memory` " +
-            "(often in Brazilian Portuguese, sometimes a title, a scene, a place, a game or a feeling). " +
+            "(often in Brazilian Portuguese, sometimes a title, a scene, a place, a game or a feeling; " +
+            "small children often name just one thing they saw, like an animal, a toy or a food — match it to `coisas`). " +
             "Which episode in the catalogue are they thinking of?",
         },
         criteria: Object.fromEntries(episodes.map((e) => [e.id, null])),

@@ -10,10 +10,16 @@ let inflight = null;
 
 const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
-// What instant matching looks at: Brazilian title, English title, aliases.
-const haystack = new Map(episodes.map((e) => [e.id, fold([e.pt, e.title, ...(e.aliases ?? [])].filter(Boolean).join(" | "))]));
+// What instant matching looks at: titles (pt + en), aliases and "coisas" (things a child names: peixe, balão…).
+const terms = new Map(episodes.map((e) => [e.id, {
+  titles: [e.pt, e.title].filter(Boolean).map(fold),
+  phrases: [...(e.aliases ?? []), ...(e.coisas ?? [])].map(fold),
+}]));
 
-// "s3e14", "3x14", "t3 e14", or words of a title or alias.
+// Leading filler a child or parent types: "o episódio do peixe" → "peixe".
+const strip = (f) => f.replace(/^(o|a)?\s*(episodio|desenho|aquele|aquela|esse|essa)?\s*(d[oa]s?|que|com|em que)?\s+/, "").trim() || f;
+
+// "s3e14", "3x14", "t3 e14", or a title / alias / thing. Exact thing first ("peixe" before "peixe com fritas").
 function localMatches(q) {
   const f = fold(q);
   const se = f.match(/^[st]?\s*(\d)\s*[ex·.\s]\s*(\d{1,2})$/);
@@ -21,8 +27,21 @@ function localMatches(q) {
     const e = byId.get(`S${se[1]}E${se[2].padStart(2, "0")}`);
     return e ? [e] : [];
   }
-  if (f.length < 3) return [];
-  return episodes.filter((e) => haystack.get(e.id).includes(f)).slice(0, 3);
+  const w = strip(f);
+  if (w.length < 3) return [];
+  const score = (t) => {
+    if (t.titles.some((x) => x === w)) return 4;
+    if (t.phrases.some((x) => x === w)) return 3;
+    if (t.titles.some((x) => x.includes(w))) return 2;
+    if (t.phrases.some((x) => x.startsWith(w) || x.includes(` ${w}`))) return 1;
+    return 0;
+  };
+  return episodes
+    .map((e) => ({ e, s: score(terms.get(e.id)) }))
+    .filter((x) => x.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 6)
+    .map((x) => x.e);
 }
 
 function render(items, note = "") {
@@ -62,9 +81,19 @@ function show(q, data) {
   }
   for (const e of local) if (!seen.has(e.id)) { seen.add(e.id); items.push(e); }
   if (!data) return render(local, local.length ? "" : "procurando…");
-  const sure = data.exists >= 0.5 && ranked[0]?.p >= 0.5;
+  // One word that several episodes share ("peixe"): no single winner, let the child pick by the picture,
+  // episodes that literally have the thing first, then Jev's guesses.
+  const word = strip(fold(q));
+  const shared = word.split(" ").length <= 2 && local.length >= 2;
+  if (shared) {
+    const at = (e) => { const i = local.findIndex((x) => x.id === e.id); return i < 0 ? local.length : i; };
+    items.sort((a, b) => at(a) - at(b)); // stable: Jev's order is kept among the rest
+  }
+  items.splice(8);
+  const sure = !shared && data.exists >= 0.5 && ranked[0]?.p >= 0.5;
   if (items[0] && sure) items[0] = { ...items[0], top: true };
-  render(items, items.length ? (sure ? "" : "Não tenho certeza. Talvez um destes:") : "Não achei nada parecido.");
+  const note = shared ? `Vários episódios têm “${word}”. Qual destes?` : sure ? "" : "Não tenho certeza. Talvez um destes:";
+  render(items, items.length ? note : "Não achei nada parecido.");
 }
 
 async function search(q) {

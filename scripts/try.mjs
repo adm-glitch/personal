@@ -35,6 +35,8 @@ const CASES = [
   ["aprendendo a andar de bicicleta", "S1E11"],
   ["esperando a comida chinesa ficar pronta", "S1E14"],
   ["morcego comendo fruta", "S1E08"],
+  // real queries from the family
+  ["o episódio do peixe", "S2E10"],
   ["dinossauro de pelúcia no espaço sideral com foguete", null],
 ];
 

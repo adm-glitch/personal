@@ -1,5 +1,5 @@
 {
- "built": "2026-10-19T14:19:13.455Z",
+ "built": "2026-10-19T15:32:45.319Z",
  "sources": [
   "api.tvmaze.com",
   "blueypedia.fandom.com"
@@ -24,6 +24,16 @@
     "congelar o papai",
     "brinquedo que congela",
     "a música que congela"
+   ],
+   "coisas": [
+    "xilofone",
+    "congelar",
+    "bigode desenhado",
+    "chifres",
+    "anão de jardim",
+    "mangueira",
+    "piano",
+    "boá de penas"
    ]
   },
   {
@@ -45,6 +55,16 @@
     "brincar de médico",
     "queijo e rato",
     "dra bluey"
+   ],
+   "coisas": [
+    "seringa",
+    "raio-x",
+    "gato",
+    "rato",
+    "queijo",
+    "polvo",
+    "martelo",
+    "curativo"
    ]
   },
   {
@@ -66,6 +86,16 @@
     "último balão",
     "balão no ar",
     "papai vira balão"
+   ],
+   "coisas": [
+    "balão",
+    "ventilador",
+    "soprador de folhas",
+    "torre de blocos",
+    "pássaro",
+    "balão de ar quente",
+    "jornal",
+    "pular no sofá"
    ]
   },
   {
@@ -87,6 +117,16 @@
     "arrumar a sala",
     "pai vira robô",
     "lixeira com rodas"
+   ],
+   "coisas": [
+    "robô",
+    "lixeira",
+    "borrifador",
+    "aspirador de pó",
+    "porquinho-da-índia",
+    "banjo",
+    "roupa suja",
+    "giz de cera"
    ]
   },
   {
@@ -108,6 +148,16 @@
     "piquenique",
     "grama é crocodilo",
     "sombra de nuvem"
+   ],
+   "coisas": [
+    "sombra",
+    "crocodilo",
+    "cupcake",
+    "ônibus",
+    "pular",
+    "piquenique",
+    "palmeira",
+    "nuvem"
    ]
   },
   {
@@ -129,6 +179,16 @@
     "bicho que parece folha",
     "papai não viu o inseto",
     "estátua mágica"
+   ],
+   "coisas": [
+    "estátua",
+    "baquetas",
+    "inseto-folha",
+    "bater e fugir",
+    "banho",
+    "escovar os dentes",
+    "loja",
+    "campainha"
    ]
   },
   {
@@ -150,6 +210,16 @@
     "pimentão colorido",
     "mangueira e lama",
     "bingo faz a salada"
+   ],
+   "coisas": [
+    "churrasco",
+    "salsicha",
+    "salada",
+    "chapéu",
+    "lama",
+    "bola de tênis",
+    "flores",
+    "cadeira de descanso"
    ]
   },
   {
@@ -171,6 +241,16 @@
     "papai sonhando com futebol",
     "não quer dormir",
     "voar de noite"
+   ],
+   "coisas": [
+    "morcego",
+    "voar",
+    "foguete",
+    "pinguim",
+    "canguru",
+    "sapo",
+    "bola de futebol",
+    "sonho"
    ]
   },
   {
@@ -192,6 +272,16 @@
     "socks pega o brinquedo",
     "cachorrinho polly",
     "tio stripe noiva"
+   ],
+   "coisas": [
+    "cavalinho",
+    "pônei",
+    "casamento",
+    "purpurina",
+    "teclado",
+    "cachorro de pelúcia",
+    "flores",
+    "livro de receitas"
    ]
   },
   {
@@ -213,6 +303,16 @@
     "papai hóspede",
     "gerente do hotel",
     "serviço de quarto"
+   ],
+   "coisas": [
+    "hotel",
+    "travesseiro maluco",
+    "vassoura",
+    "panelas",
+    "cócegas",
+    "notícias",
+    "trombeta de festa",
+    "cama"
    ]
   },
   {
@@ -234,6 +334,15 @@
     "barras do parquinho",
     "mochila da muffin",
     "bluey não consegue"
+   ],
+   "coisas": [
+    "bicicleta",
+    "capacete",
+    "bebedouro",
+    "barras de macaco",
+    "mochila",
+    "parque",
+    "cair"
    ]
   },
   {
@@ -255,6 +364,16 @@
     "fantoche da escola",
     "tablet e desenho",
     "livro de recordações"
+   ],
+   "coisas": [
+    "tablet",
+    "câmera instantânea",
+    "tirar foto",
+    "fogos de artifício",
+    "bicicleta",
+    "supermercado",
+    "televisão",
+    "vaca"
    ]
   },
   {
@@ -276,6 +395,16 @@
     "poções da bingo",
     "churrasco no parque",
     "cabelo dos adultos"
+   ],
+   "coisas": [
+    "espiões",
+    "poção",
+    "cabelo",
+    "saco de batata frita",
+    "parque",
+    "churrasco",
+    "esconderijo",
+    "lavar as mãos"
    ]
   },
   {
@@ -297,6 +426,16 @@
     "biscoito da sorte",
     "esperar o pedido",
     "corvos"
+   ],
+   "coisas": [
+    "comida chinesa",
+    "rolinho primavera",
+    "torneira",
+    "corvos",
+    "xixi no mato",
+    "biscoito da sorte",
+    "carro",
+    "jornal"
    ]
   },
   {
@@ -318,6 +457,16 @@
     "judo vizinha",
     "fugir da bingo",
     "balanço de pano"
+   ],
+   "coisas": [
+    "borboleta",
+    "casulo",
+    "balanço",
+    "lagarta",
+    "bichinho",
+    "telefone",
+    "árvore",
+    "cantar"
    ]
   },
   {
@@ -339,6 +488,16 @@
     "papai trabalha em casa",
     "latido da bingo",
     "bola escada abaixo"
+   ],
+   "coisas": [
+    "bola de ioga",
+    "cadeira giratória",
+    "elevador",
+    "pacotes",
+    "chapéu",
+    "adesivos",
+    "corredor",
+    "cama"
    ]
   },
   {
@@ -360,6 +519,16 @@
     "peixe com batata frita",
     "pretzel pescando",
     "aula da professora"
+   ],
+   "coisas": [
+    "gnomo",
+    "peixe com fritas",
+    "bonecas",
+    "casa de madeira",
+    "forte romano",
+    "galho",
+    "vila de brinquedo",
+    "tapete"
    ]
   },
   {
@@ -381,6 +550,16 @@
     "arroto de hipopótamo",
     "joelho machucado",
     "honey no médico"
+   ],
+   "coisas": [
+    "consultório",
+    "crocodilo de pelúcia",
+    "cacto",
+    "escorpiões",
+    "hipopótamo",
+    "arroto",
+    "picles",
+    "cobras de pelúcia"
    ]
   },
   {
@@ -402,6 +581,16 @@
     "pegar o ursinho",
     "moedas e tarefas",
     "sorvete sem fundo"
+   ],
+   "coisas": [
+    "máquina de garras",
+    "pelúcias",
+    "biscoito chocolate",
+    "moedas",
+    "pauzinho",
+    "arrumar a cama",
+    "regar a planta",
+    "cerimônia"
    ]
   },
   {
@@ -423,6 +612,16 @@
     "músico de rua",
     "cinco dólares",
     "o que comprar"
+   ],
+   "coisas": [
+    "feira",
+    "fada do dente",
+    "varinha de bolhas",
+    "pônei",
+    "cocô",
+    "maçã do amor",
+    "salsicha",
+    "cenouras"
    ]
   },
   {
@@ -444,6 +643,16 @@
     "raposa na caverna",
     "irmã mais velha e mais nova",
     "camas macias"
+   ],
+   "coisas": [
+    "fantoches",
+    "montanha",
+    "cócegas",
+    "raposa",
+    "caverna",
+    "tapete",
+    "lamber",
+    "nariz"
    ]
   },
   {
@@ -465,6 +674,16 @@
     "mamãe arruma a mala",
     "sem toalha",
     "boia da bingo"
+   ],
+   "coisas": [
+    "piscina",
+    "macarrão de piscina",
+    "chinelos",
+    "protetor solar",
+    "boias",
+    "limpador de piscina",
+    "óculos de natação",
+    "toalha"
    ]
   },
   {
@@ -486,6 +705,16 @@
     "quem é o gatinho",
     "mackenzie desiste",
     "jogo de mercadinho"
+   ],
+   "coisas": [
+    "loja",
+    "gatinho",
+    "miau",
+    "frutinhas",
+    "bolo de aniversário",
+    "pedra",
+    "caixa registradora",
+    "floresta"
    ]
   },
   {
@@ -507,6 +736,16 @@
     "barras de macaco",
     "papai conversando",
     "jogo do ônibus"
+   ],
+   "coisas": [
+    "carrinho de puxar",
+    "barras de macaco",
+    "boneca",
+    "escovar cabelo",
+    "bebê",
+    "carrinho de bebê",
+    "cinto de segurança",
+    "passeio"
    ]
   },
   {
@@ -528,6 +767,16 @@
     "vômito no táxi",
     "ir ao aeroporto",
     "piloto do avião"
+   ],
+   "coisas": [
+    "táxi",
+    "avião",
+    "zoológico",
+    "gps",
+    "vômito",
+    "mecânico",
+    "vovós",
+    "chuva"
    ]
   },
   {
@@ -549,6 +798,16 @@
     "pelicano",
     "andar sozinha na praia",
     "caranguejos"
+   ],
+   "coisas": [
+    "praia",
+    "castelo de areia",
+    "cauda de sereia",
+    "concha",
+    "gaivotas",
+    "caranguejo",
+    "água-viva",
+    "pelicano"
    ]
   },
   {
@@ -570,6 +829,16 @@
     "baleia azul",
     "missy com medo",
     "tempestade no mar"
+   ],
+   "coisas": [
+    "piratas",
+    "barco",
+    "baleia",
+    "tesouro",
+    "tempestade",
+    "farol",
+    "balanço",
+    "parque"
    ]
   },
   {
@@ -591,6 +860,16 @@
     "vídeo chamada com a vovó",
     "bengala",
     "vovó dançando"
+   ],
+   "coisas": [
+    "vovós",
+    "dança floss",
+    "latas de feijão",
+    "vaso sanitário",
+    "videochamada",
+    "loja",
+    "televisão",
+    "soneca"
    ]
   },
   {
@@ -612,6 +891,16 @@
     "trilha com o papai",
     "insetos estranhos",
     "nadar no rio"
+   ],
+   "coisas": [
+    "riacho",
+    "pedras",
+    "cachoeira",
+    "lagarto",
+    "aranha",
+    "libélula",
+    "lama",
+    "balanço"
    ]
   },
   {
@@ -633,6 +922,16 @@
     "dominó da bingo",
     "barba de pregador",
     "papai dança para as fadas"
+   ],
+   "coisas": [
+    "dominós",
+    "fadas",
+    "adesivos",
+    "pregadores de roupa",
+    "covo de caranguejo",
+    "patins",
+    "despensa",
+    "dançar"
    ]
   },
   {
@@ -654,6 +953,16 @@
     "chefe bluey",
     "proibido dançar",
     "brincar de trabalho"
+   ],
+   "coisas": [
+    "fábrica de canos",
+    "sapo",
+    "lamber os canos",
+    "telefone",
+    "limpar janela",
+    "pular nos papéis",
+    "cadeira",
+    "dançar"
    ]
   },
   {
@@ -675,6 +984,16 @@
     "vídeo caseiro",
     "filme da bluey",
     "cachorro doente"
+   ],
+   "coisas": [
+    "hospital",
+    "cachorrinho azul",
+    "cenouras",
+    "estrela",
+    "caldeirão",
+    "cueca roxa",
+    "bolinhas coloridas",
+    "tablet"
    ]
   },
   {
@@ -696,6 +1015,16 @@
     "torrada e ovo",
     "irrigador no trampolim",
     "papai vai trabalhar"
+   ],
+   "coisas": [
+    "trampolim",
+    "pular",
+    "ovos",
+    "torrada",
+    "suco",
+    "aspersor",
+    "salada",
+    "banana"
    ]
   },
   {
@@ -717,6 +1046,16 @@
     "carros do arco-íris",
     "desenhos jogados fora",
     "ida ao lixo"
+   ],
+   "coisas": [
+    "lixão",
+    "carro",
+    "carros do arco-íris",
+    "desenhos",
+    "reciclagem",
+    "lavagem de carro",
+    "semáforo",
+    "super-herói"
    ]
   },
   {
@@ -738,6 +1077,16 @@
     "armadilha de banana",
     "lady gaberdene",
     "girafa simpática"
+   ],
+   "coisas": [
+    "zoológico",
+    "girafa",
+    "babuíno",
+    "macarrão de piscina",
+    "mangueira",
+    "banana",
+    "biscoitos",
+    "kookaburra"
    ]
   },
   {
@@ -759,6 +1108,16 @@
     "viagem de mochileiros",
     "albergue",
     "papai com dor de barriga"
+   ],
+   "coisas": [
+    "mochilas",
+    "croissant",
+    "bananas",
+    "tuk-tuk",
+    "passaportes",
+    "caixa de areia",
+    "templo",
+    "dor de barriga"
    ]
   },
   {
@@ -780,6 +1139,16 @@
     "varinha mágica",
     "bola de tênis",
     "chloe e bluey brincam"
+   ],
+   "coisas": [
+    "princesa",
+    "rainha",
+    "cavalo",
+    "peido de sovaco",
+    "varinha mágica",
+    "bola de tênis",
+    "fantasias",
+    "castelo"
    ]
   },
   {
@@ -801,6 +1170,16 @@
     "caixa de sapato",
     "veterinário",
     "episódio triste"
+   ],
+   "coisas": [
+    "periquito",
+    "caixa de sapato",
+    "veterinário",
+    "caminhada",
+    "buzina",
+    "carrinho de pedal",
+    "pássaro machucado",
+    "cinto de segurança"
    ]
   },
   {
@@ -822,6 +1201,16 @@
     "ficar acordada até tarde",
     "prima dormindo",
     "carro de polícia"
+   ],
+   "coisas": [
+    "restaurante",
+    "violão inflável",
+    "cardápio",
+    "batata frita",
+    "planta",
+    "toalha de mesa",
+    "pelúcia",
+    "dormir"
    ]
   },
   {
@@ -843,6 +1232,16 @@
     "rusty cavaleiro",
     "dragão e rei",
     "barriga de mentira"
+   ],
+   "coisas": [
+    "hospital de bebê",
+    "dragão",
+    "cavaleiro",
+    "castelo",
+    "muletas",
+    "incubadora",
+    "boneca",
+    "barriga de grávida"
    ]
   },
   {
@@ -864,6 +1263,16 @@
     "indy e rusty",
     "mamãe e papai de brincadeira",
     "mackenzie cavando"
+   ],
+   "coisas": [
+    "bebê",
+    "pia",
+    "caixa de areia",
+    "buraco",
+    "castelo",
+    "espadas",
+    "blocos",
+    "pique-pega"
    ]
   },
   {
@@ -885,6 +1294,16 @@
     "esconde esconde",
     "família escondida",
     "debaixo da pia"
+   ],
+   "coisas": [
+    "esconde-esconde",
+    "cenoura",
+    "gnomo de jardim",
+    "libélula",
+    "caixa de brinquedos",
+    "chuveiro",
+    "privada",
+    "chá"
    ]
   },
   {
@@ -906,6 +1325,16 @@
     "acampamento nas férias",
     "amigo que fala outra língua",
     "árvore das sementes"
+   ],
+   "coisas": [
+    "acampamento",
+    "caravana",
+    "porco selvagem",
+    "gravetos",
+    "riacho",
+    "frigideira",
+    "balde",
+    "casa na floresta"
    ]
   },
   {
@@ -927,6 +1356,16 @@
     "montanha de almofadas",
     "avalanche",
     "bandeira no topo"
+   ],
+   "coisas": [
+    "escalar montanha",
+    "lanterna",
+    "caixa de música",
+    "barraca",
+    "almofadas",
+    "sombras",
+    "bandeira",
+    "ronco"
    ]
   },
   {
@@ -948,6 +1387,16 @@
     "filho favorito",
     "brincar de mamãe",
     "papai de filho"
+   ],
+   "coisas": [
+    "supermercado",
+    "carrinho de compras",
+    "legumes",
+    "batata frita",
+    "papel higiênico",
+    "chocolate",
+    "birra",
+    "castigo"
    ]
   },
   {
@@ -969,6 +1418,16 @@
     "floppy perdida",
     "papai vira galinha",
     "procurar o brinquedo"
+   ],
+   "coisas": [
+    "galinha-rato",
+    "ovo",
+    "cesto de roupa",
+    "varinha mágica",
+    "ninja",
+    "coelho de pelúcia",
+    "fogueira de blocos",
+    "geladeira"
    ]
   },
   {
@@ -990,6 +1449,16 @@
     "bairro de almofadas",
     "bingo e os bichos",
     "casinhas do sofá"
+   ],
+   "coisas": [
+    "casa de almofadas",
+    "estante de livros",
+    "pinguins",
+    "bateria",
+    "motosserra",
+    "carro turbinado",
+    "pôneis",
+    "telhado"
    ]
   },
   {
@@ -1011,6 +1480,16 @@
     "troca de nome",
     "escova de dentes",
     "big teaser"
+   ],
+   "coisas": [
+    "escova de dentes",
+    "senha",
+    "peixinho empanado",
+    "chá",
+    "macacos",
+    "banana",
+    "pum",
+    "picolé de morango"
    ]
   },
   {
@@ -1032,6 +1511,16 @@
     "família vira bicho",
     "mamãe leoa",
     "papai morsa"
+   ],
+   "coisas": [
+    "aspargo mágico",
+    "jantar",
+    "pavão",
+    "leão",
+    "morsa",
+    "minhoca",
+    "pinguim",
+    "elefante"
    ]
   },
   {
@@ -1053,6 +1542,16 @@
     "bicho de estimação",
     "ordem calma",
     "filhotes de emu"
+   ],
+   "coisas": [
+    "ema",
+    "pizza",
+    "geladeira",
+    "xampu",
+    "banho na pia",
+    "almofadas",
+    "caixa de correio",
+    "escorrega elefante"
    ]
   },
   {
@@ -1074,6 +1573,16 @@
     "papai põe para dormir",
     "siga o mestre",
     "saudade da mamãe"
+   ],
+   "coisas": [
+    "chá de bebê",
+    "balanço",
+    "telefone",
+    "camarão empanado",
+    "seguir o líder",
+    "jantar",
+    "brinquedos",
+    "beijo de boa noite"
    ]
   },
   {
@@ -1095,6 +1604,16 @@
     "véspera de natal",
     "presentes de natal",
     "socks morde a bluey"
+   ],
+   "coisas": [
+    "papai noel",
+    "presentes",
+    "varanda",
+    "rena",
+    "estojo de lápis",
+    "travesseiro",
+    "cama",
+    "ho ho ho"
    ]
   },
   {
@@ -1116,6 +1635,16 @@
     "dançar em qualquer lugar",
     "o papai comeu a batata",
     "três desejos de dança"
+   ],
+   "coisas": [
+    "batata frita",
+    "restaurante",
+    "dançar",
+    "música alta",
+    "cartão musical",
+    "botão sim e não",
+    "lápis de cera",
+    "correio"
    ]
   },
   {
@@ -1137,6 +1666,16 @@
     "carrinho de compras",
     "gnomo quebrado",
     "casinha no carrinho"
+   ],
+   "coisas": [
+    "loja grande",
+    "forno de pizza",
+    "carrinho de compras",
+    "gnomo de jardim",
+    "pisca-pisca",
+    "cortador de pizza",
+    "melancia",
+    "salsicha no pão"
    ]
   },
   {
@@ -1158,6 +1697,16 @@
     "bingo não foi convidada",
     "festa da chloe",
     "coisas ficam pesadas"
+   ],
+   "coisas": [
+    "pena mágica",
+    "festa de aniversário",
+    "presente",
+    "caixa de cereal",
+    "escova de dentes",
+    "caneta",
+    "coisas pesadas",
+    "fita adesiva"
    ]
   },
   {
@@ -1179,6 +1728,16 @@
     "irmão mais velho sempre ganha",
     "tio stripe e o papai jogando",
     "controle de videogame"
+   ],
+   "coisas": [
+    "squash",
+    "raquete",
+    "bola",
+    "capa de raquete",
+    "controle de joystick",
+    "arbusto",
+    "quadra",
+    "suado"
    ]
   },
   {
@@ -1200,6 +1759,16 @@
     "bingo acha a voz",
     "cabelo rosa e verde",
     "brincar de cabeleireira"
+   ],
+   "coisas": [
+    "cabeleireiro",
+    "piolho",
+    "chuveiro frio",
+    "cabelo rosa",
+    "martelo de borracha",
+    "troféus",
+    "bola quicante",
+    "cabelo verde"
    ]
   },
   {
@@ -1221,6 +1790,15 @@
     "unhas pintadas do papai",
     "toco de árvore",
     "limonada gelada"
+   ],
+   "coisas": [
+    "toco de árvore",
+    "salão de unhas",
+    "esmalte",
+    "maquiagem",
+    "limonada gelada",
+    "quintal",
+    "pintar unhas"
    ]
   },
   {
@@ -1242,6 +1820,16 @@
     "bluey riu da bingo",
     "jogo da coisa favorita",
     "tomatinho no garfo"
+   ],
+   "coisas": [
+    "jantar",
+    "bife",
+    "tomate cereja",
+    "garfo",
+    "mochila a jato",
+    "gnomo",
+    "hipopótamo",
+    "churrasco"
    ]
   },
   {
@@ -1263,6 +1851,16 @@
     "papai leva para a escola",
     "atrasados para a escola",
     "bingo e a nova amiga"
+   ],
+   "coisas": [
+    "carro",
+    "telefone",
+    "andar reto",
+    "casaco",
+    "estacionamento",
+    "varinha de folha",
+    "pés de estimação",
+    "dar corda"
    ]
   },
   {
@@ -1284,6 +1882,16 @@
     "quebra-cabeça de animais",
     "cartaz de peça perdida",
     "peça grudada no bumbum"
+   ],
+   "coisas": [
+    "geladeira",
+    "quebra-cabeça",
+    "kiwi",
+    "mirtilo",
+    "cartaz de perdido",
+    "pique-esconde",
+    "privada",
+    "mapa-múndi"
    ]
   },
   {
@@ -1305,6 +1913,16 @@
     "papai vai trabalhar",
     "bola do vizinho",
     "canetinha de presente"
+   ],
+   "coisas": [
+    "peixe",
+    "pescar",
+    "canetinha",
+    "ilha",
+    "tapete",
+    "lança",
+    "fogueira",
+    "bola de futebol"
    ]
   },
   {
@@ -1326,6 +1944,16 @@
     "caixinha de música",
     "na casa da vovó",
     "picolé da vovó"
+   ],
+   "coisas": [
+    "picolé",
+    "charadas",
+    "pato",
+    "bailarina",
+    "tutu",
+    "caixa de música",
+    "sapo",
+    "galinha"
    ]
   },
   {
@@ -1347,6 +1975,16 @@
     "brincar com a judo",
     "sair de casa atrasadas",
     "teleférico de brinquedo"
+   ],
+   "coisas": [
+    "lagartixa",
+    "chapéu",
+    "escovar os dentes",
+    "banana",
+    "patins",
+    "bondinho",
+    "porta-chapéus",
+    "pasta de dente"
    ]
   },
   {
@@ -1368,6 +2006,16 @@
     "canguru de bebê",
     "trabalho de parto na piscina",
     "bingo bebê"
+   ],
+   "coisas": [
+    "canguru de bebê",
+    "barriga de grávida",
+    "piscina de plástico",
+    "bolinho chinês",
+    "pepino",
+    "suco de laranja",
+    "geladeira",
+    "revista"
    ]
   },
   {
@@ -1389,6 +2037,16 @@
     "brincar de mamãe",
     "bolinhas de ar",
     "balão verde"
+   ],
+   "coisas": [
+    "balões",
+    "balão verde",
+    "almofada",
+    "sofá",
+    "banho",
+    "toalha",
+    "escovar os dentes",
+    "filme"
    ]
   },
   {
@@ -1410,6 +2068,16 @@
     "bingo veterinária",
     "boneca na creche",
     "urso polar com cócegas"
+   ],
+   "coisas": [
+    "trem",
+    "boneca",
+    "gato de brinquedo",
+    "urso polar",
+    "veterinário",
+    "bigode falso",
+    "curativos",
+    "cocô"
    ]
   },
   {
@@ -1431,6 +2099,16 @@
     "rusty sargento",
     "chapéu esquecido",
     "treino militar"
+   ],
+   "coisas": [
+    "soldado",
+    "chapéu",
+    "casa na árvore",
+    "helicóptero",
+    "flexões",
+    "peru",
+    "leite condensado",
+    "sinais com a mão"
    ]
   },
   {
@@ -1452,6 +2130,16 @@
     "papai e mamãe se beijam",
     "chef bingo",
     "romeo mcflourish"
+   ],
+   "coisas": [
+    "restaurante",
+    "feijão cozido",
+    "cardápio",
+    "teclado de brinquedo",
+    "garçonete",
+    "beijo",
+    "lua",
+    "vomitar"
    ]
   },
   {
@@ -1473,6 +2161,16 @@
     "passeio no rio",
     "sorveteria fechada",
     "corrida com turbo"
+   ],
+   "coisas": [
+    "patinete",
+    "sorveteria",
+    "rio",
+    "carrinho de bebê",
+    "ibis",
+    "pinhas",
+    "nas costas",
+    "homem biscoito"
    ]
   },
   {
@@ -1494,6 +2192,15 @@
     "peça de como os pais se conheceram",
     "bandeja no chão",
     "casamento dos pais"
+   ],
+   "coisas": [
+    "bandeja de café",
+    "dia das mães",
+    "peça de teatro",
+    "balão que estoura",
+    "fralda",
+    "casamento",
+    "touca de bebê"
    ]
   },
   {
@@ -1515,6 +2222,16 @@
     "mamãe gaivota",
     "praia",
     "papai escondido na toalha"
+   ],
+   "coisas": [
+    "caranguejo",
+    "cócegas",
+    "praia",
+    "toalha",
+    "gaivota",
+    "onda",
+    "despensa",
+    "sofá"
    ]
   },
   {
@@ -1536,6 +2253,16 @@
     "invadir o tempo dos pais",
     "a caminho da vovó",
     "sem tv no carro"
+   ],
+   "coisas": [
+    "rede",
+    "coco",
+    "águia",
+    "muro",
+    "cortador de grama",
+    "machado",
+    "helicóptero",
+    "carro gigante"
    ]
   },
   {
@@ -1557,6 +2284,16 @@
     "mamãe apaixonada pelo motorista",
     "cobra boopsie",
     "cordinha do ônibus"
+   ],
+   "coisas": [
+    "ônibus",
+    "motorista",
+    "vovós",
+    "cobra",
+    "girafa",
+    "museu",
+    "cordinha do ônibus",
+    "freio"
    ]
   },
   {
@@ -1578,6 +2315,16 @@
     "papai rainha",
     "mamãe coroada",
     "trono real"
+   ],
+   "coisas": [
+    "rainha",
+    "trono",
+    "mordomo",
+    "flauta doce",
+    "festa do chá",
+    "palmeira",
+    "folhas",
+    "cocô de passarinho"
    ]
   },
   {
@@ -1599,6 +2346,16 @@
     "plástico-bolha",
     "cães das cavernas",
     "cadeira giratória nova"
+   ],
+   "coisas": [
+    "caixa de papelão",
+    "plástico-bolha",
+    "balanço",
+    "dinossauro",
+    "caverna",
+    "nave espacial",
+    "peixe",
+    "canetinha"
    ]
   },
   {
@@ -1620,6 +2377,15 @@
     "jogo do helicóptero na escola",
     "papai viajou de avião",
     "foguete explode o helicóptero"
+   ],
+   "coisas": [
+    "helicóptero",
+    "toco de árvore",
+    "alavanca",
+    "avião",
+    "canguru",
+    "foguete",
+    "piloto"
    ]
   },
   {
@@ -1641,6 +2407,16 @@
     "livro de planetas",
     "bingo muda de cama",
     "dormir como menina grande"
+   ],
+   "coisas": [
+    "planetas",
+    "livro do espaço",
+    "sol",
+    "lua",
+    "cobertor",
+    "copo d'água",
+    "pelúcia",
+    "cama dos pais"
    ]
   },
   {
@@ -1662,6 +2438,16 @@
     "arrancando toco",
     "aventura no mato",
     "vovô tem de descansar"
+   ],
+   "coisas": [
+    "toco de árvore",
+    "sementes de abóbora",
+    "cais",
+    "nadar",
+    "canoa",
+    "mato",
+    "correr",
+    "carro"
    ]
   },
   {
@@ -1683,6 +2469,13 @@
     "pom pom pequena",
     "parquinho",
     "desequilibrar o papai"
+   ],
+   "coisas": [
+    "gangorra",
+    "parquinho",
+    "pelo fofinho",
+    "cachorrinha pequena",
+    "cair da gangorra"
    ]
   },
   {
@@ -1704,6 +2497,16 @@
     "pipoca pequena",
     "medo de trovão no filme",
     "bingo some no cinema"
+   ],
+   "coisas": [
+    "cinema",
+    "pipoca",
+    "chimpanzé",
+    "bicicleta",
+    "trovão",
+    "ingresso",
+    "banheiro",
+    "recorte de papelão"
    ]
   },
   {
@@ -1725,6 +2528,16 @@
     "carteirinha da biblioteca",
     "muffin faz o que quer",
     "sinal laranja"
+   ],
+   "coisas": [
+    "biblioteca",
+    "livros",
+    "moto de brinquedo",
+    "cartão da biblioteca",
+    "livro pop-up",
+    "pufe",
+    "semáforo",
+    "computador"
    ]
   },
   {
@@ -1746,6 +2559,16 @@
     "amigos mais velhos",
     "mia e capitão",
     "corrida de barcos de folha"
+   ],
+   "coisas": [
+    "barquinho",
+    "jardim de fadas",
+    "casca de árvore",
+    "riacho",
+    "aperto de mão",
+    "colina",
+    "escola",
+    "carta para fadas"
    ]
   },
   {
@@ -1767,6 +2590,16 @@
     "hora do banho",
     "papai não manda",
     "livro de criar filhos"
+   ],
+   "coisas": [
+    "banheira",
+    "hambúrguer",
+    "batatas fritas",
+    "letras de espuma",
+    "patinho de borracha",
+    "picles",
+    "brinquedo de corda",
+    "tirar o tampão"
    ]
   },
   {
@@ -1788,6 +2621,16 @@
     "leoa e domador",
     "hércules da moto",
     "mestre de cerimônias"
+   ],
+   "coisas": [
+    "circo",
+    "leão",
+    "pular no arco",
+    "domador",
+    "acrobata",
+    "palhaço",
+    "moto de brinquedo",
+    "votação"
    ]
   },
   {
@@ -1809,6 +2652,16 @@
     "correr na beira da piscina",
     "dedurar",
     "a escola de natação"
+   ],
+   "coisas": [
+    "piscina",
+    "touca de natação",
+    "óculos de natação",
+    "boia",
+    "protetor solar",
+    "aula de natação",
+    "bater as pernas",
+    "mergulhar"
    ]
   },
   {
@@ -1830,6 +2683,14 @@
     "fazer amizade",
     "sachê de açúcar",
     "pai do winnie fido"
+   ],
+   "coisas": [
+    "café da manhã",
+    "parquinho",
+    "pacotinho de açúcar",
+    "brincar de café",
+    "amiga nova",
+    "acordar cedo"
    ]
   },
   {
@@ -1851,6 +2712,16 @@
     "mamãe e papai brigando",
     "entregar a carta",
     "carteiro"
+   ],
+   "coisas": [
+    "carteiro",
+    "carta de amor",
+    "envelope",
+    "caixa de correio",
+    "chão é lava",
+    "coração",
+    "martelo",
+    "lixeira"
    ]
   },
   {
@@ -1872,6 +2743,16 @@
     "presente da muffin",
     "funcionário alfie",
     "mímica sem falar"
+   ],
+   "coisas": [
+    "loja de brinquedos",
+    "jogo do silêncio",
+    "mímica",
+    "unicórnio",
+    "presente",
+    "embrulhar presente",
+    "cantar",
+    "bumbum grande"
    ]
   },
   {
@@ -1893,6 +2774,16 @@
     "brinquedos demais",
     "cesto de doação",
     "avalanche de brinquedos"
+   ],
+   "coisas": [
+    "macaco de cueca",
+    "pilha de brinquedos",
+    "catálogo",
+    "canhão de bolas",
+    "óculos de sol",
+    "banana",
+    "girafa de pelúcia",
+    "cueca"
    ]
   },
   {
@@ -1914,6 +2805,16 @@
     "vinte perguntas",
     "babá dupla",
     "tio rad"
+   ],
+   "coisas": [
+    "babá",
+    "campainha",
+    "vinte perguntas",
+    "hora de dormir",
+    "contar história",
+    "xampu",
+    "televisão alta",
+    "susto"
    ]
   },
   {
@@ -1935,6 +2836,16 @@
     "capacete de chifres",
     "papai controla bingo",
     "bagunça na casa"
+   ],
+   "coisas": [
+    "capacete de chifres",
+    "biscoito",
+    "papel higiênico",
+    "desenho de unicórnio",
+    "cocô desenhado",
+    "caixa de som",
+    "carro de pedal",
+    "casinha de argila"
    ]
   },
   {
@@ -1956,6 +2867,14 @@
     "pai da chloe",
     "enguia elétrica",
     "peixe voador"
+   ],
+   "coisas": [
+    "polvo",
+    "tesouro",
+    "roubar tesouro",
+    "enguia elétrica",
+    "peixe voador",
+    "animais do mar"
    ]
   },
   {
@@ -1977,6 +2896,16 @@
     "vizinha doreen",
     "lua",
     "passagem das semanas"
+   ],
+   "coisas": [
+    "lixeira",
+    "caminhão de lixo",
+    "corvo",
+    "flauta doce",
+    "lua",
+    "karatê",
+    "robô",
+    "fantoche de lixeira"
    ]
   },
   {
@@ -1998,6 +2927,16 @@
     "lanchonete de sanduíche",
     "tia trixie",
     "muffin com cone"
+   ],
+   "coisas": [
+    "cone da vergonha",
+    "chupar o dedo",
+    "sanduíche",
+    "salgadinho",
+    "vestido de noiva",
+    "cone de trânsito",
+    "bailarina",
+    "flor"
    ]
   },
   {
@@ -2019,6 +2958,15 @@
     "bolo caiu no chão",
     "arrumar os brinquedos",
     "cidade de blocos"
+   ],
+   "coisas": [
+    "bolo de pato",
+    "glacê",
+    "batedeira",
+    "cidade de blocos",
+    "jogo da memória",
+    "adesivo de estrela",
+    "bolo de palhaço"
    ]
   },
   {
@@ -2040,6 +2988,16 @@
     "vovó chris",
     "ninguém olha",
     "aniversário da bingo"
+   ],
+   "coisas": [
+    "parada de mão",
+    "festa de aniversário",
+    "panquequinha",
+    "chantilly",
+    "dominó",
+    "balão",
+    "pistola de água",
+    "torre de blocos"
    ]
   },
   {
@@ -2061,6 +3019,15 @@
     "tablets perdidos",
     "grande amendoim",
     "mesinha do carro"
+   ],
+   "coisas": [
+    "viagem de carro",
+    "tablet",
+    "mesa dobrável",
+    "amendoim gigante",
+    "caravana",
+    "acampar",
+    "banheiro"
    ]
   },
   {
@@ -2082,6 +3049,16 @@
     "loja do museu",
     "dinossauro na orelha",
     "sorvete da muffin"
+   ],
+   "coisas": [
+    "sorvete",
+    "sorvete derretendo",
+    "lamber",
+    "língua",
+    "casquinha",
+    "museu",
+    "dinossauro",
+    "sorvete de manga"
    ]
   },
   {
@@ -2103,6 +3080,16 @@
     "rainha não diria",
     "na cama dos pais",
     "jogo de adivinhar"
+   ],
+   "coisas": [
+    "banheiro",
+    "cama dos pais",
+    "travesseiro",
+    "palavra proibida",
+    "rainha",
+    "chocolate",
+    "telefone sem fio",
+    "batata"
    ]
   },
   {
@@ -2124,6 +3111,16 @@
     "os terriers",
     "história da calypso",
     "cachorro velho no baú"
+   ],
+   "coisas": [
+    "máquina de escrever",
+    "baú",
+    "cachorro velho",
+    "gnomo",
+    "petiscos",
+    "cachorro salsicha",
+    "toco de árvore",
+    "contar história"
    ]
   },
   {
@@ -2145,6 +3142,16 @@
     "bluey e judo bebês",
     "grupo de mães",
     "correr a própria corrida"
+   ],
+   "coisas": [
+    "bebê",
+    "engatinhar",
+    "rolar",
+    "primeiros passos",
+    "barras de macaco",
+    "parquinho",
+    "corrida de bebês",
+    "arrastar o bumbum"
    ]
   },
   {
@@ -2166,6 +3173,16 @@
     "natal dos heelers",
     "crocodilo",
     "frisky e o ursinho"
+   ],
+   "coisas": [
+    "natal",
+    "presentes",
+    "piscina",
+    "ursinho grande",
+    "crocodilo",
+    "boia",
+    "chamada de vídeo",
+    "braço quebrado"
    ]
   },
   {
@@ -2187,6 +3204,16 @@
     "pistas de páscoa",
     "bingo acha que foram esquecidos",
     "carta do coelho"
+   ],
+   "coisas": [
+    "páscoa",
+    "caça aos ovos",
+    "ovo de chocolate",
+    "coelho da páscoa",
+    "caixa de correio",
+    "castelo de areia",
+    "kiwi",
+    "papel higiênico"
    ]
   },
   {
@@ -2207,6 +3234,15 @@
     "bluey desenhando cartão",
     "desenho perfeito",
     "dia dos pais",
+    "bumerangue"
+   ],
+   "coisas": [
+    "cartão",
+    "desenhar",
+    "coração",
+    "arco-íris",
+    "geladeira",
+    "cócegas",
     "bumerangue"
    ]
   },
@@ -2229,6 +3265,16 @@
     "quarto separado",
     "dormir separadas",
     "quarto das meninas"
+   ],
+   "coisas": [
+    "quarto novo",
+    "berço",
+    "tapete de melancia",
+    "bichinho de pelúcia",
+    "cama",
+    "livros",
+    "mandar recado",
+    "corrida de tapete"
    ]
   },
   {
@@ -2250,6 +3296,15 @@
     "papai não deixa ganhar",
     "corrida com o papai",
     "percurso no quintal"
+   ],
+   "coisas": [
+    "pista de obstáculos",
+    "bola de ioga",
+    "sorvete",
+    "corrida",
+    "jogo de cartas",
+    "ganso",
+    "quintal"
    ]
   },
   {
@@ -2271,6 +3326,16 @@
     "biblioteca",
     "pula pula com o papai",
     "promessa"
+   ],
+   "coisas": [
+    "quebra-cabeça",
+    "panda",
+    "trampolim",
+    "biblioteca",
+    "livros pesados",
+    "mochila",
+    "engatinhar",
+    "carro"
    ]
   },
   {
@@ -2292,6 +3357,16 @@
     "café da manhã do papai",
     "aniversário do papai",
     "bingo quebra ovos"
+   ],
+   "coisas": [
+    "omelete",
+    "ovos",
+    "quebrar ovo",
+    "café na cama",
+    "aniversário",
+    "suco de laranja",
+    "soldadinhos",
+    "bandeja"
    ]
   },
   {
@@ -2313,6 +3388,16 @@
     "roubou a torta",
     "segundo dia na terra",
     "ioga da mamãe"
+   ],
+   "coisas": [
+    "morango",
+    "torta de carne",
+    "balanço",
+    "sol",
+    "banquinho",
+    "tirar fotos",
+    "bumbum",
+    "ponto de ônibus"
    ]
   },
   {
@@ -2334,6 +3419,16 @@
     "giz de cabelo",
     "irmãs diferentes",
     "bingo pintada de azul"
+   ],
+   "coisas": [
+    "giz de cabelo",
+    "cabelo colorido",
+    "dentes falsos",
+    "fita adesiva",
+    "mangueira",
+    "careta",
+    "dançar",
+    "cantar"
    ]
   },
   {
@@ -2355,6 +3450,15 @@
     "fantoche do papai",
     "história de dormir",
     "bichinho de mão"
+   ],
+   "coisas": [
+    "fantoche",
+    "unicórnio",
+    "livro",
+    "hora de dormir",
+    "contar história",
+    "barulhos",
+    "dança da vitória"
    ]
   },
   {
@@ -2377,6 +3481,16 @@
     "casa do mackenzie",
     "crochê",
     "pintura de rosto"
+   ],
+   "coisas": [
+    "pássaro",
+    "ninho",
+    "pintura no rosto",
+    "rosto de tigre",
+    "curry",
+    "pão naan",
+    "parque",
+    "crochê"
    ]
   },
   {
@@ -2398,6 +3512,16 @@
     "feitiço",
     "mamãe não quer brincar",
     "regra da mágica"
+   ],
+   "coisas": [
+    "mágica",
+    "fazer dançar",
+    "rabo balançando",
+    "orelhas",
+    "poça",
+    "entregador de pizza",
+    "cócegas",
+    "sofá"
    ]
   },
   {
@@ -2419,6 +3543,16 @@
     "bluey aprende xadrez",
     "regras inventadas",
     "papai joga xadrez"
+   ],
+   "coisas": [
+    "xadrez",
+    "tabuleiro",
+    "cavalinho",
+    "rainha",
+    "rei",
+    "torre",
+    "peões",
+    "bonequinhos"
    ]
   },
   {
@@ -2440,6 +3574,16 @@
     "ovelha",
     "papai com mullet",
     "mamãe quer ficar sozinha"
+   ],
+   "coisas": [
+    "ovelha",
+    "comer grama",
+    "cama elástica",
+    "corte mullet",
+    "flauta doce",
+    "piada de batata",
+    "fita no cabelo",
+    "balir"
    ]
   },
   {
@@ -2461,6 +3605,16 @@
     "pais fazem bobagem",
     "aspirador de pó",
     "cabana de cobertor"
+   ],
+   "coisas": [
+    "aspirador de pó",
+    "cabana de cobertor",
+    "limpar janela",
+    "fantasma",
+    "bailarina",
+    "andar maluco",
+    "remar barco",
+    "cavalinho"
    ]
   },
   {
@@ -2481,6 +3635,16 @@
     "festa de aniversário",
     "bingo nunca ganha",
     "presente no meio do pacote"
+   ],
+   "coisas": [
+    "pacote",
+    "festa de aniversário",
+    "presente",
+    "pulseira",
+    "pirulito",
+    "pistola de água",
+    "piñata",
+    "parque"
    ]
   },
   {
@@ -2502,6 +3666,16 @@
     "pai do jack se perde",
     "navio",
     "esperando buscar na escola"
+   ],
+   "coisas": [
+    "marinheiro",
+    "barco",
+    "polvo gigante",
+    "recife de coral",
+    "placa de canguru",
+    "morangos",
+    "celular sem bateria",
+    "antártida"
    ]
   },
   {
@@ -2523,6 +3697,16 @@
     "restaurante",
     "celular de papelão",
     "vovô e a tecnologia"
+   ],
+   "coisas": [
+    "celular de papelão",
+    "restaurante",
+    "salsicha com curry",
+    "casinha",
+    "chapéu",
+    "cardápio",
+    "aplicativo",
+    "dinheiro"
    ]
   },
   {
@@ -2544,6 +3728,16 @@
     "edamame",
     "papai abre loja",
     "sobremesa na geladeira"
+   ],
+   "coisas": [
+    "pavlova",
+    "edamame",
+    "bigode desenhado",
+    "touca de cozinheiro",
+    "frigideira",
+    "molho de tomate",
+    "geladeira",
+    "brincar de café"
    ]
   },
   {
@@ -2565,6 +3759,16 @@
     "lama",
     "guarda chuva",
     "bluey na chuva"
+   ],
+   "coisas": [
+    "chuva",
+    "represa",
+    "guarda-chuva",
+    "lama",
+    "toalha",
+    "blocos de brinquedo",
+    "casa de boneca",
+    "jornal"
    ]
   },
   {
@@ -2586,6 +3790,16 @@
     "roda caindo",
     "muffin carro elétrico",
     "entrega de pizza"
+   ],
+   "coisas": [
+    "pizza de lama",
+    "carrinho de pedal",
+    "roda soltando",
+    "carro elétrico",
+    "abacaxi",
+    "cogumelos",
+    "mecânico",
+    "entregar pizza"
    ]
   },
   {
@@ -2607,6 +3821,16 @@
     "hóspede rabugento",
     "carro de brincadeira",
     "mamãe ao telefone"
+   ],
+   "coisas": [
+    "brincar de dirigir",
+    "limpador de vidro",
+    "cinto de segurança",
+    "gato rabugento",
+    "xícara de chá",
+    "leite de amêndoa",
+    "loja",
+    "rádio"
    ]
   },
   {
@@ -2628,6 +3852,16 @@
     "gigante invisível",
     "crianças mandam nos pais",
     "tina fedida"
+   ],
+   "coisas": [
+    "amiga invisível",
+    "gigante",
+    "moscas",
+    "sanduíche de geleia",
+    "lava-louça",
+    "banho",
+    "almofada",
+    "dentes caindo"
    ]
   },
   {
@@ -2649,6 +3883,16 @@
     "papai de barco",
     "mamãe baleia",
     "baleia pulando"
+   ],
+   "coisas": [
+    "baleia",
+    "barco",
+    "ondas",
+    "tartaruga",
+    "documentário",
+    "ilha deserta",
+    "sofá",
+    "remar"
    ]
   },
   {
@@ -2671,6 +3915,16 @@
     "tribunal em casa",
     "reunião de família",
     "colher de pau"
+   ],
+   "coisas": [
+    "pum",
+    "julgamento",
+    "colher de pau",
+    "bobes no cabelo",
+    "elevador",
+    "feijão",
+    "torrada com geleia",
+    "pirulito"
    ]
   },
   {
@@ -2692,6 +3946,16 @@
     "desenhar com a prima",
     "muffin não divide",
     "muffin e socks"
+   ],
+   "coisas": [
+    "chamada de vídeo",
+    "tablet",
+    "desenhar",
+    "chapéu de cowboy",
+    "peruca verde",
+    "cronômetro",
+    "castigo",
+    "filtro de gorila"
    ]
   },
   {
@@ -2713,6 +3977,16 @@
     "papai desmaiado",
     "sorvete",
     "carregar o papai"
+   ],
+   "coisas": [
+    "sorvete",
+    "nota de dinheiro",
+    "corpo mole",
+    "cair da escada",
+    "skate",
+    "patins",
+    "carro",
+    "loja da esquina"
    ]
   },
   {
@@ -2735,6 +4009,16 @@
     "maldição",
     "mamãe princesa",
     "joão e maria"
+   ],
+   "coisas": [
+    "conto de fadas",
+    "bicicleta",
+    "derrapar",
+    "praia",
+    "peixe empanado",
+    "cereal",
+    "princesa",
+    "maldição"
    ]
   },
   {
@@ -2756,6 +4040,15 @@
     "música não para",
     "brincar de estátua",
     "dançar"
+   ],
+   "coisas": [
+    "estátua musical",
+    "dançar",
+    "música",
+    "cereal",
+    "almôndegas",
+    "espaguete",
+    "almofada"
    ]
   },
   {
@@ -2777,6 +4070,16 @@
     "cavalo falante",
     "major tom",
     "bichinho de cera"
+   ],
+   "coisas": [
+    "cavalinho de cera",
+    "vaca",
+    "cera de abelha",
+    "óculos de cera",
+    "bigode",
+    "cavalo falante",
+    "pescoço do cavalo",
+    "muu"
    ]
   },
   {
@@ -2798,6 +4101,16 @@
     "encontro com a mamãe",
     "carrapato",
     "boas maneiras à mesa"
+   ],
+   "coisas": [
+    "fantoche unicórnio",
+    "carrapato",
+    "escova de dentes",
+    "pasta de dente",
+    "chuveiro gelado",
+    "brócolis",
+    "gravata borboleta",
+    "vomitar"
    ]
   },
   {
@@ -2819,6 +4132,15 @@
     "esconde a tartaruga",
     "bingo e dougie",
     "brinquedo perdido"
+   ],
+   "coisas": [
+    "tartaruga",
+    "brinquedo",
+    "parquinho",
+    "balanço",
+    "esconder",
+    "montanha-russa",
+    "televisão"
    ]
   },
   {
@@ -2841,6 +4163,15 @@
     "zebra",
     "bingo vira guepardo",
     "irmã da mamãe"
+   ],
+   "coisas": [
+    "macacão de guepardo",
+    "macacão de zebra",
+    "perseguição",
+    "esconder no carro",
+    "banheira",
+    "galpão",
+    "dançar"
    ]
   },
   {
@@ -2862,6 +4193,16 @@
     "pedreiros",
     "espiãs",
     "inimigos viram amigos"
+   ],
+   "coisas": [
+    "espiões",
+    "embaixo da casa",
+    "operários",
+    "buraco",
+    "lago de peixes",
+    "sorvete",
+    "giz",
+    "celular"
    ]
   },
   {
@@ -2883,6 +4224,16 @@
     "muffin vovó",
     "scooter de idoso",
     "muffin negocia"
+   ],
+   "coisas": [
+    "venda de garagem",
+    "vovós",
+    "scooter elétrica",
+    "vaso",
+    "balas",
+    "pano de prato",
+    "dinheiro",
+    "vovó rabugenta"
    ]
   },
   {
@@ -2904,6 +4255,16 @@
     "buraco negro",
     "nave espacial no parquinho",
     "mackenzie desaparece"
+   ],
+   "coisas": [
+    "astronauta",
+    "nave espacial",
+    "marte",
+    "buraco negro",
+    "asteroide",
+    "barco do parquinho",
+    "fio de lã",
+    "árvore"
    ]
   },
   {
@@ -2925,6 +4286,16 @@
     "esconder o papai",
     "bafo de sardinha",
     "pum e xixi no pé"
+   ],
+   "coisas": [
+    "beijo",
+    "sovaco fedido",
+    "pum",
+    "xixi no pé",
+    "bafo de sardinha",
+    "batedor de ovos",
+    "almofadas",
+    "esconder o papai"
    ]
   },
   {
@@ -2947,6 +4318,16 @@
     "chow chow",
     "montanha de terra",
     "wendy"
+   ],
+   "coisas": [
+    "montanha de terra",
+    "caminhão",
+    "sujeira",
+    "forma de alumínio",
+    "escorregar",
+    "banho",
+    "corte de cabelo",
+    "roupa de proteção"
    ]
   },
   {
@@ -2968,6 +4349,16 @@
     "chucky escolhe time",
     "time do papai",
     "jogo na tela do quintal"
+   ],
+   "coisas": [
+    "rúgbi",
+    "telão no jardim",
+    "pipoca",
+    "pelo tingido",
+    "torcida",
+    "camisetas",
+    "vaiar",
+    "dançar"
    ]
   },
   {
@@ -2990,6 +4381,16 @@
     "pelúcia",
     "bichinho de pelúcia",
     "fita métrica"
+   ],
+   "coisas": [
+    "casinha de cobertor",
+    "almofadas",
+    "bichinho de pelúcia",
+    "fita métrica",
+    "televisão",
+    "cobertores",
+    "cama",
+    "mesa"
    ]
   },
   {
@@ -3011,6 +4412,16 @@
     "bingo funcionária nova",
     "papai de elevador",
     "exercício no quintal"
+   ],
+   "coisas": [
+    "treino",
+    "pesos",
+    "colchonete",
+    "elevador",
+    "escritório",
+    "cadeira giratória",
+    "pingue-pongue",
+    "parque de diversões"
    ]
   },
   {
@@ -3032,6 +4443,16 @@
     "elevador",
     "relaxar na praia",
     "viagem de carro"
+   ],
+   "coisas": [
+    "hotel",
+    "elevador",
+    "beliche",
+    "sabonete",
+    "cofre",
+    "sereia",
+    "praia",
+    "protetor solar"
    ]
   },
   {
@@ -3053,6 +4474,15 @@
     "praia",
     "castelo de areia destruído",
     "pássaro de vareta"
+   ],
+   "coisas": [
+    "gravetos",
+    "escultura de areia",
+    "cabeça de pássaro",
+    "praia",
+    "lago",
+    "jogar longe",
+    "mar"
    ]
   },
   {
@@ -3074,6 +4504,16 @@
     "garra de caranguejo",
     "dia de mostrar",
     "contar as ordens"
+   ],
+   "coisas": [
+    "garra de caranguejo",
+    "molho de tomate",
+    "prancha de surfe",
+    "gps",
+    "cemitério",
+    "café da manhã",
+    "carro",
+    "telefone"
    ]
   },
   {
@@ -3095,6 +4535,16 @@
     "papai não sabe desenhar",
     "humpty dumpty",
     "história desenhada"
+   ],
+   "coisas": [
+    "dragão",
+    "desenhar",
+    "fada",
+    "cavalo",
+    "ovo gigante",
+    "árvore falante",
+    "moto",
+    "canetinhas"
    ]
   },
   {
@@ -3116,6 +4566,16 @@
     "brincar de bichos",
     "indy e cacau",
     "pega pega do banheiro"
+   ],
+   "coisas": [
+    "porco",
+    "floresta",
+    "correr atrás",
+    "dançar",
+    "abrigo",
+    "fazenda",
+    "batatas",
+    "espantalho"
    ]
   },
   {
@@ -3138,6 +4598,16 @@
     "câmera de segurança",
     "farmácia",
     "televisão da loja"
+   ],
+   "coisas": [
+    "câmera",
+    "televisão",
+    "farmácia",
+    "dançar",
+    "papel higiênico",
+    "batom",
+    "fones de ouvido",
+    "verme no bumbum"
    ]
   },
   {
@@ -3159,6 +4629,16 @@
     "lagarta",
     "borboleta",
     "bingo e lila"
+   ],
+   "coisas": [
+    "escorregador de água",
+    "lagarta",
+    "borboleta",
+    "joaninha",
+    "formiga",
+    "gafanhoto",
+    "besouro",
+    "insetos"
    ]
   },
   {
@@ -3180,6 +4660,15 @@
     "jogo dos pais",
     "jogo da vizinhança",
     "bola rápida"
+   ],
+   "coisas": [
+    "críquete",
+    "taco",
+    "bola de tênis",
+    "rebater",
+    "arremessar",
+    "festa de aniversário",
+    "pega-pega"
    ]
   },
   {
@@ -3201,6 +4690,16 @@
     "corretor de imóveis",
     "casa das vovozinhas",
     "vovozinhas janet e rita"
+   ],
+   "coisas": [
+    "cesto de roupa",
+    "fantasma",
+    "casa à venda",
+    "carrinho de pedal",
+    "pistola de bolhas",
+    "garra de pegar",
+    "biscoitos",
+    "carrinho de mão"
    ]
   },
   {
@@ -3224,6 +4723,16 @@
     "noiva fugiu",
     "casa à venda",
     "placa de vende se"
+   ],
+   "coisas": [
+    "casamento",
+    "noiva",
+    "placa de vende-se",
+    "casa à venda",
+    "daminhas",
+    "fazendeiro",
+    "mudança",
+    "porquinho-da-índia"
    ]
   },
   {
@@ -3245,6 +4754,16 @@
     "papai cuida de bebês",
     "hospital de brinquedo",
     "arminha de bolinhas"
+   ],
+   "coisas": [
+    "bebê de brinquedo",
+    "porta-lata",
+    "bola de tênis",
+    "arminha de bolinhas",
+    "hospital de mentira",
+    "creche",
+    "pufe",
+    "armadura"
    ]
   }
  ]
