@@ -1,0 +1,660 @@
+[
+ {
+  "id": "S3E01",
+  "pt": "Perfeito",
+  "pt_source": "apple",
+  "card": "Bluey quer desenhar o cartão de Dia dos Pais perfeito para o papai, mas acha defeito em cada desenho. A mamãe lembra as brincadeiras com ele, como Bumerangue e Sem Bilhete, em que ele também não foi perfeito.",
+  "aliases": [
+   "cartão de dia dos pais",
+   "bluey desenhando cartão",
+   "desenho perfeito",
+   "dia dos pais",
+   "bumerangue"
+  ]
+ },
+ {
+  "id": "S3E02",
+  "pt": "Quarto",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo ganham um quarto cada, depois que o antigo quarto das duas é esvaziado. A mamãe fica nostálgica. À noite, Bluey sente falta da Bingo e as duas arrumam um jeito de dormir juntas de novo.",
+  "aliases": [
+   "cada uma ganha um quarto",
+   "bluey sente saudade da bingo",
+   "quarto separado",
+   "dormir separadas",
+   "quarto das meninas"
+  ]
+ },
+ {
+  "id": "S3E03",
+  "pt": "Pista de Obstáculos",
+  "pt_source": "apple",
+  "card": "A mamãe monta uma pista de obstáculos no quintal só por diversão, mas o papai quer apostar corrida. As crianças ficam decididas a ganhar dele de qualquer jeito. Antes, o papai joga cartas com Bluey e nunca deixa ela ganhar.",
+  "aliases": [
+   "pista de obstáculos",
+   "corrida no quintal",
+   "papai não deixa ganhar",
+   "corrida com o papai",
+   "percurso no quintal"
+  ]
+ },
+ {
+  "id": "S3E04",
+  "pt": "Promessas",
+  "pt_source": "apple",
+  "card": "Bluey promete arrumar o quebra-cabeça de panda e levar a Bingo à biblioteca, mas quebra uma promessa atrás da outra. Ela vê como a Bingo confia na palavra da mamãe e aprende a valorizar o que promete.",
+  "aliases": [
+   "bluey quebra promessas",
+   "quebra cabeça de panda",
+   "biblioteca",
+   "pula pula com o papai",
+   "promessa"
+  ]
+ },
+ {
+  "id": "S3E05",
+  "pt": "Omelete",
+  "pt_source": "apple",
+  "card": "No aniversário do papai, Bingo quer ajudar a mamãe a fazer uma omelete de café da manhã na cama. Quebrar ovos é difícil, os ovos caem no chão e o papai fica cada vez mais faminto.",
+  "aliases": [
+   "omelete",
+   "ovo quebrado",
+   "café da manhã do papai",
+   "aniversário do papai",
+   "bingo quebra ovos"
+  ]
+ },
+ {
+  "id": "S3E06",
+  "pt": "Nascido Ontem",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo brincam que o papai nasceu ontem e guiam ele pelo segundo dia na Terra. Ele descobre que comida é uma delícia e rouba a torta do pai do Lucky. Começa com a mamãe fazendo ioga na TV.",
+  "aliases": [
+   "papai nasceu ontem",
+   "papai finge que não sabe nada",
+   "roubou a torta",
+   "segundo dia na terra",
+   "ioga da mamãe"
+  ]
+ },
+ {
+  "id": "S3E07",
+  "pt": "Mini Bluey",
+  "pt_source": "apple",
+  "card": "O papai reclama que Bluey e Bingo são muito diferentes. Bluey, com giz de cabelo, transforma a Bingo na Mini Bluey, e a Bingo precisa dançar, cantar e agir como a irmã.",
+  "aliases": [
+   "mini bluey",
+   "bingo vira a bluey",
+   "giz de cabelo",
+   "irmãs diferentes",
+   "bingo pintada de azul"
+  ]
+ },
+ {
+  "id": "S3E08",
+  "pt": "Unicórsio",
+  "pt_source": "apple",
+  "card": "Bluey não consegue dormir e a mamãe lê mais uma história, mas o Unicórsio, um fantoche de mão muito chato, não para de interromper. Bluey tenta consertar o jeito dele.",
+  "aliases": [
+   "unicórsio",
+   "fantoche chato",
+   "fantoche do papai",
+   "história de dormir",
+   "bichinho de mão"
+  ]
+ },
+ {
+  "id": "S3E09",
+  "pt": "A Missão do Curry",
+  "pt_source": "apple",
+  "card": "Bingo e o papai atravessam o parque para trocar curry na casa do Mackenzie e enfrentam um pássaro que ataca em voo rasante. Bingo topa por causa da pintura de rosto. Bluey aprende crochê com a mamãe.",
+  "aliases": [
+   "troca de curry",
+   "pássaro atacando",
+   "pássaro no parque",
+   "casa do mackenzie",
+   "crochê",
+   "pintura de rosto"
+  ]
+ },
+ {
+  "id": "S3E10",
+  "pt": "Mágica",
+  "pt_source": "apple",
+  "card": "Bluey ensina a Bingo a fazer mágica para a mamãe brincar com elas, mas esquece a regra principal: nunca usar a mágica para travessuras. A Bingo usa a mágica em todo mundo.",
+  "aliases": [
+   "mágica",
+   "bingo faz mágica na mamãe",
+   "feitiço",
+   "mamãe não quer brincar",
+   "regra da mágica"
+  ]
+ },
+ {
+  "id": "S3E11",
+  "pt": "Xandrez",
+  "pt_source": "apple",
+  "card": "O papai quer ensinar xadrez à Bluey, que entende \"xandrez\", mas a mamãe acha que ela é nova demais. A Bingo entra no jogo, as meninas inventam suas regras e mesmo assim não ganham do papai.",
+  "aliases": [
+   "xadrez",
+   "jogo de tabuleiro",
+   "bluey aprende xadrez",
+   "regras inventadas",
+   "papai joga xadrez"
+  ]
+ },
+ {
+  "id": "S3E12",
+  "pt": "Ovelhinha",
+  "pt_source": "apple",
+  "card": "O papai brinca de cão pastor com Bluey e Bingo para a mamãe descansar 20 minutos. Cuidar da ovelha dá mais trabalho que o esperado. O papai volta do barbeiro com um corte mullet.",
+  "aliases": [
+   "cão pastor",
+   "cachorro pastor",
+   "ovelha",
+   "papai com mullet",
+   "mamãe quer ficar sozinha"
+  ]
+ },
+ {
+  "id": "S3E13",
+  "pt": "Limpando a Casa",
+  "pt_source": "apple",
+  "card": "A mamãe e o papai dizem que só terminam a faxina quando as crianças pararem de fazer bobagem. Isso nunca acontece, então eles passam a brincar de bobos também. Bluey e Bingo ficam numa cabana de cobertor.",
+  "aliases": [
+   "faxina",
+   "limpando a casa",
+   "pais fazem bobagem",
+   "aspirador de pó",
+   "cabana de cobertor"
+  ]
+ },
+ {
+  "id": "S3E14",
+  "pt": "Passa o Pacote",
+  "pt_source": "apple",
+  "card": "Festas de aniversário com a brincadeira de passa o pacote. O pai do Lucky muda a regra: só um prêmio no meio do pacote. A Bingo perde em todas as festas e a mamãe ajuda ela a lidar com a frustração.",
+  "aliases": [
+   "o do pacote",
+   "festa de aniversário",
+   "bingo nunca ganha",
+   "presente no meio do pacote"
+  ]
+ },
+ {
+  "id": "S3E15",
+  "pt": "Exploradores",
+  "pt_source": "apple",
+  "card": "Esperando o pai buscar na escola, Jack brinca de marinheiro tentando voltar para a Austrália com Rusty, Bluey e Cacau. Jack fica por último. O pai dele se perde no caminho com o celular sem bateria.",
+  "aliases": [
+   "marinheiros",
+   "jack na escola",
+   "pai do jack se perde",
+   "navio",
+   "esperando buscar na escola"
+  ]
+ },
+ {
+  "id": "S3E16",
+  "pt": "Celulares",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo brincam de restaurante com o Vovô Mario, que precisa baixar um aplicativo para pedir a comida. As meninas fazem celulares de papelão. Ele chega de carro de aplicativo.",
+  "aliases": [
+   "vovô mario",
+   "aplicativo",
+   "restaurante",
+   "celular de papelão",
+   "vovô e a tecnologia"
+  ]
+ },
+ {
+  "id": "S3E17",
+  "pt": "Pavlova",
+  "pt_source": "apple",
+  "card": "A mamãe não deixa a Bingo comer pavlova, então as meninas brincam de café na cozinha. O papai, o cozinheiro, nunca acerta o pedido, é demitido e abre uma loja concorrente que só vende edamame.",
+  "aliases": [
+   "pavlova",
+   "brincar de café",
+   "edamame",
+   "papai abre loja",
+   "sobremesa na geladeira"
+  ]
+ },
+ {
+  "id": "S3E18",
+  "pt": "Chuva",
+  "pt_source": "apple",
+  "card": "Numa forte chuva de verão, Bluey tenta fazer uma barragem de água no jardim da frente. A mamãe tenta impedir que ela entre em casa cheia de lama. Bluey usa até o guarda-chuva na represa.",
+  "aliases": [
+   "chuva",
+   "barragem",
+   "lama",
+   "guarda chuva",
+   "bluey na chuva"
+  ]
+ },
+ {
+  "id": "S3E19",
+  "pt": "Meninas da Pizza",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo fazem pizzas de lama e entregam aos adultos com um carrinho de pedal cuja roda não para de cair. A Muffin chega com um carro elétrico novo e bate no carrinho.",
+  "aliases": [
+   "pizza de lama",
+   "carrinho de pedal",
+   "roda caindo",
+   "muffin carro elétrico",
+   "entrega de pizza"
+  ]
+ },
+ {
+  "id": "S3E20",
+  "pt": "Dirigindo",
+  "pt_source": "apple",
+  "card": "Com só cinco minutos para brincar, Bluey e a mamãe brincam de dirigir para comprar leite para um hóspede rabugento e fogem de um comerciante bravo. A mamãe está ao telefone com uma colega.",
+  "aliases": [
+   "dirigindo",
+   "comprar leite",
+   "hóspede rabugento",
+   "carro de brincadeira",
+   "mamãe ao telefone"
+  ]
+ },
+ {
+  "id": "S3E21",
+  "pt": "Tina",
+  "pt_source": "apple",
+  "card": "Cansadas de receber ordens, Bluey e Bingo chamam a Tina, uma amiga invisível gigante, para mandar nos pais. Os pais se rebelam e lutam com ela. A Tina fede e perde os dentes.",
+  "aliases": [
+   "tina",
+   "amiga invisível gigante",
+   "gigante invisível",
+   "crianças mandam nos pais",
+   "tina fedida"
+  ]
+ },
+ {
+  "id": "S3E22",
+  "pt": "Observação de Baleia",
+  "pt_source": "apple",
+  "card": "Bluey é capitã de um passeio de observação de baleias, com o papai de barco e a mamãe de baleia. Os pais estão cansados de uma noite em claro. Depois a baleia pula de verdade num documentário.",
+  "aliases": [
+   "observação de baleia",
+   "passeio de barco",
+   "papai de barco",
+   "mamãe baleia",
+   "baleia pulando"
+  ]
+ },
+ {
+  "id": "S3E23",
+  "pt": "Reunião de Família",
+  "pt_source": "apple",
+  "card": "Bluey acusa o papai de soltar um pum na cara dela. A mamãe vira juíza de bobes no cabelo e faz uma reunião de família no jantar, com regras, tribunal e testemunhas.",
+  "aliases": [
+   "pum do papai",
+   "julgamento",
+   "mamãe juíza",
+   "tribunal em casa",
+   "reunião de família",
+   "colher de pau"
+  ]
+ },
+ {
+  "id": "S3E24",
+  "pt": "Chamada de Vídeo",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo fazem chamada de vídeo com Muffin e Socks para desenhar juntas no tablet. Muffin não deixa a Socks ter a vez, e todo mundo descobre o que acontece quando alguém monopoliza.",
+  "aliases": [
+   "chamada de vídeo",
+   "tablet",
+   "desenhar com a prima",
+   "muffin não divide",
+   "muffin e socks"
+  ]
+ },
+ {
+  "id": "S3E25",
+  "pt": "Boneco de Pano",
+  "pt_source": "apple",
+  "card": "O papai promete levar Bluey e Bingo para comprar sorvete se elas conseguirem levá-lo até o carro, mas ele vira um boneco de pano, mole e pesado. Elas acham uma nota de dez dólares no chão.",
+  "aliases": [
+   "boneco de pano",
+   "papai mole",
+   "papai desmaiado",
+   "sorvete",
+   "carregar o papai"
+  ]
+ },
+ {
+  "id": "S3E26",
+  "pt": "Conto de Fadas",
+  "pt_source": "apple",
+  "card": "Depois de ler João e Maria, o papai conta um conto de fadas de verdade sobre ele e o Tio Stripe nos anos 80. Ele é amaldiçoado, ninguém pode dizer seu nome, até a mamãe, vestida de princesa, aparecer.",
+  "aliases": [
+   "conto de fadas",
+   "papai e tio stripe",
+   "anos 80",
+   "maldição",
+   "mamãe princesa",
+   "joão e maria"
+  ]
+ },
+ {
+  "id": "S3E27",
+  "pt": "Estátua",
+  "pt_source": "apple",
+  "card": "No fim de um dia longo, a família está desencontrada, então a mamãe faz todo mundo brincar de estátua musical. Bluey ganha e não quer parar de dançar, então a mamãe cria uma versão em que a música nunca para.",
+  "aliases": [
+   "estátua musical",
+   "dança da família",
+   "música não para",
+   "brincar de estátua",
+   "dançar"
+  ]
+ },
+ {
+  "id": "S3E28",
+  "pt": "Histórias",
+  "pt_source": "apple",
+  "card": "Na escola, a cavalinha de cera da Indy parece uma vaca. Winton ajuda e os dois saem procurando um cavalo de verdade, e acham o Major Tom, um cavalo falante. Calypso incentiva a Indy a não desistir.",
+  "aliases": [
+   "cavalo parece vaca",
+   "indy e winton",
+   "cavalo falante",
+   "major tom",
+   "bichinho de cera"
+  ]
+ },
+ {
+  "id": "S3E29",
+  "pt": "Fantoches",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo ensinam boas maneiras ao Unicórsio para ele convidar a mamãe para um encontro. Ele se apaixona por ela, mas estraga tudo ao comer um carrapato. Depois a família se reveza para controlar ele.",
+  "aliases": [
+   "unicórsio",
+   "fantoche apaixonado",
+   "encontro com a mamãe",
+   "carrapato",
+   "boas maneiras à mesa"
+  ]
+ },
+ {
+  "id": "S3E30",
+  "pt": "Tartaruguito",
+  "pt_source": "apple",
+  "card": "Bingo acha uma tartaruga de brinquedo no parquinho e quer levar para casa, mas o papai diz que não é certo. Ela e o Dougie escondem o Tartaruguito para brincar sempre, até Bingo deixar o brinquedo para os outros.",
+  "aliases": [
+   "tartaruga de brinquedo",
+   "achado no parquinho",
+   "esconde a tartaruga",
+   "bingo e dougie",
+   "brinquedo perdido"
+  ]
+ },
+ {
+  "id": "S3E31",
+  "pt": "Roupinhas",
+  "pt_source": "apple",
+  "card": "A Tia Brandy, irmã da mamãe, visita a família depois de anos e traz macacões de bichos. Bingo troca para o de guepardo e vira um guepardo faminto que persegue todo mundo. Mamãe e Brandy dançam juntas.",
+  "aliases": [
+   "macacão de bicho",
+   "tia brandy",
+   "guepardo",
+   "zebra",
+   "bingo vira guepardo",
+   "irmã da mamãe"
+  ]
+ },
+ {
+  "id": "S3E32",
+  "pt": "Trabalhadores",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo se escondem embaixo da casa e espionam dois trabalhadores misteriosos no quintal, achando que são inimigos. Quando um deles oferece sorvete, as meninas viram amigas deles.",
+  "aliases": [
+   "espionar embaixo da casa",
+   "trabalhadores no quintal",
+   "pedreiros",
+   "espiãs",
+   "inimigos viram amigos"
+  ]
+ },
+ {
+  "id": "S3E33",
+  "pt": "Carrinho de Vovó",
+  "pt_source": "apple",
+  "card": "Numa venda de garagem, Muffin brinca de vovó rabugenta e o papai empurra ela num carrinho elétrico de idoso à venda. Quando uma vovó rabugenta de verdade quer comprar, Muffin negocia o preço.",
+  "aliases": [
+   "venda de garagem",
+   "vovó rabugenta",
+   "muffin vovó",
+   "scooter de idoso",
+   "muffin negocia"
+  ]
+ },
+ {
+  "id": "S3E34",
+  "pt": "Espaço",
+  "pt_source": "apple",
+  "card": "Mackenzie, Jack e Rusty brincam de astronautas numa missão a Marte, com o barco do parquinho de nave. Mackenzie muda o rumo para um buraco negro e some sem saber por quê. Calypso aparece numa visão.",
+  "aliases": [
+   "astronautas",
+   "missão a marte",
+   "buraco negro",
+   "nave espacial no parquinho",
+   "mackenzie desaparece"
+  ]
+ },
+ {
+  "id": "S3E35",
+  "pt": "Beijinho",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo querem o papai só para elas e escondem ele pela casa, até descobrir seus hábitos nojentos: sovaco fedido, pum e xixi no próprio pé. Depois descobrem os hábitos da mamãe, como o bafo de sardinha.",
+  "aliases": [
+   "papai nojento",
+   "beijo da mamãe",
+   "esconder o papai",
+   "bafo de sardinha",
+   "pum e xixi no pé"
+  ]
+ },
+ {
+  "id": "S3E36",
+  "pt": "Sujeira",
+  "pt_source": "apple",
+  "card": "Judo quer brincar na terra com Bluey e Bingo, mas, por ser uma Chow Chow de pelo difícil de limpar, não pode se sujar. As meninas tentam escorregador de forma e roupa protetora. Wendy corta o próprio pelo e a Judo também.",
+  "aliases": [
+   "judo na terra",
+   "cachorra peluda",
+   "corte de pelo",
+   "chow chow",
+   "montanha de terra",
+   "wendy"
+  ]
+ },
+ {
+  "id": "S3E37",
+  "pt": "A Final",
+  "pt_source": "apple",
+  "card": "Lucky, Chucky e o pai deles vão à casa dos Heelers ver uma final de rúgbi na tela do jardim. Todos torcem pelo Maroons, mas a mãe do Lucky torce pelo Blues. Chucky não consegue escolher o time.",
+  "aliases": [
+   "final de rúgbi",
+   "assistir ao jogo",
+   "chucky escolhe time",
+   "time do papai",
+   "jogo na tela do quintal"
+  ]
+ },
+ {
+  "id": "S3E38",
+  "pt": "Casinha",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo constroem uma casinha de cobertor muito especial para o bicho de pelúcia Kimjim, que não cabe para tirar a soneca. A mamãe também quer aumentar a casa e pega a fita métrica.",
+  "aliases": [
+   "cabana",
+   "kimjim",
+   "casinha de cobertor",
+   "pelúcia",
+   "bichinho de pelúcia",
+   "fita métrica"
+  ]
+ },
+ {
+  "id": "S3E39",
+  "pt": "Exercício",
+  "pt_source": "apple",
+  "card": "O papai tenta fazer o treino no quintal, mas Bingo finge ser a funcionária nova da chefe Bluey e as meninas montam um escritório ao redor dele. Ele vira elevador. Seu treino de dez minutos nunca dá certo.",
+  "aliases": [
+   "treino do papai",
+   "escritório de brincadeira",
+   "bingo funcionária nova",
+   "papai de elevador",
+   "exercício no quintal"
+  ]
+ },
+ {
+  "id": "S3E40",
+  "pt": "Relaxar",
+  "pt_source": "apple",
+  "card": "A família chega num hotel de férias, mas Bluey e Bingo preferem explorar o quarto, o elevador e tudo mais do que relaxar na praia com a mamãe. No carro elas cantam a música dos cinco homenzinhos no disco voador.",
+  "aliases": [
+   "férias no hotel",
+   "quarto de hotel",
+   "elevador",
+   "relaxar na praia",
+   "viagem de carro"
+  ]
+ },
+ {
+  "id": "S3E41",
+  "pt": "Passarinho",
+  "pt_source": "apple",
+  "card": "Na praia, a mamãe ensina Bluey a jogar varetas longe. Bingo e o papai, triste, acham uma vareta com cabeça de pássaro e fazem uma escultura na areia, que é destruída por crianças maiores.",
+  "aliases": [
+   "vareta",
+   "escultura de areia",
+   "praia",
+   "castelo de areia destruído",
+   "pássaro de vareta"
+  ]
+ },
+ {
+  "id": "S3E42",
+  "pt": "Apresentação",
+  "pt_source": "apple",
+  "card": "Bluey decide contar quantas vezes o papai manda nela e descobre que ele guarda o molho de tomate bom para os adultos. Bingo ensaia a apresentação do dia de mostrar e contar com uma garra de caranguejo.",
+  "aliases": [
+   "papai manda em tudo",
+   "molho de tomate",
+   "garra de caranguejo",
+   "dia de mostrar",
+   "contar as ordens"
+  ]
+ },
+ {
+  "id": "S3E43",
+  "pt": "Dragão",
+  "pt_source": "apple",
+  "card": "Bluey, o papai, a mamãe e a Bingo desenham a si mesmos como personagens e partem numa missão para achar o dragão da história. O papai desenha muito mal. Aparece até o Humpty Dumpty.",
+  "aliases": [
+   "dragão",
+   "desenhar o dragão",
+   "papai não sabe desenhar",
+   "humpty dumpty",
+   "história desenhada"
+  ]
+ },
+ {
+  "id": "S3E44",
+  "pt": "Meninas Selvagens",
+  "pt_source": "apple",
+  "card": "Na escola, Cacau quer jogar Meninas Selvagens com a Indy e o Winton, que é o porco, mas Chloe prefere outro jogo. Calypso diz que um jogo pode mudar um pouco. As meninas caçam o Winton na floresta.",
+  "aliases": [
+   "meninas selvagens",
+   "winton porco",
+   "brincar de bichos",
+   "indy e cacau",
+   "pega pega do banheiro"
+  ]
+ },
+ {
+  "id": "S3E45",
+  "pt": "TV da Loja",
+  "pt_source": "apple",
+  "card": "Na farmácia, Bluey, Bingo e os amigos descobrem as telas das câmeras de segurança. Dançam para as câmeras para chamar a atenção da Cacau, dos Terriers e do Winton.",
+  "aliases": [
+   "câmera na loja",
+   "telas na farmácia",
+   "dançar para a câmera",
+   "câmera de segurança",
+   "farmácia",
+   "televisão da loja"
+  ]
+ },
+ {
+  "id": "S3E46",
+  "pt": "Escorregador",
+  "pt_source": "apple",
+  "card": "Bingo e Lila estão animadas com o novo escorregador de água, mas insetos ficam passando. Elas brincam de inspetoras de insetos para não esmagar ninguém. Papai quase esmaga uma lagarta e voa para os arbustos.",
+  "aliases": [
+   "escorregador de água",
+   "inspetor de insetos",
+   "lagarta",
+   "borboleta",
+   "bingo e lila"
+  ]
+ },
+ {
+  "id": "S3E47",
+  "pt": "Críquete",
+  "pt_source": "apple",
+  "card": "Num amistoso de críquete da vizinhança, nenhum dos pais consegue tirar o Rusty, que treinou muito a rebatida. O pai do Lucky tenta uma bola rápida, mas o Rusty rebate e ainda passa fácil para a irmãzinha pegar.",
+  "aliases": [
+   "críquete",
+   "rusty rebatedor",
+   "jogo dos pais",
+   "jogo da vizinhança",
+   "bola rápida"
+  ]
+ },
+ {
+  "id": "S3E48",
+  "pt": "Cesto Fantasma",
+  "pt_source": "apple",
+  "card": "O papai finge ser um corretor de imóveis vendendo a casa das Vovozinhas para a mamãe. Janet e Rita não querem sair e tentam atrapalhar, até com o Cesto Fantasma, um cesto de roupa assombrado.",
+  "aliases": [
+   "cesto fantasma",
+   "cesto de roupa assombrado",
+   "corretor de imóveis",
+   "casa das vovozinhas",
+   "vovozinhas janet e rita"
+  ]
+ },
+ {
+  "id": "S3E49",
+  "pt": "A Placa",
+  "pt_source": "apple",
+  "card": "Especial de 28 minutos. A casa dos Heelers está à venda e Bluey fica triste. No dia do casamento da madrinha Frisky com o Tio Zé, ela foge ao saber que ele quer se mudar. Calypso conta a história do fazendeiro.",
+  "aliases": [
+   "casamento",
+   "casamento da tia",
+   "casamento da madrinha",
+   "casamento da irmã",
+   "noiva fugiu",
+   "casa à venda",
+   "placa de vende se"
+  ]
+ },
+ {
+  "id": "S3E50",
+  "pt": "Surpresa",
+  "pt_source": "apple",
+  "card": "Bluey e Bingo querem que o papai brinque de jogos diferentes, então ele brinca dos dois ao mesmo tempo. Cuida dos bebês de porta-latas e bolinha de tênis da Bingo enquanto Bluey o ataca com uma arminha de bolinhas.",
+  "aliases": [
+   "bebês de porta latas",
+   "bebês de brinquedo",
+   "papai cuida de bebês",
+   "hospital de brinquedo",
+   "arminha de bolinhas"
+  ]
+ }
+]

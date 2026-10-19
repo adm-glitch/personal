@@ -3,8 +3,16 @@
 // episode id against the query, and one Noul says whether any episode matches at all.
 const ENDPOINT = "https://api.typesafe.ai/v1/systemone";
 
-export function catalogue(episodes) {
-  return episodes.map((e) => `${e.id} | ${e.title} | ${e.plot}`).join("\n");
+// One line per episode. With a pt-BR card: Brazilian title / English title | card | aliases, plus the first
+// `plotChars` of the English plot (0 = card only). Without a card: the English plot.
+export function catalogue(episodes, { plotChars = 0 } = {}) {
+  return episodes
+    .map((e) => {
+      if (!e.card) return `${e.id} | ${e.title} | ${e.plot}`;
+      const plot = plotChars ? ` | ${e.plot.slice(0, plotChars)}` : "";
+      return `${e.id} | ${e.pt} / ${e.title} | ${e.card} | lembram como: ${e.aliases.join("; ")}${plot}`;
+    })
+    .join("\n");
 }
 
 export function buildRequest(episodes, state, query, model = "jev-latest") {

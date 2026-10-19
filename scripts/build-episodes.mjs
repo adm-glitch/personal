@@ -2,12 +2,13 @@
 // Episodes + stills: TVMaze API (CC BY-SA). Plots: Blueypedia via the MediaWiki API (CC BY-SA).
 // Plots are only sent to Jev as search context; the page shows title, number and still.
 // Run: node scripts/build-episodes.mjs
-import { writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
 
 const UA = "bluey-finder/0.1 (family fan project; github.com/adm-glitch/bluey-finder)";
 const WIKI = "https://blueypedia.fandom.com/api.php";
 const SHOW_ID = 41821; // TVMaze: Bluey (2018)
 const PLOT_CHARS = 700;
+const LONG_PLOT_CHARS = 2500; // source text for the pt-BR cards (data/sources/wiki-plots.json)
 
 async function getJson(url) {
   const res = await fetch(url, { headers: { "User-Agent": UA } });
@@ -140,20 +141,37 @@ const rows = episodes.map((e) => {
     title: e.name,
     airdate: e.airdate,
     image: e.image?.medium ?? null,
-    still: e.image?.original ?? null,
+    still: e.image?.medium?.replace("/medium_landscape/", "/large_landscape/") ?? null,
     tvmaze: e.url,
     wiki: wt ? `https://blueypedia.fandom.com/wiki/${encodeURIComponent(page.replace(/ /g, "_"))}` : null,
     plot: clip(recap && recap !== blurb ? `${blurb} ${recap}` : blurb, PLOT_CHARS),
+    longPlot: clip(recap && recap !== blurb ? `${blurb} ${recap}` : blurb, LONG_PLOT_CHARS),
   };
 }).filter(Boolean).sort((a, b) => a.season - b.season || a.number - b.number);
 
 const dupes = rows.filter((r) => rows.filter((x) => x.id === r.id).length > 1).map((r) => `${r.id} ${r.title}`);
 if (dupes.length) throw new Error(`duplicate ids: ${dupes.join(", ")}`);
 
-await mkdir("data", { recursive: true });
+// pt-BR search cards (data/cards/s<season>.json), written from wiki plots + Apple TV BR + the dub glossary.
+const cards = new Map();
+for (const s of [1, 2, 3]) {
+  try {
+    for (const c of JSON.parse(await readFile(`data/cards/s${s}.json`, "utf8"))) cards.set(c.id, c);
+  } catch (err) {
+    if (err.code !== "ENOENT") throw err;
+  }
+}
+for (const r of rows) {
+  const c = cards.get(r.id);
+  if (c) Object.assign(r, { pt: c.pt, card: c.card, aliases: c.aliases });
+}
+
+await mkdir("data/sources", { recursive: true });
+await writeFile("data/sources/wiki-plots.json", JSON.stringify(rows.map(({ id, title, longPlot }) => ({ id, title, plot: longPlot })), null, 1) + "\n");
+for (const r of rows) delete r.longPlot;
 await writeFile("data/episodes.json", JSON.stringify({ built: new Date().toISOString(), sources: ["api.tvmaze.com", "blueypedia.fandom.com"], episodes: rows }, null, 1) + "\n");
 // What the page displays: no plots.
 await mkdir("public", { recursive: true });
-await writeFile("public/episodes.json", JSON.stringify(rows.map(({ id, season, number, title, airdate, image, still }) => ({ id, season, number, title, airdate, image, still }))) + "\n");
-console.log(`${rows.length} episodes, ${rows.length - missing.length} with Blueypedia plots, ~${Math.round(rows.reduce((n, r) => n + r.plot.length, 0) / 4)} plot tokens`);
+await writeFile("public/episodes.json", JSON.stringify(rows.map(({ id, season, number, title, pt, aliases, airdate, image, still }) => ({ id, season, number, title, pt, aliases, airdate, image, still }))) + "\n");
+console.log(`${rows.length} episodes, ${rows.length - missing.length} with Blueypedia plots, ${cards.size} pt-BR cards, ~${Math.round(rows.reduce((n, r) => n + r.plot.length, 0) / 4)} plot tokens`);
 if (missing.length) console.log("no wiki page:", missing.join(", "));

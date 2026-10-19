@@ -10,7 +10,10 @@ let inflight = null;
 
 const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
-// "s3e14", "3x14", "t3 e14", or words of the English title.
+// What instant matching looks at: Brazilian title, English title, aliases.
+const haystack = new Map(episodes.map((e) => [e.id, fold([e.pt, e.title, ...(e.aliases ?? [])].filter(Boolean).join(" | "))]));
+
+// "s3e14", "3x14", "t3 e14", or words of a title or alias.
 function localMatches(q) {
   const f = fold(q);
   const se = f.match(/^[st]?\s*(\d)\s*[ex·.\s]\s*(\d{1,2})$/);
@@ -19,7 +22,7 @@ function localMatches(q) {
     return e ? [e] : [];
   }
   if (f.length < 3) return [];
-  return episodes.filter((e) => fold(e.title).includes(f)).slice(0, 3);
+  return episodes.filter((e) => haystack.get(e.id).includes(f)).slice(0, 3);
 }
 
 function render(items, note = "") {
@@ -37,10 +40,10 @@ function render(items, note = "") {
       se.className = "se";
       se.textContent = `Temporada ${e.season} · Episódio ${e.number}`;
       const h = document.createElement("h2");
-      h.textContent = e.title;
+      h.textContent = e.pt ?? e.title;
       const meta = document.createElement("div");
       meta.className = "meta";
-      meta.textContent = e.airdate ? `estreou em ${e.airdate.slice(0, 4)}` : "";
+      meta.textContent = [e.pt && e.pt !== e.title ? e.title : "", e.airdate?.slice(0, 4)].filter(Boolean).join(" · ");
       body.append(se, h, meta);
       li.append(img, body);
       return li;

@@ -1,0 +1,1222 @@
+{
+ "pulled": "2026-10-19T14:13:09.238Z",
+ "source": "https://tv.apple.com/br/show/bluey/umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1",
+ "episodes": [
+  {
+   "season": 1,
+   "number": 1,
+   "title": "O Xilofone Mágico",
+   "description": "Bluey e Bingo têm um xilofone mágico que pode congelar seu pai no espaço e no tempo. Papai, no entanto, ganha controle sob o feitiço e congela Bluey.",
+   "released": "2018-10-01",
+   "url": "https://tv.apple.com/br/episode/o-xilofone-magico/umc.cmc.440oapkohz2dznupmkdm5lfbp?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 2,
+   "title": "Hospital",
+   "description": "A Dra. Bluey é necessária quando Papai recebe uma radiografia muito estranha do enfermeiro Bingo. Parece que ele tem um gato na barriga, deixando a Dra. Bluey sem escolha a não ser operá-lo imediatamente.",
+   "released": "2018-10-02",
+   "url": "https://tv.apple.com/br/episode/hospital/umc.cmc.3af9hyl676t4b9d8e5suy3vyf?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 3,
+   "title": "Manter no Alto",
+   "description": "Bluey, Bingo e mamãe jogam um jogo com um último balão - mas a brincadeira se torna competitiva quando papai se junta a eles.",
+   "released": "2018-10-03",
+   "url": "https://tv.apple.com/br/episode/manter-no-alto/umc.cmc.11lu004ec6sfblivhngh1n5lb?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 4,
+   "title": "Papai Robô",
+   "description": "Bluey, Bingo e mamãe brincam de balão. A competição fica acirrada quando o pai entra no jogo; Papai Robô ajuda Bluey e Bingo a recolher os brinquedos, mas o resultado é um desastre completo.",
+   "released": "2018-10-04",
+   "url": "https://tv.apple.com/br/episode/papai-robo/umc.cmc.21zsgo2klj9k3ur9rj7hmkncz?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 5,
+   "title": "Pisando Nas Sombras",
+   "description": "Bluey e suas amigas brincam durante um piquenique, mas Coco não joga de acordo com as regras.",
+   "released": "2018-10-05",
+   "url": "https://tv.apple.com/br/episode/pisando-nas-sombras/umc.cmc.1kjgdo2pbfzyy788o67jslige?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 6,
+   "title": "O Fim de Semana",
+   "description": "Bingo encontra um inseto incrível no jardim durante uma brincadeira com Bluey e o pai, mas fica chateada quando o pai fica tão absorvido pelo jogo que não lhe dá atenção.",
+   "released": "2018-10-06",
+   "url": "https://tv.apple.com/br/episode/o-fim-de-semana/umc.cmc.3f5vpzaknavy4kp1y9af0ud8z?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 7,
+   "title": "Churrasco",
+   "description": "Bluey faz um churrasco no quintal, mas cabe a Bingo procurar por pimentões para a salada como seus primos lhe pediram.",
+   "released": "2018-10-07",
+   "url": "https://tv.apple.com/br/episode/churrasco/umc.cmc.1fmgv8gu50myinuj2xb06orky?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 8,
+   "title": "Morceguinha",
+   "description": "Sem vontade de ir para a cama, Bluey tenta sonhar em ser um morcego noturno para que ela possa ficar acordada a noite toda. Logo, ela se vê voando pelo céu noturno.",
+   "released": "2018-10-08",
+   "url": "https://tv.apple.com/br/episode/morceguinha/umc.cmc.2hz0pjooddcu8z67hbgt4f04?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 9,
+   "title": "Cavalinho",
+   "description": "As crianças fazem um casamento de cavalo para distrair Socks quando ela se recusa a devolver o brinquedo favorito de Bluey.",
+   "released": "2018-10-09",
+   "url": "https://tv.apple.com/br/episode/cavalinho/umc.cmc.62m1ppdiwnghmq1jh75i4v83u?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 10,
+   "title": "Hotel",
+   "description": "Bluey e Bingo decidem administrar um hotel louco, com o pai atuando como seu convidado. Bingo, porém, se enche da natureza controladora de Bluey, e o o pai deve ensiná-los a importância de ceder e trabalhar juntos.",
+   "released": "2018-10-10",
+   "url": "https://tv.apple.com/br/episode/hotel/umc.cmc.6d6cobs43qf1cyfn7z1xnydh?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 11,
+   "title": "Bicicleta",
+   "description": "Bluey enfrenta dificuldades para aprender a andar de bicicleta, mas encontra inspiração quando observa a determinação de seus amigos em suas próprias tarefas.",
+   "released": "2018-10-11",
+   "url": "https://tv.apple.com/br/episode/bicicleta/umc.cmc.4kbj273c4nbo1otfk7z6f4743?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 12,
+   "title": "Bob Bilby",
+   "description": "Bluey enfrenta dificuldades para aprender a andar de bicicleta, mas encontra inspiração nos amigos; é a vez de Bingo levar para casa o Coelho Bob para acompanhá-lo nas suas atividades e da sua família.",
+   "released": "2018-10-12",
+   "url": "https://tv.apple.com/br/episode/bob-bilby/umc.cmc.62acq1j31lwwjedxj3i4pl7d1?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 13,
+   "title": "Jogo de Espiões",
+   "description": "Bingo decide parar de jogar o jogo de espionagem de Bluey no parque e seu dispositivo para manter os adultos sob controle deixa de funcionar.",
+   "released": "2018-10-13",
+   "url": "https://tv.apple.com/br/episode/jogo-de-espioes/umc.cmc.3b7oyg4glxpfuzbr6lzjyedof?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 14,
+   "title": "Comida Para Levar",
+   "description": "Bluey e Bingo testam a paciência do pai quando não conseguem esperar pelo pedido que fizeram.",
+   "released": "2018-10-14",
+   "url": "https://tv.apple.com/br/episode/comida-para-levar/umc.cmc.27mfddwo2cqjvrnnf56296159?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 15,
+   "title": "Borboletas",
+   "description": "Bluey, Bingo e Judo se divertem brincando com borboletas no quintal, mas Bingo fica chateada quando Bluey foge com Judo.",
+   "released": "2018-10-15",
+   "url": "https://tv.apple.com/br/episode/borboletas/umc.cmc.23sn1fzve4bx8pb7ln37a8j3d?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 16,
+   "title": "Bola de Ioga",
+   "description": "Bingo adora brincar com o pai de um jeito mais intenso, mas, às vezes, ele se esquece de que ela é menor do que a irmã. A mãe mostra para Bingo como ela pode alertar a família sobre seus limites usando o próprio latido.",
+   "released": "2018-10-16",
+   "url": "https://tv.apple.com/br/episode/bola-de-ioga/umc.cmc.6qmmwg9nqnooy9n9jaf058idl?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 17,
+   "title": "Calypso",
+   "description": "Bluey e seus amigos se divertem jogando na escola. O professor deles, Calypso, os mantêm entretidos mostrando uma música.",
+   "released": "2018-10-17",
+   "url": "https://tv.apple.com/br/episode/calypso/umc.cmc.42qpebh6eluga0fcvdaww51in?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 18,
+   "title": "A Doutora",
+   "description": "Honey espera impacientemente por sua consulta com Dr. Bingo - e sua família tenta distraí-la fingindo trabalhar no hospital.",
+   "released": "2018-10-18",
+   "url": "https://tv.apple.com/br/episode/a-doutora/umc.cmc.1d49mieyiqahgoxjcqa3lusow?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 19,
+   "title": "A Garra",
+   "description": "Mamãe e papai constroem sua própria máquina de bichinhos de pelúcia em casa, para que Bluey e Bingo possam brincar, mas papai garante que vencer não é fácil.",
+   "released": "2018-10-19",
+   "url": "https://tv.apple.com/br/episode/a-garra/umc.cmc.27g1u8k4b06wkxl9dp83bvb7o?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 20,
+   "title": "A Feira",
+   "description": "Bluey está impressionada com todas as opções disponíveis nos mercados para gastar os cinco dólares que ganhou da fada dos dentes. É mais difícil do que parece fazer a compra perfeita.",
+   "released": "2018-10-20",
+   "url": "https://tv.apple.com/br/episode/a-feira/umc.cmc.1tor0vlvwqmhbkway93xxw5k5?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 21,
+   "title": "Montanhas Azuis",
+   "description": "Bluey, Bingo, mamãe e papai brincam com fantoches de mão. No jogo, eles andam pelas Montanhas Azuis e precisam ser mais espertos do que a raposa atrevida e localizar as camas mais macias do mundo.",
+   "released": "2018-10-21",
+   "url": "https://tv.apple.com/br/episode/montanhas-azuis/umc.cmc.3pw5mytjh1femgnhkfix28mxr?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 22,
+   "title": "A Piscina",
+   "description": "Bluey e papai provocam mamãe por ser exigente ao fazer as malas para ir à piscina, mas, quando chegam mal preparados, percebem que mamãe estava certa.",
+   "released": "2018-10-22",
+   "url": "https://tv.apple.com/br/episode/a-piscina/umc.cmc.7e8l57yfb3u3q662lnhrry2hl?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 23,
+   "title": "O Mercado",
+   "description": "Bluey e seus amigos se divertem fingindo estar em diferentes lojas, mas quando ela começa a questionar e a mudar as regras, ninguém sabe se o jogo acabará.",
+   "released": "2018-10-23",
+   "url": "https://tv.apple.com/br/episode/o-mercado/umc.cmc.4md8z8znlejtb6uj66vljvf8?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 24,
+   "title": "Passeio de Charrete",
+   "description": "Papai leva Bluey e Bingo em um passeio de carroça pelo parque, e Bluey quer brincar nas barras. Porém, sua paciência é testada quando papai continua a parar e conversar com outros adultos.",
+   "released": "2018-10-24",
+   "url": "https://tv.apple.com/br/episode/passeio-de-charrete/umc.cmc.45ra48io6q938cp3b0uglvje4?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 25,
+   "title": "O Táxi",
+   "description": "Bluey finge ser taxista e seu primeiro passageiro é o seu pai, que precisa chegar ao aeroporto com urgência.",
+   "released": "2018-10-25",
+   "url": "https://tv.apple.com/br/episode/o-taxi/umc.cmc.3edmq63a9kv2113gxqzwxktbu?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 26,
+   "title": "A Praia",
+   "description": "Bluey corre para alcançar a mamãe quando ela dá um passeio na praia. Ela se depara com uma série de encontros divertidos ao longo do caminho.",
+   "released": "2018-10-26",
+   "url": "https://tv.apple.com/br/episode/a-praia/umc.cmc.4hidq3f0uijfqwzspykvx6g55?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 27,
+   "title": "Piratas",
+   "description": "Bluey, Bingo e Missy vão para o alto mar e brincam de piratas no balanço da rede, mas precisam ter coragem para enfrentar as tempestades e os ataques de baleias.",
+   "released": "2019-04-01",
+   "url": "https://tv.apple.com/br/episode/piratas/umc.cmc.18wvndrb0c19upvjw6i9d714e?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 28,
+   "title": "Vovozinhas",
+   "description": "Bingo e Bluey não sabem como responder uma pergunta ao jogarem um jogo \"de gente velha\". Elas ligam para Vovó para descobrirem vovós costumam dançar.",
+   "released": "2019-04-02",
+   "url": "https://tv.apple.com/br/episode/vovozinhas/umc.cmc.3kemhaudpijl2w6vkhekiatd6?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 29,
+   "title": "O Riacho",
+   "description": "Papai e as crianças decidem fazer uma viagem ao riacho depois de se cansarem do parquinho local; embora fora de sua zona de conforto, os olhos de Bluey estão abertos para a beleza do mundo natural.",
+   "released": "2019-04-03",
+   "url": "https://tv.apple.com/br/episode/o-riacho/umc.cmc.4aj3n48v48jn7pjdx2xa8c7z0?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 30,
+   "title": "As Fadas",
+   "description": "A casa de Bluey é invadida por fadas e toda a família trabalha em conjunto para caçá-las.",
+   "released": "2019-04-04",
+   "url": "https://tv.apple.com/br/episode/as-fadas/umc.cmc.1ejxmg4r0vy1e4cd6g9888ty2?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 31,
+   "title": "Trabalhando",
+   "description": "Durante uma brincadeira, papai contrata Bluey e Bingo em sua fábrica de canos de esgoto. Bluey acaba assumindo o comando da firma, impressionando o papai com uma regra nova.",
+   "released": "2019-04-05",
+   "url": "https://tv.apple.com/br/episode/trabalhando/umc.cmc.76i9pe7wlzb2lp2nqu0uby10l?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 32,
+   "title": "Bumpy e a Sábia Cachorra de Caça",
+   "description": "Bingo vai para o hospital e Bluey e papai fazem um vídeo caseiro com uma historinha para animá-la.",
+   "released": "2019-04-06",
+   "url": "https://tv.apple.com/br/episode/bumpy-e-a-sabia-cachorra-de-caca/umc.cmc.4yq6r9ndc5ik3z2h0phso1tkw?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 33,
+   "title": "Cama Elástica",
+   "description": "Papai é forçado a parar de brincar com as meninas para ir trabalhar. Porém, elas fazem tudo para mantê-lo brincando com elas.",
+   "released": "2019-04-07",
+   "url": "https://tv.apple.com/br/episode/cama-elastica/umc.cmc.6z8o1dwekv83og7bt72wgvo0w?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 34,
+   "title": "O Depósito de Lixo",
+   "description": "Ao visitar o lixão, papai anuncia que é o melhor em tudo. Bluey descobre que papai jogou fora um de seus desenhos antigos e começa a duvidar se ele é isso tudo mesmo.",
+   "released": "2019-04-08",
+   "url": "https://tv.apple.com/br/episode/o-deposito-de-lixo/umc.cmc.186hqfy0eu30btd34j9q3tbry?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 35,
+   "title": "O Zoológico",
+   "description": "Bluey cria um zoológico em seu quintal com criaturas incríveis, incluindo o grande gorila papai. Quando ele escapa, o tratador Bluey tenta rastreá-lo.",
+   "released": "2019-04-09",
+   "url": "https://tv.apple.com/br/episode/o-zoologico/umc.cmc.1ytd4bd7k2fgy0mld4jjx3k42?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 36,
+   "title": "Os Mochileiros",
+   "description": "Mamãe e papai partem para uma aventura e decidiram usar as crianças de mochilas. Tudo está indo muito bem até que eles perdem seus passaportes.",
+   "released": "2019-04-10",
+   "url": "https://tv.apple.com/br/episode/os-mochileiros/umc.cmc.1fwck4uov80dqlc13exblg505?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 37,
+   "title": "A AVENTURA",
+   "description": "Bluey e Chloe saem em uma aventura para resgatares o reino das garras de uma rainha gananciosa.",
+   "released": "2019-04-11",
+   "url": "https://tv.apple.com/br/episode/a-aventura/umc.cmc.3mnbmcdqi7r03djawh2vn5e51?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 38,
+   "title": "O Jogo da Imitação",
+   "description": "O jogo de Bluey acaba de uma maneira ruim e a família faz uma visita de emergência ao veterinário.",
+   "released": "2019-04-12",
+   "url": "https://tv.apple.com/br/episode/o-jogo-da-imitacao/umc.cmc.52gttlxrc7kfj1ujtjtwusdix?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 39,
+   "title": "A Prima Vem Dormir Com A Gente",
+   "description": "Bingo e Bluey passam a noite na casa da prima e aproveitam a oportunidade para ficarem acordadas até tarde. Muffin chega muito cansada e as meninas se divertem mais do que esperavam.",
+   "released": "2019-04-13",
+   "url": "https://tv.apple.com/br/episode/a-prima-vem-dormir-com-a-gente/umc.cmc.2ml1g83bzlt9v9vix2nyuh2dc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 40,
+   "title": "A Bebê Prematura",
+   "description": "O jogo de Rusty entra em conflito com o jogo de Bluey quando eles estão no playgroup e a turma percebe que os jogos têm muito em comum.",
+   "released": "2019-04-14",
+   "url": "https://tv.apple.com/br/episode/a-bebe-prematura/umc.cmc.40l6eentalbaotitcjhvveusp?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 41,
+   "title": "Mamães e Papais",
+   "description": "Indy e Rusty não conseguem chegar a um acordo enquanto brincam de papai e mamãe. Indy tem dificuldade em encontrar um novo parceiro e Rusty acaba ficando com o papel de bebê junto com Bluey.",
+   "released": "2019-04-15",
+   "url": "https://tv.apple.com/br/episode/mamaes-e-papais/umc.cmc.6k5w94sjz39m9fyj7zhn2judx?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 42,
+   "title": "Esconde-Esconde",
+   "description": "Bluey adora brincar de esconde-esconde, mas a família está convencida de que ela vai se distrair e esquecer de procurar por eles. Bluey promete que vai se concentrar e, depois de contar até vinte, a brincadeira começou! Mas sua promessa logo é esquecida, quando ela descobre Chattermax (um brinquedo velho e barulhento) escondido debaixo da pia. Bluey se distrai e esquece a brincadeira, deixando sua família frustrada e presa nos esconderijos. Somente quando ela redescobre o quanto Chattermax é barulhento e irritante e que ela precisa de ajuda para desligá-lo, Bluey finalmente usa sua capacidade de concentração, lembra-se do jogo e encontra todos.",
+   "released": "2019-04-16",
+   "url": "https://tv.apple.com/br/episode/esconde-esconde/umc.cmc.6znhux3fs7a51cms55xfkcaz3?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 43,
+   "title": "O Acampamento",
+   "description": "Bluey faz um novo amigo durante um acampamento de férias, mas os dois não falam a mesma língua. Ela não consegue entendê-lo, mas os dois encontram uma forma de se comunicar pelas brincadeiras.",
+   "released": "2019-04-17",
+   "url": "https://tv.apple.com/br/episode/o-acampamento/umc.cmc.1s9laommyf179azkj06acb6yj?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 44,
+   "title": "Monte Mamãe-Papai",
+   "description": "Bingo e Bluey têm apenas cinco minutos antes de dormir, então eles decidem correr para o topo de uma montanha. Eles precisam trabalhar juntos para enfrentar tempestades, avalanches e áreas fedorentas.",
+   "released": "2019-04-18",
+   "url": "https://tv.apple.com/br/episode/monte-mamae-papai/umc.cmc.4o2p87638gmapq32riqolhg8i?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 45,
+   "title": "Filhos",
+   "description": "No supermercado, um jogo de Bingo e Bluey causa a maior confusão.",
+   "released": "2019-04-19",
+   "url": "https://tv.apple.com/br/episode/filhos/umc.cmc.21loyvxkw3sldwja7xb7hmy58?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 46,
+   "title": "Galinha-Rato",
+   "description": "É hora de dormir e Bingo não consegue lembrar onde deixou Floppy. Ao retomar seus passos, ela e Bluey pedem ajuda de mamãe na esperança de encontrá-la.",
+   "released": "2019-04-20",
+   "url": "https://tv.apple.com/br/episode/galinha-rato/umc.cmc.41dyjeddey1o9utw2e8gdbpzl?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 47,
+   "title": "Vizinhos",
+   "description": "As meninas constroem casinhas com a mamãe; Bluey precisa de conselhos para lidar com Bingo.",
+   "released": "2019-04-21",
+   "url": "https://tv.apple.com/br/episode/vizinhos/umc.cmc.g7psdg2hvpdratmgovkevbe5?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 48,
+   "title": "Provocação",
+   "description": "Bluey, Bingo e Mamãe discutem com Papai sobre a definição de provocação. Quando eles se lembram de todas as vezes que ele provocou, Papai argumenta que ele estava apenas brincando.",
+   "released": "2026-10-26",
+   "url": "https://tv.apple.com/br/episode/provocacao/umc.cmc.1wij56feye52rihrfcn9wmxqn?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 49,
+   "title": "Os Asarpagos",
+   "description": "O pai de Bluey a ensina boas maneiras à mesa. Bluey pegas aspargos com as mãos e mostra que todos temos um lado pouco educado.",
+   "released": "2019-04-23",
+   "url": "https://tv.apple.com/br/episode/os-asarpagos/umc.cmc.68am27oj280jwg2ylgavkm35g?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 50,
+   "title": "Shaun",
+   "description": "Papai transforma sua mão em um emu para mostrar a Bluey e Bingo como é difícil cuidar de um animal de estimação.",
+   "released": "2019-04-24",
+   "url": "https://tv.apple.com/br/episode/shaun/umc.cmc.6dnxtzyqgguu0cvjiz8halfd1?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 1,
+   "number": 51,
+   "title": "Hora de Dormir com o Papai",
+   "description": "Mamãe vai em um chá de bebê, e papai se encarrega da rotina noturna das meninas. Porém, com Bluey sentindo falta da mãe, papai precisa usar todos os jogos que conhece para mantê-las entretidas.",
+   "released": "2019-04-25",
+   "url": "https://tv.apple.com/br/episode/hora-de-dormir-com-o-papai/umc.cmc.5val19ne7epl9fuvymzkleibw?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 1,
+   "title": "Vamos Dançar",
+   "description": "O papai come a última batata frita da Bingo e, para compensar, Bingo tem direito a três desejos de 'modo de dança' para usar à vontade.",
+   "released": "2020-03-17",
+   "url": "https://tv.apple.com/br/episode/vamos-dancar/umc.cmc.369f6onjjf19fwv5zzzyqvw7o?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 2,
+   "title": "Hammerbarn",
+   "description": "Chilli e Bandit estão ansiosos para comprar um novo forno de pizza como o de seus vizinhos, então todos partem em viagem para Hammerbarn.",
+   "released": "2020-03-18",
+   "url": "https://tv.apple.com/br/episode/hammerbarn/umc.cmc.4ktx9nbabyzyuo3vyf7sqr41n?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 3,
+   "title": "Varinha de Pena",
+   "description": "Bluey e Mamãe vão para a festa de Chloe, mas Bingo não foi convidada. Para passar o tempo, ela se diverte brincando de varinha mágica com uma pena de cacatua.",
+   "released": "2020-03-19",
+   "url": "https://tv.apple.com/br/episode/varinha-de-pena/umc.cmc.2kj3s1frourarck79en9um1gd?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 4,
+   "title": "Squash",
+   "description": "Papai e tio Stripe jogam squash e Bluey e Bingo fingem que estão no controle de todos os seus movimentos. Bingo prova que irmãos mais velhos nem sempre vencem irmãos mais novos.",
+   "released": "2020-03-20",
+   "url": "https://tv.apple.com/br/episode/squash/umc.cmc.5gvr3a3h2n577xyknbqj5tf2i?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 5,
+   "title": "Cabeleireiras",
+   "description": "Bluey e Bingo brincam de cabeleireiro, cuidando de sua mãe e de seu pai.",
+   "released": "2020-03-21",
+   "url": "https://tv.apple.com/br/episode/cabeleireiras/umc.cmc.5skpwyys35xkkc7fltiwbgd95?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 6,
+   "title": "Festa dos Tocos",
+   "description": "Papai e seus amigos arrancam tocos de árvore do jardim, mas Bluey, Bingo e Muffin decidem aproveitar um dos tocos para brincar e não querem deixar que os adultos o arranquem.",
+   "released": "2020-03-22",
+   "url": "https://tv.apple.com/br/episode/festa-dos-tocos/umc.cmc.3wzt7lgvshkdcvvx3kl04rjat?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 7,
+   "title": "Coisa Favorita",
+   "description": "No jantar, a família se lembra de seus momentos favoritos do dia. Porém, Bluey ri de algo que sua irmã disse e a deixa muito chateada.",
+   "released": "2020-03-23",
+   "url": "https://tv.apple.com/br/episode/coisa-favorita/umc.cmc.480and3w6xp25ysi4pv2t7yoy?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 8,
+   "title": "Papai Leva as Meninas para a Escola",
+   "description": "Papai deve dar o café da manhã às crianças e deixá-las na escola na hora certa, mas Bluey e Bingo não facilitam a tarefa para ele.",
+   "released": "2020-03-24",
+   "url": "https://tv.apple.com/br/episode/papai-leva-as-meninas-para-a-escola/umc.cmc.483i1l5xhupxdznqoqqrihao0?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 9,
+   "title": "Bingo",
+   "description": "Bingo precisa aprender a jogar sozinha quando Bluey tem um encontro para jogar com Chloe.",
+   "released": "2020-03-25",
+   "url": "https://tv.apple.com/br/episode/bingo/umc.cmc.1mnhlibzho28usd38vi9zboai?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 10,
+   "title": "Ilha do Tapete",
+   "description": "Bluey e Bingo fingem estar morando em uma ilha deserta no quintal de casa.",
+   "released": "2020-03-26",
+   "url": "https://tv.apple.com/br/episode/ilha-do-tapete/umc.cmc.3b1qqeun21wprqh5q91k02mke?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 11,
+   "title": "Charadas",
+   "description": "Bluey e Bingo querem que todos joguem charadas, mas Muffin e Socks são muito jovens para entender as regras. Nanna deve pensar em maneiras de manter o jogo nos trilhos.",
+   "released": "2020-03-27",
+   "url": "https://tv.apple.com/br/episode/charadas/umc.cmc.3lentsihpcw9h8erk4qyngdi8?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 12,
+   "title": "Lagartixa Grudenta",
+   "description": "Mamãe quer levar Bluey e Bingo para brincar lá fora, mas eles se recusam a sair até que uma lagartixa de borracha pegajosa caia do teto.",
+   "released": "2020-03-28",
+   "url": "https://tv.apple.com/br/episode/lagartixa-grudenta/umc.cmc.31kiod35pk53sq5ok0jqplxo0?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 14,
+   "title": "Escola da Mamãe",
+   "description": "Bluey finge ser mãe de balões saltitantes e aprende sobre as dificuldades da maternidade.",
+   "released": "2020-03-30",
+   "url": "https://tv.apple.com/br/episode/escola-da-mamae/umc.cmc.61y7ulauzykn2veoi0y37edp3?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 15,
+   "title": "Trens",
+   "description": "Bingo viaja para deixar sua filha na creche, ir trabalhar como veterinário e depois voltar para casa. No entanto, há problemas em jogo.",
+   "released": "2020-03-31",
+   "url": "https://tv.apple.com/br/episode/trens/umc.cmc.2zyj4og0qczlye28450694s2p?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 16,
+   "title": "Exército",
+   "description": "Jack é o novo cão da escola e o mais novo recruta do Rusty's Army. Jack luta para seguir instruções e sempre se esquece de seu chapéu, mas Rusty faz dele um soldado.",
+   "released": "2020-04-01",
+   "url": "https://tv.apple.com/br/episode/exercito/umc.cmc.3lfp7ai9rsabtwmq8xwf0d4xn?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 17,
+   "title": "Restaurante Chique",
+   "description": "Bluey e Bingo querem que mamãe e papai sejam românticos, então eles marcam uma noite especial para os dois em seu restaurante chique. Tudo vai de acordo com o planejado, até que chega o especial do chef Bingo.",
+   "released": "2020-04-02",
+   "url": "https://tv.apple.com/br/episode/restaurante-chique/umc.cmc.4d9mb0x488f0m2g8tyg4b1cvn?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 18,
+   "title": "Nas Costas",
+   "description": "As pernas de Bingo se cansam durante uma caminhada pelo rio e ela quer pegar carona, e Mamãe e papai inventam jogos divertidos para fazê-las se mexer novamente.",
+   "released": "2020-04-03",
+   "url": "https://tv.apple.com/br/episode/nas-costas/umc.cmc.58zm2qu7gspb10bwmqlbvkh28?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 19,
+   "title": "A Apresentação",
+   "description": "Bingo joga o café da manhã na cama de Mamãe no chão, e ela se convence de que arruinou o grande dia dela. Bluey tenta encontrar uma maneira de animar a irmã e fazendo um show sobre como Mamãe e Papai se conheceram.",
+   "released": "2020-04-04",
+   "url": "https://tv.apple.com/br/episode/a-apresentacao/umc.cmc.3bt7ken1pw9q39um8h9jepd15?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 20,
+   "title": "Cócegas",
+   "description": "As crianças querem jogar um jogo e papai precisa aprender a suportar a própria dor. Felizmente, ele é resgatado por uma amigável gaivota.",
+   "released": "2020-04-05",
+   "url": "https://tv.apple.com/br/episode/cocegas/umc.cmc.4sxt152my35x05h8kn8oeumxd?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 21,
+   "title": "Fuga",
+   "description": "Mamãe e papai dizem a Bluey e Bingo que vão deixá-los na casa de Nana para que possam ter um tempo para si mesmos. As meninas ficam indignadas e imaginam um plano elaborado para se infiltrar no tempo privado de seus pais.",
+   "released": "2020-04-06",
+   "url": "https://tv.apple.com/br/episode/fuga/umc.cmc.63z3afc65e37vbza55rvmigim?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 22,
+   "title": "Ônibus",
+   "description": "Os Heelers brincam de ônibus com papai como motorista, mamãe como passageira e Bluey e Bingo como avós. Quando a mãe do passageiro fica com muito medo de dizer ao motorista do ônibus para o pai que ela secretamente o ama, ela recebe ajuda das avós.",
+   "released": "2020-04-07",
+   "url": "https://tv.apple.com/br/episode/onibus/umc.cmc.lbs4wb5qt8q6nyx87zf6y6k6?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 23,
+   "title": "Rainhas",
+   "description": "Bingo e Bluey se revezam sendo a rainha e o mordomo, mas as duas querem ser mordomos. Mamãe, então, é coroada após papai ter sido uma rainha caótica.",
+   "released": "2020-04-08",
+   "url": "https://tv.apple.com/br/episode/rainhas/umc.cmc.4w0n0qjst633tvn62d1yj0n88?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 24,
+   "title": "Montável",
+   "description": "Enquanto mamãe e papai montam sua nova cadeira giratória, Bluey e Bingo usam o papelão e o plástico-bolha para construir sua própria civilização.",
+   "released": "2020-04-09",
+   "url": "https://tv.apple.com/br/episode/montavel/umc.cmc.14opueq5e7erp1do7j2r2dp9y?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 25,
+   "title": "Helicóptero",
+   "description": "Bluey e seus amigos jogam um jogo de helicóptero com um toco de árvore, mas Bluey tem que aprender a abrir mão de um pouco do controle para se divertir.",
+   "released": "2020-04-10",
+   "url": "https://tv.apple.com/br/episode/helicoptero/umc.cmc.6tgttpeu21aebdytx8xkxa5z6?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 26,
+   "title": "Hora de Dormir",
+   "description": "Mamãe lê histórias de ninar para Bingo e lhe dá um beijo de boa noite. Bingo tem um sonho sobre uma aventura espacial com Floppy.",
+   "released": "2020-04-11",
+   "url": "https://tv.apple.com/br/episode/hora-de-dormir/umc.cmc.644ts4xbth9eyzwk2xfe0ocek?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 27,
+   "title": "Avô",
+   "description": "Vovô deveria descansar, mas Bluey e Bingo o visitam. Ele aposta uma corrida com as crianças e as leva para uma aventura.",
+   "released": "2020-10-25",
+   "url": "https://tv.apple.com/br/episode/avo/umc.cmc.3x4uvtg1mr341m89gg8z3e26m?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 28,
+   "title": "Gangorra",
+   "description": "Papai se joga rudemente em uma das pontas da gangorra e fica preso. Bluey e Bingo buscam por todo o playground algo para ajudar a tirá-lo de lá, mas acabam percebendo que precisam de uma ajuda extra.",
+   "released": "2020-10-26",
+   "url": "https://tv.apple.com/br/episode/gangorra/umc.cmc.2amas77v0j0mjqt0djvqkiy5u?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 29,
+   "title": "Cinema",
+   "description": "Bluey vai pela primeira vez ao cinema, mas preocupa-se que o filme seja muito assustador. Ela deve ser corajosa e ajudar papai quando Bingo começa a se movimentar no teatro.",
+   "released": "2020-10-27",
+   "url": "https://tv.apple.com/br/episode/cinema/umc.cmc.2r5dzz8deony08fzfc4iq1cq5?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 30,
+   "title": "Biblioteca",
+   "description": "Muffin é informada por seu pai de que é especial e ela interpreta isso como uma desculpa para fazer o que quiser.",
+   "released": "2020-10-28",
+   "url": "https://tv.apple.com/br/episode/biblioteca/umc.cmc.1sjolht9x3txsidgvz9iiyaqn?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 31,
+   "title": "Barcos e Latidos",
+   "description": "Bluey e Mackenzie ficam ansiosos para passar um tempo com Mia e Capitão. Porém, quando as crianças mais velhas fogem para brincar juntas sem eles, Calypso percebe que crescer pode ser difícil.",
+   "released": "2020-10-29",
+   "url": "https://tv.apple.com/br/episode/barcos-e-latidos/umc.cmc.2paldlm75fx1n63ttjaa9s9zc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 32,
+   "title": "Brincando com o Papai",
+   "description": "É hora de Bluey e Bingo saírem da banheira, mas papai decidiu não dizer a eles o que fazer e foi arrastado para um jogo de Burger Shop.",
+   "released": "2020-10-30",
+   "url": "https://tv.apple.com/br/episode/brincando-com-o-papai/umc.cmc.5whjjtm5erowcyytonyhjz3db?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 33,
+   "title": "Circo",
+   "description": "Bluey vira a mestre de cerimônias em uma brincadeira de circo com seus amigos, mas Hércules quer jogar seu jogo de motocicleta em vez disso. Felizmente, Bluey tem uma solução para deixar todos felizes.",
+   "released": "2020-10-31",
+   "url": "https://tv.apple.com/br/episode/circo/umc.cmc.qwnlcharwt4955xkgzkz2u42?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 34,
+   "title": "Natação",
+   "description": "Mamãe, papai e Bingo devem completar as duas aulas para passar na escola de natação, mas agradar a estrita instrutora Margaret, também conhecida como Bluey, está se revelando muito difícil.",
+   "released": "2020-11-01",
+   "url": "https://tv.apple.com/br/episode/natacao/umc.cmc.1cajhdbphqdqpgvajv42bwwok?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 35,
+   "title": "Café",
+   "description": "No parque, Bluey conhece uma nova companheira de brincadeiras chamada Winnie. Porém, quando Bluey quer convidar ela e seu pai para o café da manhã, acaba descobrindo que os adultos demoram um pouco mais para fazer amigos.",
+   "released": "2020-11-02",
+   "url": "https://tv.apple.com/br/episode/cafe/umc.cmc.34lwnul8ibo12v0g7yk6sdw8t?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 36,
+   "title": "Carteiro",
+   "description": "Bluey fica chateada quando ouve seus pais discutindo sobre um assunto trivial; Bluey aprende que brigar é saudável.",
+   "released": "2020-11-03",
+   "url": "https://tv.apple.com/br/episode/carteiro/umc.cmc.6l5xpzpi57qorebvbazl9j11h?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 37,
+   "title": "O Jogo do Silêncio",
+   "description": "Bluey e Bingo jogam um jogo silencioso e não podem usar palavras para dizerem ao pai qual brinquedo comprar para Muffin. Papai recruta Alfie para ajudá-lo a decifrar as mímicas das garotas.",
+   "released": "2020-11-04",
+   "url": "https://tv.apple.com/br/episode/o-jogo-do-silencio/umc.cmc.11of38d00m3ung30tc6hi72fr?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 38,
+   "title": "Sr. Monkeyjocks",
+   "description": "Bluey e Bingo devem provar que o Sr. Monkeyjocks é especial para evitarem que papai o jogue fora.",
+   "released": "2020-11-05",
+   "url": "https://tv.apple.com/br/episode/sr-monkeyjocks/umc.cmc.5loibf0bjs7oo6zoud40655vy?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 39,
+   "title": "Babá em Dobro",
+   "description": "Tio Rad e Frisky tomam conta de Bluey e Bingo e tentam fazer Bluey se sentir melhor.",
+   "released": "2020-11-06",
+   "url": "https://tv.apple.com/br/episode/baba-em-dobro/umc.cmc.2alzucvop3b2i9qhugn1qle3r?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 40,
+   "title": "Brincadeira",
+   "description": "Bingo joga com o pai, que controla tudo o que ela faz, causando um caos na casa.",
+   "released": "2020-11-07",
+   "url": "https://tv.apple.com/br/episode/brincadeira/umc.cmc.1w42oes4ps5tpnjw57gkjwewa?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 41,
+   "title": "Polvo",
+   "description": "Chloe tenta ensinar ao pai a improvisar em um jogo. Ele acha as instruções difíceis e ambos percebam que podem jogar do seu próprio jeito.",
+   "released": "2020-11-08",
+   "url": "https://tv.apple.com/br/episode/polvo/umc.cmc.3o0wgdz6t0snhji4gxd3nn1ll?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 42,
+   "title": "Noite do Lixo",
+   "description": "Bingo conta ao pai sobre uma criança nova que é má com ela, e Mamãe oferece alguns bons conselhos.",
+   "released": "2020-11-09",
+   "url": "https://tv.apple.com/br/episode/noite-do-lixo/umc.cmc.1p07tvwj1g3cy1jf1l3dqu2bk?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 43,
+   "title": "O Cone da Muffin",
+   "description": "Muffin não consegue parar de chupar o dedo, e tem que usar um cone da vergonha. No entanto, o cone atrapalha e ela não consegue mais brincar de lanchonete com Bluey e Bingo.",
+   "released": "2020-11-10",
+   "url": "https://tv.apple.com/br/episode/o-cone-da-muffin/umc.cmc.4cla4hl10dmieolwj82k9n6q2?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 44,
+   "title": "Bolo",
+   "description": "Bluey quer ajudar o Papai a fazer o bolo de aniversário de Bingo, mas primeiro ela precisa guardar os brinquedos. No entanto, nada consegue fazê-la querer arrumar, até que Papai deixa cair o bolo.",
+   "released": "2020-11-11",
+   "url": "https://tv.apple.com/br/episode/bolo/umc.cmc.3i19kl8omjanrpzd7h9cf0pha?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 45,
+   "title": "Plantando Bananeira",
+   "description": "Durante uma festa, Bingo fica desesperada para mostrar suas habilidades de plantar bananeira; Nanna não consegue encontrar uma maneira de se fazer útil. Ambas se sentem um pouco perdidas, até que se encontrem.",
+   "released": "2020-11-12",
+   "url": "https://tv.apple.com/br/episode/plantando-bananeira/umc.cmc.2ttv8qhezpea5jg89aa5mlgh7?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 46,
+   "title": "Viagem",
+   "description": "Mamãe ajuda Bluey e Bingo a encontrar maneiras de se divertir em uma viagem com a família. Papai tenta ficar à frente de um comboio para não correr o risco de acampar perto dos banheiros.",
+   "released": "2020-11-13",
+   "url": "https://tv.apple.com/br/episode/viagem/umc.cmc.5plkpoknfcu3qcic7ptesrlze?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 47,
+   "title": "Sorvete",
+   "description": "Bluey e Bingo querem dar uma lambida no sorvete um do outro, mas estão tão focados em garantir que cada lambida seja justa que não percebem que seus sorvetes estão derretendo.",
+   "released": "2020-11-14",
+   "url": "https://tv.apple.com/br/episode/sorvete/umc.cmc.79hjh1w103j9tn9vf8n3j9ew?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 48,
+   "title": "Palavra Feia",
+   "description": "Mamãe proíbe as meninas de dizerem a palavra \"trono\", pois esta não é uma palavra que uma rainha usa. Porém, as crianças tentam enganá-la para que ela diga a palavra de qualquer jeito.",
+   "released": "2020-11-14",
+   "url": "https://tv.apple.com/br/episode/palavra-feia/umc.cmc.7h9i6i5bdbhwhv187id64u69i?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 49,
+   "title": "Máquina de Escrever",
+   "description": "Bluey, Snickers e Winton pedem ajuda para Calypso e são emboscados por terriers. Eles precisam usar seu talentos único para resolverem o problema.",
+   "released": "2020-11-16",
+   "url": "https://tv.apple.com/br/episode/maquina-de-escrever/umc.cmc.3xd728utyib93imnoeybepi42?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 50,
+   "title": "Corrida dos Bebês",
+   "description": "Mamãe lembra de Bluey e Judo quando eram bebês. Bluey aprendeu a rolar primeiro, mas o Judo foi o primeiro a engatinhar, então começou uma corrida para ver quem andaria primeiro.",
+   "released": "2020-11-17",
+   "url": "https://tv.apple.com/br/episode/corrida-dos-bebes/umc.cmc.12tb0ac8iqm4qvkjzwae39n6g?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 51,
+   "title": "Mergulho de Natal",
+   "description": "Bluey ganha um novo ursinho de Natal e o apresenta a toda a família. Mas todos são pouco amigáveis com ele e, agora, ele quer voltar para casa.",
+   "released": "2020-12-01",
+   "url": "https://tv.apple.com/br/episode/mergulho-de-natal/umc.cmc.6p62ie79puvz8stx5jma8mzns?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 2,
+   "number": 52,
+   "title": "Páscoa",
+   "description": "Bingo está convencida de que o coelhinho da Páscoa os esqueceu, assim como no ano passado. Mas Bluey encontra uma série de pistas que os levam a uma caça ao tesouro dos ovos de Páscoa.",
+   "released": "2021-04-04",
+   "url": "https://tv.apple.com/br/episode/pascoa/umc.cmc.nk8ab7n8369hw2apajta4okb?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 1,
+   "title": "Perfeito",
+   "description": "O cartão do Dia dos Pais de Bluey precisa ser perfeito, mas ela não consegue decidir o que pode desenhar. Mamãe lembra de todos os momentos divertidos que Bluey teve com papai e como ele também não é tão perfeito assim.",
+   "released": "2021-09-05",
+   "url": "https://tv.apple.com/br/episode/perfeito/umc.cmc.4cj0vuoc0njea2370wrptaxk0?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 2,
+   "title": "Quarto",
+   "description": "Bluey está animada em ter o próprio quarto mas, quando chega a hora de dormir, ela sente mais falta de Bingo do que esperava e precisa encontrar uma maneira de manter o contato com a irmã.",
+   "released": "2021-11-22",
+   "url": "https://tv.apple.com/br/episode/quarto/umc.cmc.1fx0pkofgwxgjgbgg47708ddn?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 3,
+   "title": "Pista de Obstáculos",
+   "description": "Mamãe cria uma pista de obstáculos no quintal, mas papai quer correr. As crianças estão determinadas a vencerem de qualquer maneira.",
+   "released": "2021-11-23",
+   "url": "https://tv.apple.com/br/episode/pista-de-obstaculos/umc.cmc.5li26o8n8zvnbrmcvelwpoh0y?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 4,
+   "title": "Promessas",
+   "description": "Bluey continua quebrando suas promessas. Após perceber o quanto Bingo confia na palavra de mamãe, Bluey aprende o poder das promessas e por quais motivos é importante não quebrá-las.",
+   "released": "2021-11-24",
+   "url": "https://tv.apple.com/br/episode/promessas/umc.cmc.1sbdote8tzouyj4ij3egx9ghx?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 5,
+   "title": "Omelete",
+   "description": "Bingo ajuda mamãe a preparar uma omelete para o café da manhã do aniversário de papai, mas quebrar ovos é mais difícil do que parece e papai fica cada vez mais faminto.",
+   "released": "2021-11-25",
+   "url": "https://tv.apple.com/br/episode/omelete/umc.cmc.6zi6q04jff0a5erobqmk2j3a9?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 6,
+   "title": "Nascido Ontem",
+   "description": "Papai se finge de inocente e Bluey e Bingo precisam guiá-lo em seu segundo dia na Terra - especialmente quando ele descobre que a comida é deliciosa e acaba roubando a torta do pai de Lucky.",
+   "released": "2021-11-26",
+   "url": "https://tv.apple.com/br/episode/nascido-ontem/umc.cmc.7jxoit5q4f970yt6ofnd7it0e?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 7,
+   "title": "Mini Bluey",
+   "description": "Papai reclama de como Bluey e Bingo são diferentes e Bluey tem um plano para torná-las parecidas.",
+   "released": "2021-11-27",
+   "url": "https://tv.apple.com/br/episode/mini-bluey/umc.cmc.5cbbgwnjvdwukwga4503pi2d3?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 8,
+   "title": "Unicórsio",
+   "description": "Bluey não consegue dormir e mamãe tenta ler uma última história para ela. Ambas acabam sendo interrompidas por um fantoche irritante e Bluey tenta arrumá-lo.",
+   "released": "2021-11-28",
+   "url": "https://tv.apple.com/br/episode/unicorsio/umc.cmc.1gz5uchfwgdkqpvtsbt573pvr?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 9,
+   "title": "A Missão do Curry",
+   "description": "Bingo e Papai vão para a casa de Mackenzie pelo caminho do parque e precisam enfrentar um pássaro que protege seu ninho.",
+   "released": "2021-11-29",
+   "url": "https://tv.apple.com/br/episode/a-missao-do-curry/umc.cmc.31hkb9dk8hv67br23lkadx4qd?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 10,
+   "title": "Mágica",
+   "description": "Bluey ensina Bingo a usar magia para fazer a mamãe brincar com ela, mas ela se esquece de explicar a regra mais importante – nunca use magia para travessuras!",
+   "released": "2021-11-30",
+   "url": "https://tv.apple.com/br/episode/magica/umc.cmc.9sdfe0xelmq8pu9pksxwp3za?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 11,
+   "title": "Xandrez",
+   "description": "Papai tenta ensinar Bluey a jogar xadrez, mas mamãe acha que ela ainda é muito jovem. Bingo se junta a eles e as crianças criam suas próprias regras. Só que ainda assim não conseguem vencer papai.",
+   "released": "2021-12-01",
+   "url": "https://tv.apple.com/br/episode/xandrez/umc.cmc.745ztvgr7dl2t3qw7cnlig640?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 12,
+   "title": "Ovelhinha",
+   "description": "Papai concorda em brincar com Bluey e Bingo, pois não quer as duas incomodem Mamãe, que precisa descansar. Porém, cuidar de ovelhas é mais trabalhoso do que eles esperavam.",
+   "released": "2021-12-02",
+   "url": "https://tv.apple.com/br/episode/ovelhinha/umc.cmc.wbibstoislsphrgaaqabxvuo?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 13,
+   "title": "Limpando a Casa",
+   "description": "Mamãe e papai prometem terminar os trabalhos domésticos somente quando as crianças deixarem de agir como bobas - mas isto nunca acontece e eles acabam desistindo da abordagem.",
+   "released": "2021-12-03",
+   "url": "https://tv.apple.com/br/episode/limpando-a-casa/umc.cmc.6a4yd1pkr0q0wje3fxfdsq1vt?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 14,
+   "title": "Passa o Pacote",
+   "description": "O pai de Lucky fica indignado com as regras de um jogo e Bingo continua perdendo.",
+   "released": "2021-12-04",
+   "url": "https://tv.apple.com/br/episode/passa-o-pacote/umc.cmc.6aa25dy6fs4ybboziu7s7cpmc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 15,
+   "title": "Exploradores",
+   "description": "Ao esperar que o pai venha lhe buscar na escola, Jack brinca de marinheiro que navega de volta para casa, na Austrália. Seu pai, no entanto, perde-se no caminho para pegá-lo.",
+   "released": "2021-12-05",
+   "url": "https://tv.apple.com/br/episode/exploradores/umc.cmc.5sa34ba6o5kwos0yk7xcsaaj6?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 16,
+   "title": "Celulares",
+   "description": "Bluey e Bingo brincam de restaurante com o bisavô e ele precisa baixar um app para pedir comida.",
+   "released": "2021-12-06",
+   "url": "https://tv.apple.com/br/episode/celulares/umc.cmc.dhiiqg7stnsb9manofldh2ww?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 17,
+   "title": "Pavlova",
+   "description": "As crianças brincam para que Bingo possa comer pavlova, mas o pai nunca acerta o pedido. Bluey acaba o demitindo e ele monta a sua própria loja e vira seu concorrente.",
+   "released": "2021-12-07",
+   "url": "https://tv.apple.com/br/episode/pavlova/umc.cmc.2scskx9z0t7p1x3xpswenkfsj?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 18,
+   "title": "Chuva",
+   "description": "Uma forte chuva de verão cai sobre a casa dos Heelers e Bluey está determinada a ajudar. Sua mãe tenta impedi-la de sujar a casa de lama.",
+   "released": "2021-12-08",
+   "url": "https://tv.apple.com/br/episode/chuva/umc.cmc.69vho5wxy9rhbv2aawipf11ns?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 19,
+   "title": "Meninas da Pizza",
+   "description": "Bluey e Bingo decidem fazer pizzas de lama e entregar para os adultos, mas a roda do carrinho de pedais não para de cair o tempo todo.",
+   "released": "2021-12-09",
+   "url": "https://tv.apple.com/br/episode/meninas-da-pizza/umc.cmc.inkxnxt2849hpu79uct9b9ao?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 20,
+   "title": "Dirigindo",
+   "description": "Com apenas cinco minutos para brincarem, Bluey e Mamãe correm contra o relógio para comprar leite para um hóspede rabugento e precisam fugir de um comerciante zangado.",
+   "released": "2021-12-10",
+   "url": "https://tv.apple.com/br/episode/dirigindo/umc.cmc.4l93chv15vcmdfu6j9m1bnoem?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 21,
+   "title": "Tina",
+   "description": "Cansadas de cumprirem ordens, Bluey e Bingo unem-se a um amigo invisível gigante para mostrar aos próprios pais quem manda. Elas podem fazer o que quiserem - até que mamãe e papai se rebelem.",
+   "released": "2021-12-11",
+   "url": "https://tv.apple.com/br/episode/tina/umc.cmc.452kpblk1d1ovqf24t80obpme?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 22,
+   "title": "Observação de Baleia",
+   "description": "Bluey promete a Bingo o melhor passeio de todos, mas elas precisam que mamãe e papai se juntem a elas, pois estão muito cansadas para jogar no fim da noite.",
+   "released": "2021-12-12",
+   "url": "https://tv.apple.com/br/episode/observacao-de-baleia/umc.cmc.4ogdgx060b42b3jstd8s99wgc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 23,
+   "title": "Reunião de Família",
+   "description": "Quando papai é acusado de soltar um pum na cara de Bluey, mamãe faz uma reunião para resolver a questão.",
+   "released": "2021-12-13",
+   "url": "https://tv.apple.com/br/episode/reuniao-de-familia/umc.cmc.1anjalp8v3scwuydmyzozjk5f?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 24,
+   "title": "Chamada de Vídeo",
+   "description": "Bluey e Bingo adoram conversar por vídeo com Muffin e Socks para que todos desenhos juntos. Mas Muffin não deixa Socks ter sua vez e as crianças descobrem o que acontece quando se monopoliza algo.",
+   "released": "2021-12-14",
+   "url": "https://tv.apple.com/br/episode/chamada-de-video/umc.cmc.m21hv9f5z5st7ybodubeir5f?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 25,
+   "title": "Boneco de Pano",
+   "description": "Papai concorda em levar Bluey e Bingo para comprar sorvete se elas conseguirem levá-lo ao carro.",
+   "released": "2021-12-15",
+   "url": "https://tv.apple.com/br/episode/boneco-de-pano/umc.cmc.120waptnet7fw5gp3eldqsm9i?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 26,
+   "title": "Conto de Fadas",
+   "description": "Papai conta a Bluey e Bingo uma história sobre um menino que tratava mau seu irmãozinho.",
+   "released": "2021-12-16",
+   "url": "https://tv.apple.com/br/episode/conto-de-fadas/umc.cmc.2yki2oyc70lllqxf5kzc9596p?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 27,
+   "title": "Estátua",
+   "description": "No final de um longo dia, Bluey e sua família estão fora de sincronia e tudo está uma bagunça, então a mãe faz com que todos toquem estátuas musicais.",
+   "released": "2022-06-13",
+   "url": "https://tv.apple.com/br/episode/estatua/umc.cmc.232n36nlme9rf9mgyyewd8km7?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 28,
+   "title": "Histórias",
+   "description": "Indy se sente mal porque o boneco de cavalo dela fica parecendo uma vaca, mas Calypso a encoraja a não desistir, então ela tenta consertá-lo com uma pequena ajuda de Winton.",
+   "released": "2022-06-14",
+   "url": "https://tv.apple.com/br/episode/historias/umc.cmc.62106cdumshgn6eo0xpon8db0?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 29,
+   "title": "Fantoches",
+   "description": "Bluey e Bingo ensinam boas maneiras ao Unicorse para que ele possa convidar a mamãe para um encontro, mas as coisas dão errado quando o Unicorse come um carrapato.",
+   "released": "2022-06-15",
+   "url": "https://tv.apple.com/br/episode/fantoches/umc.cmc.y7einn6jahdsfej565txauvg?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 30,
+   "title": "Tartaruguito",
+   "description": "Bingo encontra uma tartaruga de brinquedo no parquinho e quer levá-la para casa, mas o pai diz que não é a coisa certa a fazer.",
+   "released": "2022-06-16",
+   "url": "https://tv.apple.com/br/episode/tartaruguito/umc.cmc.606lhvbngnn7erbtj8jcdmd2?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 31,
+   "title": "Roupinhas",
+   "description": "Quando a irmã da mamãe, Brandy, vem para uma visita, ela traz os macacões para presentear as crianças, o que tem um efeito inesperado em Bingo!",
+   "released": "2022-06-17",
+   "url": "https://tv.apple.com/br/episode/roupinhas/umc.cmc.epeyisjufv52jbr4u1p5buqf?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 32,
+   "title": "Trabalhadores",
+   "description": "Bluey e Bingo se escondem embaixo da casa e espionam duas pessoas misteriosas trabalhando no quintal.",
+   "released": "2022-06-18",
+   "url": "https://tv.apple.com/br/episode/trabalhadores/umc.cmc.5z6kx2wnrz4ly24yesg84v9qe?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 33,
+   "title": "Carrinho de Vovó",
+   "description": "Muffin está fingindo ser a vovó rabugenta em uma venda de garagem, fazendo o pai empurrá-la em uma velha moto. Mas quando uma vovó rabugenta de verdade quer comprá-la, Muffin não aceita.",
+   "released": "2022-06-19",
+   "url": "https://tv.apple.com/br/episode/carrinho-de-vovo/umc.cmc.4zuth4t2uv263cuvm50ilt04e?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 34,
+   "title": "Espaço",
+   "description": "Mackenzie, Jack e Rusty estão brincando de astronautas em uma missão a Marte. Mas durante sua jornada, Mackenzie continua desaparecida e ninguém sabe por quê – nem mesmo Mackenzie!",
+   "released": "2022-06-20",
+   "url": "https://tv.apple.com/br/episode/espaco/umc.cmc.2sxxm6ywux09kft02gt75ur15?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 35,
+   "title": "Beijinho",
+   "description": "Bluey e Bingo querem o pai só para elas, mas descobrem que ele tem alguns hábitos nojentos.",
+   "released": "2022-06-21",
+   "url": "https://tv.apple.com/br/episode/beijinho/umc.cmc.6gm8r4ivk36fwcfj02etv5afb?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 36,
+   "title": "Sujeira",
+   "description": "Judo quer brincar na terra com Bluey e Bingo, mas ela não pode se sujar.",
+   "released": "2022-06-22",
+   "url": "https://tv.apple.com/br/episode/sujeira/umc.cmc.5tj397kjn4hsldq7uphzhoynf?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 37,
+   "title": "A Final",
+   "description": "O pai de Lucky, Lucky e Chucky vão à casa dos Heeler para assistir a uma final de rúgbi juntos.",
+   "released": "2022-06-23",
+   "url": "https://tv.apple.com/br/episode/a-final/umc.cmc.2m72g20w7d33c5tf0i09ifs7e?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 38,
+   "title": "Casinha",
+   "description": "Bluey e Bingo constroem uma casinha muito especial para Kimjim, seu bicho de pelúcia.",
+   "released": "2023-04-08",
+   "url": "https://tv.apple.com/br/episode/casinha/umc.cmc.5v1yd97v0f5by09q66mkhfsa7?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 39,
+   "title": "Exercício",
+   "description": "Bingo finge ser o novo funcionário do chefe Bluey no meio do treino do papai no quintal. Enquanto Bluey faz um tour pelo escritório com Bingo, papai faz o exercício mais difícil de sua vida!",
+   "released": "2023-04-16",
+   "url": "https://tv.apple.com/br/episode/exercicio/umc.cmc.6le87j9ywkb8abnzrhcz861p5?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 40,
+   "title": "Relaxar",
+   "description": "Bluey e Bingo preferem brincar e explorar seu quarto de hotel de férias do que relaxar na praia com mamãe.",
+   "released": "2023-04-23",
+   "url": "https://tv.apple.com/br/episode/relaxar/umc.cmc.74zosibh27gghti4irgccjlm1?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 41,
+   "title": "Passarinho",
+   "description": "Em uma viagem à praia, mamãe ensina Bluey a jogar varetas, enquanto Bingo e papai são criativos quando encontram uma vareta em forma de cabeça de pássaro.",
+   "released": "2023-04-30",
+   "url": "https://tv.apple.com/br/episode/passarinho/umc.cmc.68wk7wwwvx1e1cnrnfkv7ngk3?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 42,
+   "title": "Apresentação",
+   "description": "Quando papai diz a Bluey para terminar seu café da manhã, Bluey quer saber por que papai está sempre dando ordens.",
+   "released": "2023-05-07",
+   "url": "https://tv.apple.com/br/episode/apresentacao/umc.cmc.45bwcq96i60jg7btaetl8jozt?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 43,
+   "title": "Dragão",
+   "description": "Bluey pede ajuda ao pai para desenhar um dragão para sua história, mas ele não é muito bom desenhando!",
+   "released": "2023-05-14",
+   "url": "https://tv.apple.com/br/episode/dragao/umc.cmc.17t2pfj74z3976plins9cqjjc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 44,
+   "title": "Meninas Selvagens",
+   "description": "Na escola, Coco quer jogar Wild Girls com Indy, mas Chloe quer que ela jogue outro jogo.",
+   "released": "2023-05-21",
+   "url": "https://tv.apple.com/br/episode/meninas-selvagens/umc.cmc.5wb0pfx25ezi5fs9gh9467a3u?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 45,
+   "title": "TV da Loja",
+   "description": "Na farmácia, Bluey e Bingo e seus amigos se divertem brincando com as telas de CFTV.",
+   "released": "2023-05-28",
+   "url": "https://tv.apple.com/br/episode/tv-da-loja/umc.cmc.3wk85prkz5wz6mirbb9y8bzdt?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 46,
+   "title": "Escorregador",
+   "description": "Bingo e Lila estão animados para brincar em seu novo toboágua, mas primeiro eles precisam ter certeza de que não esmagarão nenhum inseto.",
+   "released": "2023-06-04",
+   "url": "https://tv.apple.com/br/episode/escorregador/umc.cmc.7gdb5kquwbyto1slu15yn0v0e?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 47,
+   "title": "Críquete",
+   "description": "Durante um amistoso jogo de críquete do bairro, nenhum dos pais consegue derrotar Rusty, que passou longas tardes aperfeiçoando sua técnica de rebatidas.",
+   "released": "2023-06-11",
+   "url": "https://tv.apple.com/br/episode/criquete/umc.cmc.22gymhf1r9cgxwxp5abrmaclc?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 48,
+   "title": "Cesto Fantasma",
+   "description": "Assista agora ao novo episódio.",
+   "released": "2024-04-07",
+   "url": "https://tv.apple.com/br/episode/cesto-fantasma/umc.cmc.6uhgqt6gr9l7s1h64yhli9dhi?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 49,
+   "title": "A Placa",
+   "description": "Assista agora ao novo episódio.",
+   "released": "2024-04-14",
+   "url": "https://tv.apple.com/br/episode/a-placa/umc.cmc.4xtj3wpmklmlgl8uhsu6jk633?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  },
+  {
+   "season": 3,
+   "number": 50,
+   "title": "Surpresa",
+   "description": "Assista agora ao novo episódio.",
+   "released": "2024-04-21",
+   "url": "https://tv.apple.com/br/episode/surpresa/umc.cmc.2940bxlk9prpt7sew9m5fq7ng?showId=umc.cmc.3ez94w3cvm4oeo9rugqsu6dx1"
+  }
+ ]
+}
