@@ -3,7 +3,10 @@
 import { readFile } from "node:fs/promises";
 import { catalogue, searchJev } from "../src/search.js";
 
-const { episodes } = JSON.parse(await readFile(new URL("../data/episodes.json", import.meta.url)));
+const all = JSON.parse(await readFile(new URL("../data/episodes.json", import.meta.url))).episodes;
+// TRY_PLOT_CHARS=300 tests a shorter catalogue (faster, maybe less accurate).
+const max = Number(process.env.TRY_PLOT_CHARS) || Infinity;
+const episodes = all.map((e) => ({ ...e, plot: e.plot.slice(0, max) }));
 const state = catalogue(episodes);
 const byId = new Map(episodes.map((e) => [e.id, e]));
 
@@ -14,6 +17,8 @@ const CASES = [
   ["dançando na farmácia na TV", "S3E45"],
   ["store tv camera dancing", "S3E45"],
   ["xilofone mágico que congela o pai", "S1E01"],
+  ["casamento da irmã", "S3E49"],
+  ["a noiva foge do casamento", "S3E49"],
   ["dinossauro de pelúcia no espaço sideral com foguete", null],
 ];
 

@@ -91,7 +91,7 @@ input.addEventListener("input", () => {
   clearTimeout(timer);
   if (q.length < 3) { inflight?.abort(); return render(localMatches(q)); }
   show(q, cache.get(fold(q)));
-  timer = setTimeout(() => search(q), 350);
+  timer = setTimeout(() => search(q), 250);
 });
 
 document.getElementById("examples").addEventListener("click", (ev) => {
