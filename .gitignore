@@ -1,0 +1,7 @@
+raw/**
+!raw/.gitkeep
+*.duckdb
+*.parquet
+.env
+__pycache__/
+.venv/
