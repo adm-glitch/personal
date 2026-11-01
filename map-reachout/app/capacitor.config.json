@@ -1,0 +1,8 @@
+{
+  "appId": "com.atipica.mutirao",
+  "appName": "Mutirao",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}

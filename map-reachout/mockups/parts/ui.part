@@ -1,0 +1,635 @@
+/* citywide data-quality counters, computed once */
+const GAPS=(function(){
+  let noGeo=0,ghost=0,ghostAddr=0,dup=0;
+  for(let q=0;q<NQ;q++) if(!qgeo[q]) noGeo++;
+  for(let i=0;i<NF;i++) if(foff[i+1]===foff[i]){ ghost++; ghostAddr+=totF[i]; }
+  for(let i=0;i<NA;i++) if((DUP[i>>3]>>(i&7))&1) dup++;
+  return {noGeo,ghost,ghostAddr,dup};
+})();
+
+/* ================= stats ================= */
+const qStats=q=>({faces:(qFaces.get(q)||[]).length, seen:seenQ[q], done:doneQ[q],
+                  total:totQ[q], census:censusQ[q],
+                  untouched:(qFaces.get(q)||[]).filter(fi=>fstat[fi]===0&&totF[fi]>0).length});
+const bStats=b=>({quadras:(bQuadras.get(b)||[]).length, seen:seenB[b], done:doneB[b],
+                  total:totB[b], census:censusB[b]});
+const fLabel=(q,f)=>{ const i=faceIdx.get(fkey(q,f)); return i===undefined?'—':ST[fs[i]]; };
+const qLabel=q=>qcode[q], qName=q=>qlbl[q];
+
+/* ================= presentation tiers =================
+   What the canvasser can physically identify decides how the quadra is presented.
+     1  the face has a line on the map      → tap the row or the line
+     2  no line, but the quadra has an outline → row only, dots show where
+     3  the quadra has no geometry at all   → group by street; one tap marks the
+        whole street, because with no geometry the trechos are indistinguishable
+        on the ground and pretending otherwise is false precision.
+   tierForce lets the mockup pin a tier so the same quadra can be compared. */
+let tierForce=0;
+const tierOfFace=(q,fi)=>!qgeo[q]?3:(isGhost(fi)?2:1);
+function tierOfQuadra(q){
+  if(tierForce) return tierForce;
+  if(!qgeo[q]) return 3;
+  const rows=qFaces.get(q)||[];
+  return rows.length&&rows.every(isGhost)?2:1;
+}
+/* tier 3 collapses a quadra's faces into one row per street name */
+function streetGroups(q){
+  const m=new Map();
+  for(const fi of (qFaces.get(q)||[])){
+    const nm=ST[fs[fi]]; let g=m.get(nm);
+    if(!g){ g={name:nm, rows:[], hh:0, census:0}; m.set(nm,g); }
+    g.rows.push(fi); g.hh+=totF[fi]; g.census+=fr[fi];
+  }
+  return [...m.values()].sort((a,b)=>b.hh-a.hh||a.name.localeCompare(b.name));
+}
+const gStat=g=>{ const v=fstat[g.rows[0]];
+  return g.rows.every(fi=>fstat[fi]===v)?v:2; };      // mixed reads as parcial
+const gTalk=g=>g.rows.reduce((s,fi)=>s+ftalk[fi],0);
+const gAbs=g=>g.rows.reduce((s,fi)=>s+fabs[fi],0);
+
+/* ================= GPS ================= */
+let gmode='hi',gps=null,walkT=null,seg=0,tt=0,route=null;
+route=(function(){
+  let best=-1,bl=0;
+  for(let i=0;i<NF;i++){
+    if(isGhost(i)||!aRange.get(fkey(fq[i],ff[i])))continue;
+    let L=0;
+    for(let p=foff[i];p<foff[i+1]-2;p+=2) L+=Math.hypot((fgAll[p+2]-fgAll[p])*KX,fgAll[p+3]-fgAll[p+1]);
+    if(L>bl&&L<4000){bl=L;best=i;}
+  }
+  return best;
+})();
+function setPos(){
+  if(gmode==='off'){gps=null;return;}
+  const s=foff[route],e=foff[route+1], n=(e-s)/2;
+  if(seg>=n-1){seg=0;tt=0;}
+  const axx=fgAll[s+seg*2],ayy=fgAll[s+seg*2+1],bx=fgAll[s+seg*2+2],by=fgAll[s+seg*2+3];
+  const tx=axx+(bx-axx)*tt, ty=ayy+(by-ayy)*tt;
+  const acc=gmode==='hi'?8:110, off=acc*0.5/M_UNIT;
+  gps={x:tx+Math.sin(seg*3.7+tt*5.1)*off/KX, y:ty+Math.cos(seg*2.3+tt*4.4)*off, acc};
+}
+function nearestFaces(px,py,n){
+  const R=400/ (111320*KX) *1e6;             // 400 m box in coord units
+  const out=[];
+  for(let i=0;i<NF;i++){
+    if(isGhost(i))continue;
+    const o=i*4;
+    if(fbb[o]>px+R||fbb[o+2]<px-R||fbb[o+1]>py+R||fbb[o+3]<py-R)continue;
+    let best=Infinity;
+    for(let p=foff[i];p<foff[i+1]-2;p+=2){
+      const axx=fgAll[p],ayy=fgAll[p+1],bx=fgAll[p+2],by=fgAll[p+3];
+      const vx=(bx-axx)*KX,vy=by-ayy,wxx=(px-axx)*KX,wy2=py-ayy,L2=vx*vx+vy*vy;
+      let t=L2?(wxx*vx+wy2*vy)/L2:0; t=t<0?0:(t>1?1:t);
+      const d=Math.hypot(wxx-t*vx,wy2-t*vy); if(d<best)best=d;
+    }
+    out.push({q:fq[i],f:ff[i],name:ST[fs[i]],d:best*M_UNIT});
+  }
+  out.sort((a,b)=>a.d-b.d);
+  const seen=new Set(),res=[];
+  for(const o of out){ const kk=o.name+'|'+o.q; if(seen.has(kk))continue; seen.add(kk); res.push(o); if(res.length>=n)break; }
+  return res;
+}
+/* ================= toast ================= */
+let toastT=null;
+function toast(m){ const el=document.getElementById('toast');
+  document.getElementById('toast-t').textContent=m; el.classList.add('on');
+  if(toastT)clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),2200); }
+
+/* ================= location banner ================= */
+const locbar=document.getElementById('locbar');
+function nextPend(q,f){ const arr=placesOf(q,f); const n=arr.find(p=>pPend(p)>0);
+  return n?'Próxima: nº '+(n.n||'s/n'):'Sem pendências nesta face'; }
+function renderLoc(){
+  const pick=document.getElementById('loc-pick'); pick.innerHTML='';
+  const K=document.getElementById('loc-k'),V=document.getElementById('loc-v'),M=document.getElementById('loc-m');
+  if(gmode!=='off') setPos();
+  const near=gmode==='off'?null:nearestFaces(gps.x,gps.y,3);
+  if(gmode==='hi'&&locSource==='gps'&&near&&near.length){
+    locbar.classList.remove('bad');
+    if(!isWorking(near[0].q,near[0].f)) setWork(near[0].q,near[0].f,'gps');
+    K.textContent='Você está em'; V.textContent=near[0].name;
+    M.textContent=qLabel(workQ)+' · '+nextPend(workQ,workF)+' · ±'+gps.acc+' m';
+    const row=document.createElement('div'); row.className='locrow';
+    row.appendChild(changeChip('Não é aqui? Trocar local'));
+    pick.appendChild(row); return;
+  }
+  if(locSource==='manual'){
+    locbar.classList.remove('bad');
+    K.textContent='Definido por você';
+    V.textContent=workF===null?(workQ!==null?qName(workQ):'—'):fLabel(workQ,workF);
+    M.textContent=workQ===null?'':(qLabel(workQ)+(workF===null?' · escolha a face':' · '+nextPend(workQ,workF)));
+    const row=document.createElement('div'); row.className='locrow';
+    if(gmode==='hi'&&near&&near.length&&!isWorking(near[0].q,near[0].f)){
+      const b=document.createElement('button'); b.className='chip';
+      b.innerHTML='GPS: <b>'+near[0].name+'</b>';
+      b.title='seguir o GPS · ±'+gps.acc+' m';
+      b.onclick=()=>{setWork(near[0].q,near[0].f,'gps');toast('Seguindo o GPS');renderLoc();renderAll();};
+      row.appendChild(b);
+    }
+    row.appendChild(changeChip('Trocar local'));
+    pick.appendChild(row); return;
+  }
+  locbar.classList.add('bad');
+  if(gmode==='off'){ K.textContent='GPS desligado'; V.textContent='Escolha onde você está'; M.textContent=''; }
+  else{
+    K.textContent='Sinal fraco · ±'+gps.acc+' m';
+    V.textContent='Em qual rua você está?'; M.textContent='Toque para confirmar';
+    for(const o of near){
+      const b=document.createElement('button');
+      b.innerHTML=o.name+'<small>'+Math.round(o.d)+' m · '+qLabel(o.q)+' · '+BN[qb[o.q]]+'</small>';
+      b.onclick=()=>{setWork(o.q,o.f,'manual');toast('Confirmado: '+o.name);renderLoc();renderAll();};
+      pick.appendChild(b);
+    }
+  }
+  const row=document.createElement('div'); row.className='locrow';
+  row.appendChild(changeChip('Escolher pela lista')); pick.appendChild(row);
+}
+function changeChip(label){
+  const b=document.createElement('button'); b.className='chip';
+  b.textContent=label;
+  b.onclick=()=>{ picking=true; curB=null; curQ=null; curF=null; expanded=true;
+    openPlace=null; actionOn=null; bulkOn=null; renderAll(); };
+  return b;
+}
+/* ================= sheet ================= */
+const listEl=document.getElementById('list');
+/* a target is 'f<row>' (one face) or 'g<i>' (a tier-3 street group) */
+function targetRows(t){
+  if(!t) return [];
+  if(t[0]==='f') return [+t.slice(1)];
+  const g=streetGroups(curQ)[+t.slice(1)];
+  return g?g.rows:[];
+}
+const FDOT=v=>v===1?'background:var(--s-contact)':v===2?'background:var(--s-noanswer)'
+            :v===5?'background:var(--muted)':'background:var(--s-none)';
+const chip=v=>v?'<span class="chip s'+v+'">'+FLAB[v]+'</span>':'';
+const tallyTxt=(t,a)=>(t||a)?'<span class="tal">'+(t?'falei '+t:'')+(t&&a?' · ':'')+(a?'ausente '+a:'')+'</span>':'';
+/* one action panel, shared by a face row (tiers 1–2) and a street row (tier 3) */
+function faceActionsHTML(target,cur,talk,abs){
+  let h='<div class="acts face" data-acts="'+target+'">';
+  for(const [v,l] of FACTS)
+    h+='<button class="full'+(cur===v?' on':'')+'" data-fs="'+v+'">'+
+       '<span class="d" style="'+FDOT(v)+'"></span>'+l+'</button>';
+  h+='<div class="tally"><span>Opcional — quantas portas</span>'+
+     '<div class="tw"><b>falei</b><button data-tly="talk" data-d="-1">−</button><i>'+talk+
+     '</i><button data-tly="talk" data-d="1">+</button></div>'+
+     '<div class="tw"><b>ausente</b><button data-tly="abs" data-d="-1">−</button><i>'+abs+
+     '</i><button data-tly="abs" data-d="1">+</button></div></div>';
+  if(cur) h+='<button class="clr" data-fs="0">Limpar registro</button>';
+  return h+'</div>';
+}
+/* the tier selector — mockup-only, so the same quadra can be read three ways */
+function tierBarHTML(q){
+  const auto=tierOfQuadra(q);
+  let h='<div class="tierbar"><span>Apresentação</span>';
+  for(const [v,l] of [[0,'auto'],[1,'1 · linha'],[2,'2 · sem linha'],[3,'3 · por rua']])
+    h+='<button class="'+(tierForce===v?'on':'')+'" data-tier="'+v+'">'+l+'</button>';
+  return h+'<i>tier '+auto+(tierForce?' forçado':' automático')+'</i></div>';
+}
+function crumb(){
+  const p=['<span data-nav="root">'+MUNI+'</span>'];
+  if(curB!==null) p.push('<span data-nav="bairro">'+BN[curB]+'</span>');
+  if(curQ!==null) p.push('<span data-nav="quadra">'+qLabel(curQ)+'</span>');
+  if(curF!==null) p.push('<span class="cur">'+fLabel(curQ,curF)+'</span>');
+  return '<div class="crumbbar">'+p.join('<i>›</i>')+'</div>';
+}
+function renderSheet(){
+  const gt=document.getElementById('grip-t'),gs=document.getElementById('grip-s');
+  document.getElementById('grip-c').textContent=expanded?'▾':'▴';
+  listEl.classList.toggle('hidden',!expanded);
+  if(picking){ gt.childNodes[0].nodeValue='Onde você está?'; gs.textContent='bairro › quadra › face'; }
+  else if(level()==='face'){ const i=faceIdx.get(fkey(curQ,curF));
+    gt.childNodes[0].nodeValue=fLabel(curQ,curF);
+    gs.textContent=(i!==undefined?FLAB[fstat[i]]+' · '+totF[i]+' domicílios':'—')+
+                   ' · censo '+(i!==undefined?fr[i]:0); }
+  else if(level()==='quadra'){ const s=qStats(curQ);
+    gt.childNodes[0].nodeValue=qName(curQ); gs.textContent=qLabel(curQ)+' · '+s.faces+' faces · '+s.seen+'/'+s.total; }
+  else if(level()==='bairro'){ const s=bStats(curB);
+    gt.childNodes[0].nodeValue=BN[curB]; gs.textContent=s.quadras+' quadras · '+s.seen+'/'+s.total+' visitados'; }
+  else { gt.childNodes[0].nodeValue=MUNI; gs.textContent=NBLAB+' · '+NA.toLocaleString('pt-BR')+' domicílios'; }
+  if(!expanded){ listEl.innerHTML=''; return; }
+
+  let h='';
+  if(picking) h+='<div class="pickhdr">Toque para abrir · <b>estou aqui</b> para marcar<button id="pick-x">✕</button></div>';
+  h+=crumb();
+  if(!picking&&workQ!==null){
+    if(level()==='face'&&!isWorking(curQ,curF))
+      h+='<div class="browsing js-gowork">👁 <b>'+(workF===null?qLabel(workQ):fLabel(workQ,workF))+'</b> · voltar</div>';
+    else if(level()!=='face'&&curQ!==null&&curQ!==workQ)
+      h+='<div class="browsing js-gowork">👁 <b>'+qLabel(workQ)+'</b> · voltar</div>';
+  }
+  const lv=level();
+  if(lv==='root'){
+    for(let b=0;b<BN.length;b++){
+      const s=bStats(b); if(!s.quadras)continue;
+      const ng=(bQuadras.get(b)||[]).filter(q=>!qgeo[q]).length;
+      h+='<div class="row" data-b="'+b+'"><span class="cmp"><b class="rn">'+BN[b]+'</b>'+
+         '<br><span class="sm">'+s.quadras+' quadras · '+s.census.toLocaleString('pt-BR')+' dom.'+
+         (ng?' · <span style="color:var(--warn)">'+ng+' sem contorno</span>':'')+'</span></span>'+
+         '<span class="minibar"><i style="width:'+(s.total?s.seen/s.total*100:0).toFixed(0)+'%"></i></span>'+
+         '<span class="fr">'+s.seen+'/'+s.total+'</span></div>';
+    }
+  } else if(lv==='bairro'){
+    for(const q of (bQuadras.get(curB)||[])){
+      const s=qStats(q), here=q===workQ;
+      h+='<div class="row swipe'+(here?' here':'')+'" data-q="'+q+'"><span class="cmp">'+
+         '<b class="rn">'+qName(q)+'</b>'+(here?' <span class="hereb">AQUI</span>':'')+
+         (qgeo[q]?'':' <span class="tiny">SEM CONTORNO</span>')+
+         '<br><span class="sm">'+qLabel(q)+' · '+s.faces+' faces · '+s.census+' dom.</span></span>'+
+         '<span class="minibar"><i style="width:'+(s.total?s.seen/s.total*100:0).toFixed(0)+'%"></i></span>'+
+         '<span class="fr">'+s.seen+'/'+s.total+'</span>'+
+         (picking?'<button class="pickb" data-pickq="'+q+'">estou aqui</button>':'')+'</div>';
+    }
+  } else if(lv==='quadra'){
+    const tier=tierOfQuadra(curQ);
+    if(!picking) h+=tierBarHTML(curQ);
+    if(tier===3){
+      /* no geometry anywhere in this quadra: the street is the only unit anyone
+         standing here can name, so it is the unit they mark */
+      streetGroups(curQ).forEach((g,gi)=>{
+        const tgt='g'+gi, v=gStat(g), open=actionOn===tgt, fi0=g.rows[0];
+        h+='<div class="row swipe'+(open?' open':'')+'" data-tgt="'+tgt+'"><span class="cmp">'+
+           '<b class="rn">'+g.name+'</b> <span class="tierb">T3</span>'+
+           '<br><span class="sm">'+g.hh+' domicílios · '+g.rows.length+' trecho'+
+           (g.rows.length>1?'s':'')+'</span>'+tallyTxt(gTalk(g),gAbs(g))+'</span>'+chip(v)+
+           (picking?'<button class="pickb" data-pickf="'+ff[fi0]+'">estou aqui</button>'
+                   :'<button class="more" data-face="'+ff[fi0]+'" aria-label="ver domicílios">▸</button>')+'</div>';
+        if(open) h+=faceActionsHTML(tgt,v,ftalk[fi0],fabs[fi0]);
+      });
+    } else {
+      for(const fi of (qFaces.get(curQ)||[])){
+        const f=ff[fi], here=isWorking(curQ,f), tgt='f'+fi, v=fstat[fi], open=actionOn===tgt;
+        const ft=tierForce||tierOfFace(curQ,fi);
+        h+='<div class="row swipe'+(here?' here':'')+(open?' open':'')+'" data-tgt="'+tgt+'">'+
+           '<span class="cmp"><b class="rn">'+ST[fs[fi]]+'</b>'+
+           (here?' <span class="hereb">AQUI</span>':'')+' <span class="tierb">T'+ft+'</span>'+
+           (isGhost(fi)?' <span class="tiny">SEM LINHA NO MAPA</span>':'')+
+           '<br><span class="sm">'+totF[fi]+' domicílios · censo '+fr[fi]+'</span>'+
+           tallyTxt(ftalk[fi],fabs[fi])+'</span>'+chip(v)+
+           (picking?'<button class="pickb" data-pickf="'+f+'">estou aqui</button>'
+                   :'<button class="more" data-face="'+f+'" aria-label="ver domicílios">▸</button>')+'</div>';
+        if(open) h+=faceActionsHTML(tgt,v,ftalk[fi],fabs[fi]);
+      }
+    }
+    const s=qStats(curQ);
+    if(!picking&&s.untouched===0&&s.total>0){
+      const nxt=(bQuadras.get(curB)||[]).find(q=>q!==curQ&&qStats(q).seen===0);
+      h+='<div class="donebar"><button id="nextq">'+(nxt!==undefined?('Quadra percorrida — ir para '+qLabel(nxt)):'Bairro percorrido')+'</button></div>';
+    }
+  } else {
+    if(picking) h+='<div class="confirmbar"><button id="pick-here">✓ Estou aqui — '+fLabel(curQ,curF)+
+                   '</button><span>'+qName(curQ)+' · '+qLabel(curQ)+'</span></div>';
+    const cfi=faceIdx.get(fkey(curQ,curF));
+    if(cfi!==undefined&&!picking){
+      const v=fstat[cfi], tgt='f'+cfi;
+      h+='<div class="facehdr"><span class="cmp"><b class="rn">'+ST[fs[cfi]]+'</b>'+
+         ' <span class="tierb">T'+(tierForce||tierOfFace(curQ,cfi))+'</span>'+
+         '<br><span class="sm">'+totF[cfi]+' domicílios · censo '+fr[cfi]+'</span>'+
+         tallyTxt(ftalk[cfi],fabs[cfi])+'</span>'+chip(v)+'</div>';
+      h+=faceActionsHTML(tgt,v,ftalk[cfi],fabs[cfi]);
+      h+='<div class="rohdr">Domicílios nesta face — <b>apenas consulta</b>, '+
+         'a cobertura é registrada na face</div>';
+    }
+    /* read-only from here down: the canvasser never marks a door */
+    for(const p of placesOf(curQ,curF)){
+      const tot=p.ids.length, dup=p.ids.some(isDup);
+      if(tot>1){
+        h+='<div class="row ro'+(openPlace===p?' open':'')+'" data-place="'+p.ids[0]+'">'+
+           '<span class="num">'+(p.n||'s/n')+'</span><span class="cmp">'+tot+' domicílios'+
+           (dup?' <span class="tiny">Nº REPETIDO PERTO</span>':'')+'</span>'+
+           '<span class="badge">'+tot+'</span></div>';
+        if(openPlace===p) for(const i of p.ids)
+          h+='<div class="row sub ro"><span class="num">'+(ANUM.get(i)||'s/n')+
+             '</span><span class="cmp">'+(ACMP.get(i)||'—')+'</span></div>';
+      } else {
+        h+='<div class="row ro"><span class="num">'+(p.n||'s/n')+'</span><span class="cmp">'+
+           (ACMP.get(p.ids[0])||'')+(dup?' <span class="tiny">Nº REPETIDO PERTO</span>':'')+
+           '</span></div>';
+      }
+    }
+  }
+  listEl.innerHTML=h; wire();
+}
+function anchorText(){
+  if(gmode==='hi'&&locSource==='gps') return 'Será gravado na sua posição atual, <b>±'+gps.acc+' m</b>.';
+  const arr=placesOf(curQ,curF); let prev=null,next=null;
+  for(const p of arr){ if(pSeen(p)===p.ids.length&&p.ids.length)prev=p; else if(!next&&pPend(p)>0)next=p; }
+  const bt=prev&&next?('entre o <b>nº '+prev.n+'</b> e o <b>nº '+next.n+'</b>')
+        :prev?('depois do <b>nº '+prev.n+'</b>'):next?('antes do <b>nº '+next.n+'</b>'):'no início da face';
+  return (gmode==='off'?'Sem GPS. ':'Sinal fraco. ')+'Vai entrar '+bt+', na ordem da caminhada.';
+}
+function formHTML(kind){
+  const u=kind==='unit';
+  return '<div class="form'+(u?' sub':'')+'"><div class="fl">'+(u?'Complemento do domicílio':'Número da porta na rua')+'</div>'+
+    '<input id="add-in" type="text" placeholder="'+(u?'ex.: CASA 4 - FUNDOS, APTO 302':'ex.: 47, 47-A, s/n')+'" autocomplete="off">'+
+    (u?'':'<div class="where">'+anchorText()+'</div>')+
+    '<div class="fb"><button id="add-cancel">Cancelar</button><button id="add-ok" class="pri">'+
+    (u?'Adicionar domicílio':'Adicionar endereço')+'</button></div></div>';
+}
+function wire(){
+  listEl.querySelectorAll('.crumbbar span[data-nav]').forEach(s=>{
+    s.onclick=()=>{ const n=s.dataset.nav;
+      if(n==='root') goTo(null,null,null); else if(n==='bairro') goTo(curB,null,null); else goTo(curB,curQ,null);
+      renderAll(); };
+  });
+  const px=document.getElementById('pick-x');
+  if(px) px.onclick=()=>{ picking=false; curQ=workQ; curF=workF; if(workQ!==null)curB=qb[workQ]; renderAll(); };
+  const ph=document.getElementById('pick-here');
+  if(ph) ph.onclick=()=>{ setWork(curQ,curF,'manual'); toast('Você está em '+fLabel(workQ,workF)); renderLoc(); renderAll(); };
+  listEl.querySelectorAll('.row[data-b]').forEach(r=>r.onclick=()=>{goTo(+r.dataset.b,null,null);renderAll();});
+  listEl.querySelectorAll('.row[data-q]').forEach(r=>r.onclick=()=>{goTo(curB,+r.dataset.q,null);renderAll();});
+  listEl.querySelectorAll('button[data-face]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    goTo(curB,curQ,+b.dataset.face); actionOn=null; renderAll();});
+  listEl.querySelectorAll('.tierbar button[data-tier]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    tierForce=+b.dataset.tier; actionOn=null; renderAll();});
+  /* the row itself opens the action panel — marking is the primary gesture now */
+  listEl.querySelectorAll('.row[data-tgt]').forEach(r=>r.onclick=()=>{
+    if(picking) return;
+    const t=r.dataset.tgt; actionOn=actionOn===t?null:t; openPlace=null; renderSheet();});
+  listEl.querySelectorAll('.acts button[data-fs]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const rows=targetRows(actionOn); if(!rows.length)return;
+    const v=+b.dataset.fs;
+    rows.forEach(r=>setFace(r,v)); queued+=rows.length;
+    toast(rows.length>1?(rows.length+' trechos — '+FLAB[v]):FLAB[v]);
+    actionOn=null; renderAll();});
+  listEl.querySelectorAll('.acts button[data-tly]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const rows=targetRows(actionOn); if(!rows.length)return;
+    const fi=rows[0], arr=b.dataset.tly==='talk'?ftalk:fabs;
+    arr[fi]=Math.max(0,Math.min(999,arr[fi]+(+b.dataset.d)));
+    if(!fstat[fi]&&arr[fi]>0) rows.forEach(r=>setFace(r,2));   // a tally implies presence
+    renderSheet();});
+  listEl.querySelectorAll('button[data-pickq]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    setWork(+b.dataset.pickq,null,'manual'); curF=null; toast(qLabel(workQ)+' — escolha a face'); renderLoc(); renderAll();});
+  listEl.querySelectorAll('button[data-pickf]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    setWork(curQ,+b.dataset.pickf,'manual'); toast('Você está em '+fLabel(workQ,workF)); renderLoc(); renderAll();});
+  listEl.querySelectorAll('.js-gowork').forEach(g=>g.onclick=()=>{ if(workQ===null)return;
+    curB=qb[workQ]; curQ=workQ; curF=workF; openPlace=null;actionOn=null;bulkOn=null; renderAll(); });
+  listEl.querySelectorAll('.row.swipe').forEach(r=>{
+    let sx0=null,dx=0;
+    r.addEventListener('pointerdown',e=>{sx0=e.clientX;dx=0;});
+    r.addEventListener('pointermove',e=>{ if(sx0===null)return;
+      dx=Math.max(0,Math.min(96,e.clientX-sx0));
+      r.style.transform='translateX('+dx+'px)'; r.style.background=dx>55?'var(--surface-3)':''; });
+    const end=()=>{ if(sx0===null)return; r.style.transform='';r.style.background='';
+      const open=dx>55; sx0=null;
+      /* swipe is a shortcut to the same panel a tap opens — there is no separate
+         bulk path any more, because marking the face IS the operation */
+      if(open&&!picking&&r.dataset.tgt!==undefined){
+        actionOn=r.dataset.tgt; openPlace=null; renderSheet();
+      } };
+    r.addEventListener('pointerup',end); r.addEventListener('pointercancel',end);
+    r.addEventListener('pointerleave',()=>{if(sx0!==null){r.style.transform='';r.style.background='';sx0=null;}});
+  });
+  listEl.querySelectorAll('.row[data-place]').forEach(r=>r.onclick=()=>{
+    const p=placesOf(curQ,curF).find(x=>x.ids[0]===+r.dataset.place);
+    openPlace=openPlace===p?null:p; renderSheet();});
+  const ap=document.getElementById('add-place'); if(ap) ap.onclick=()=>{addForm={kind:'place'};renderSheet();fi();};
+  const au=document.getElementById('add-unit'); if(au) au.onclick=()=>{addForm={kind:'unit'};renderSheet();fi();};
+  const cn=document.getElementById('add-cancel'); if(cn) cn.onclick=()=>{addForm=null;renderSheet();};
+  const ok=document.getElementById('add-ok');
+  if(ok) ok.onclick=()=>{
+    const el=document.getElementById('add-in'); const val=((el&&el.value)||'').trim();
+    if(!val){toast('Escreva o número ou o complemento');return;}
+    /* the mockup records the intent; a real add writes to the outbound queue */
+    added++; queued++;
+    toast(addForm.kind==='unit'?('domicílio '+val+' criado'):('nº '+val+' adicionado — registre a visita'));
+    addForm=null; renderAll();
+  };
+  const nq=document.getElementById('nextq');
+  if(nq) nq.onclick=()=>{ const nxt=(bQuadras.get(curB)||[]).find(q=>q!==curQ&&qStats(q).seen===0);
+    if(nxt!==undefined){ setWork(nxt,null,'manual'); toast(qLabel(nxt)+' — '+qStats(nxt).census+' domicílios'); renderLoc(); renderAll(); } };
+}
+function fi(){ const el=document.getElementById('add-in'); if(el&&el.focus) el.focus(); }
+
+/* ================= panels ================= */
+const BAT={hi:{g:7,note:'Fixes de alta precisão só com uma face aberta.'},
+           lo:{g:3,note:'Só posicionamento por rede — dá para saber a quadra.'},
+           off:{g:0,note:'Sem posicionamento e ainda assim utilizável.'}};
+function renderPanels(){
+  const s=workQ!==null?qStats(workQ):{seen:0,total:0,done:0,census:0,untouched:0,faces:0};
+  document.getElementById('c-q').textContent=(workQ!==null?qLabel(workQ):'—')+(locSource==='manual'?' (manual)':'');
+  document.getElementById('c-seen').textContent=s.seen+' / '+s.total;
+  document.getElementById('c-res').textContent=s.done+' / '+s.census;
+  document.getElementById('c-untouched').textContent=s.untouched+' de '+s.faces;
+  document.getElementById('c-added').textContent=added;
+  document.getElementById('ab-chip').innerHTML='↑ <b>'+queued+'</b>';
+  document.getElementById('ab-sub').textContent=workQ!==null?(BN[qb[workQ]]+' · '+qLabel(workQ)):'sem local definido';
+  document.getElementById('g-bairros').textContent=NBLAB;
+  document.getElementById('g-nogeo').textContent=GAPS.noGeo.toLocaleString('pt-BR')+' de '+NQ.toLocaleString('pt-BR');
+  document.getElementById('g-ghost').textContent=GAPS.ghost.toLocaleString('pt-BR')+' de '+NF.toLocaleString('pt-BR');
+  document.getElementById('g-ghostaddr').textContent=GAPS.ghostAddr.toLocaleString('pt-BR')+' ('+(GAPS.ghostAddr/NA*100).toFixed(1)+'%)';
+  document.getElementById('g-dup').textContent=GAPS.dup.toLocaleString('pt-BR')+' endereços';
+  const b=BAT[gmode];
+  document.getElementById('b-gps').textContent=b.g?('~'+b.g+' %/h'):'0 %/h';
+  document.getElementById('b-scr').textContent='~16 %/h';
+  document.getElementById('b-tot').textContent='~'+Math.round((b.g+16*0.35)*4)+' %';
+  document.getElementById('b-expl').innerHTML='<strong>Estimativas.</strong> '+b.note;
+  document.getElementById('sb-gps').textContent=gmode==='off'?'—':(gmode==='hi'?'GPS ●':'GPS ○');
+}
+function renderAll(){ renderSheet(); renderPanels(); draw(); }
+
+/* ================= diagnóstico =================
+   A testing instrument, not part of the field UI. Everything here reads APIs the
+   WebView already exposes, so it behaves identically in the browser mockup and
+   inside the APK; the two web fallbacks (getBattery, userAgent) are the ones
+   Capacitor's Device plugin should replace once packaged. */
+const NAV=typeof navigator!=='undefined'?navigator:{};
+const UA=NAV.userAgent||'';
+const uaModel=(/;\s*([^;)]+?)\s+Build\//.exec(UA)||[])[1]
+            ||(/\(Linux;[^)]*?;\s*([^;)]+)\)/.exec(UA)||[])[1]||'—';
+const uaAndroid=(/Android\s([\d.]+)/.exec(UA)||[])[1]||'—';
+const uaWebView=((/Chrome\/([\d.]+)/.exec(UA)||[])[1]||'').split('.')[0]||'—';
+let dbgOn=false, fps=0, frames=0, lastFpsT=0, drawMs=0, drawN=0;
+let bat=null, bat0=0, batT0=Date.now(), stEst=null;
+let fixN=0, ttff=null, lastFix=null, geoErr='';
+{ const _draw=draw;                       // time every real frame, cost only when open
+  draw=function(){ const t=Date.now(); _draw.apply(null,arguments);
+                   drawMs=Date.now()-t; drawN++; }; }
+if(NAV.getBattery) try{ NAV.getBattery().then(b=>{ bat=b; bat0=b.level; batT0=Date.now(); }); }catch(e){}
+function dbgGeo(){
+  if(!NAV.geolocation) { geoErr='geolocation indisponível'; return; }
+  const t0=Date.now(); geoErr='';
+  NAV.geolocation.getCurrentPosition(
+    p=>{ fixN++; lastFix=p; if(ttff===null) ttff=((Date.now()-t0)/1000).toFixed(1); dbgPaint(); },
+    e=>{ geoErr=(e&&e.message)||('erro '+(e&&e.code)); dbgPaint(); },
+    {enableHighAccuracy:true,timeout:30000,maximumAge:0});
+}
+const dRow=(k,v,w)=>'<div class="dr'+(w?' w':'')+'"><b>'+k+'</b><i>'+v+'</i></div>';
+function dbgPaint(){
+  const el=document.getElementById('dbg'); if(!el||!dbgOn) return;
+  const m=(typeof performance!=='undefined'&&performance.memory)?performance.memory:null;
+  const mb=x=>(x/1048576).toFixed(1)+' MB', C=window.__CITY||{};
+  let marked=0; for(let i=0;i<NF;i++) if(fstat[i]) marked++;
+  let h='<div class="dh">Diagnóstico<button id="dbg-x">✕</button></div>';
+  h+='<div class="dsec">APARELHO</div>'
+   + dRow('modelo',uaModel)
+   + dRow('android',uaAndroid+' · webview '+uaWebView, uaWebView!=='—'&&+uaWebView<80)
+   + dRow('RAM aprox.',NAV.deviceMemory?NAV.deviceMemory+' GB':'não exposto',NAV.deviceMemory&&NAV.deviceMemory<=2)
+   + dRow('núcleos',NAV.hardwareConcurrency||'—')
+   + dRow('tela',innerWidth+'×'+innerHeight+' @'+(window.devicePixelRatio||1)+'x');
+  h+='<div class="dsec">MEMÓRIA JS</div>'
+   + (m? dRow('heap em uso',mb(m.usedJSHeapSize),m.usedJSHeapSize/m.jsHeapSizeLimit>0.7)
+        +dRow('heap total',mb(m.totalJSHeapSize))+dRow('limite',mb(m.jsHeapSizeLimit))
+       : dRow('heap','performance.memory indisponível'));
+  h+='<div class="dsec">RENDER</div>'
+   + dRow('fps',fps||'—',fps&&fps<20)+dRow('último draw',drawMs+' ms',drawMs>32)
+   + dRow('frames',drawN)+dRow('decode do payload',(C.decodeMs!==undefined?C.decodeMs:'—')+' ms');
+  h+='<div class="dsec">GPS</div>'
+   + dRow('modo do app',gmode)+dRow('precisão simulada',(gps&&gps.acc!==undefined)?gps.acc+' m':'—')
+   + dRow('fixes reais',fixN)+dRow('TTFF',ttff!==null?ttff+' s':'—');
+  h+= lastFix
+     ? dRow('precisão real',Math.round(lastFix.coords.accuracy)+' m',lastFix.coords.accuracy>30)
+      +dRow('coords',lastFix.coords.latitude.toFixed(5)+', '+lastFix.coords.longitude.toFixed(5))
+      +dRow('idade do fix',Math.round((Date.now()-lastFix.timestamp)/1000)+' s')
+     : dRow('fix real',geoErr||'aguardando…',!!geoErr);
+  h+='<button class="dbtn" id="dbg-gps">Pedir fix agora</button>';
+  h+='<div class="dsec">BATERIA</div>';
+  if(bat){ const dt=(Date.now()-batT0)/3600000, drop=(bat0-bat.level)*100;
+    h+=dRow('nível',Math.round(bat.level*100)+'%',bat.level<0.2)
+     + dRow('carregando',bat.charging?'sim':'não')
+     + dRow('consumo',dt>0.03?(drop/dt).toFixed(1)+' %/h':'medindo…')
+     + dRow('sessão',dt<1?Math.round(dt*60)+' min':dt.toFixed(1)+' h'); }
+  else h+=dRow('bateria','API indisponível — usar Device plugin no APK');
+  h+='<div class="dsec">REDE E ARMAZENAMENTO</div>'
+   + dRow('online',NAV.onLine===false?'não':'sim',NAV.onLine===false);
+  const c=NAV.connection;
+  if(c) h+=dRow('conexão',(c.effectiveType||'—')+(c.downlink?' · '+c.downlink+' Mb/s':'')+(c.rtt?' · '+c.rtt+' ms':''));
+  if(stEst) h+=dRow('armazenamento',(stEst.usage/1048576).toFixed(1)+' / '+(stEst.quota/1048576).toFixed(0)+' MB');
+  h+='<div class="dsec">APLICAÇÃO</div>'
+   + dRow('payload',MAPMB)+dRow('domicílios',NA.toLocaleString('pt-BR'))
+   + dRow('faces / quadras',NF.toLocaleString('pt-BR')+' / '+NQ.toLocaleString('pt-BR'))
+   + dRow('faces marcadas',marked)+dRow('na fila',queued);
+  el.innerHTML=h;
+  const x=document.getElementById('dbg-x'); if(x) x.onclick=()=>dbgToggle(false);
+  const g=document.getElementById('dbg-gps'); if(g) g.onclick=()=>{ geoErr=''; dbgGeo(); };
+}
+function dbgTick(){
+  if(!dbgOn) return;
+  frames++; const now=Date.now();
+  if(now-lastFpsT>=1000){ fps=Math.round(frames*1000/(now-lastFpsT)); frames=0; lastFpsT=now; dbgPaint(); }
+  if(typeof requestAnimationFrame==='function') requestAnimationFrame(dbgTick);
+}
+function dbgToggle(v){
+  dbgOn=v;
+  const el=document.getElementById('dbg'); if(el) el.classList.toggle('on',v);
+  if(!v) return;
+  lastFpsT=Date.now(); frames=0;
+  if(NAV.storage&&NAV.storage.estimate) try{ NAV.storage.estimate().then(e=>{stEst=e;dbgPaint();}); }catch(e){}
+  dbgPaint(); dbgGeo();
+  if(typeof requestAnimationFrame==='function') requestAnimationFrame(dbgTick);
+}
+
+/* ================= drawer ================= */
+function renderDrawer(){
+  let conv=0,seen=0;
+  for(let i=0;i<NF;i++){ if(fstat[i]){ seen+=totF[i]; conv+=ftalk[i]; } }
+  const items=[['ENVIO',[['⇅','Fila de envio',queued+' aguardando',queued>0],
+                         ['↻','Enviar agora','última: 17:41',false],
+                         ['⤓','Exportar registros (CSV)','se o envio falhar',false]]],
+               ['TRABALHO',[['⌕','Buscar endereço, rua ou CEP','',false],
+                            ['◔','Meu dia',conv+' conversas · '+seen+' portas',false],
+                            ['⚑','Avisar o coordenador','área insegura',false]]],
+               ['APARELHO',[['⬒','Mapa offline',MUNI+' · '+MAPMB,false],
+                            ['◐','Economia de bateria',gmode==='hi'?'desligada':'ligada',false]]],
+               ['CONTA',[['◯','Privacidade — o que é registrado','',false],['?','Ajuda','',false],['⏻','Sair','',false]]],
+               ['TESTE',[['◈','Diagnóstico','RAM · GPS · bateria · render',false]]]];
+  let h='';
+  for(const [g,rows] of items){ h+='<div class="dgrp">'+g+'</div>';
+    for(const [ic,nm,note,hot] of rows)
+      h+='<div class="ditem'+(nm.startsWith('Avisar')?' warn':'')+'"><span class="ic">'+ic+'</span>'+nm+
+         (note?'<span class="n'+(hot?' hot':'')+'">'+note+'</span>':'')+'</div>'; }
+  document.getElementById('dbody').innerHTML=h;
+  document.querySelectorAll('#dbody .ditem').forEach(d=>d.onclick=()=>{
+    if((d.textContent||'').indexOf('Diagnóstico')>=0){ drawerOpen(false); dbgToggle(true); return; }
+    toast('mockup'); });
+}
+function drawerOpen(v){
+  document.getElementById('drawer').classList.toggle('on',v);
+  document.getElementById('scrim').classList.toggle('on',v);
+  if(v) renderDrawer();
+}
+document.getElementById('burger').onclick=()=>drawerOpen(true);
+document.getElementById('drawer-x').onclick=()=>drawerOpen(false);
+document.getElementById('scrim').onclick=()=>drawerOpen(false);
+
+/* ================= controls ================= */
+function setMode(m){
+  gmode=m; openPlace=null;actionOn=null;addForm=null;bulkOn=null;
+  for(const [id,mm] of [['g-hi','hi'],['g-lo','lo'],['g-off','off']])
+    document.getElementById(id).setAttribute('aria-pressed',String(mm===m));
+  if(m==='off') gps=null; else setPos();
+  if(m!=='hi'&&locSource==='gps') workF=null;
+  renderLoc(); renderAll();
+}
+document.getElementById('g-hi').onclick=()=>setMode('hi');
+document.getElementById('g-lo').onclick=()=>setMode('lo');
+document.getElementById('g-off').onclick=()=>setMode('off');
+document.getElementById('grip').onclick=()=>{expanded=!expanded;renderSheet();};
+document.getElementById('walk').onclick=function(){
+  if(walkT){clearInterval(walkT);walkT=null;this.classList.remove('on');this.textContent='Andar pela passagem';return;}
+  this.classList.add('on'); this.textContent='Parar';
+  walkT=setInterval(()=>{ if(gmode==='off')return;
+    tt+=0.16; if(tt>=1){tt=0;seg++;}
+    setPos(); if(gmode==='hi'&&locSource==='gps'){renderLoc();renderAll();} else draw(); },420);
+};
+document.getElementById('fill').onclick=()=>{
+  if(workQ===null){toast('Defina um local primeiro');return;}
+  const rows=qFaces.get(workQ)||[];
+  rows.slice(0,Math.max(1,rows.length-2)).forEach((fi2,n)=>{
+    if(fstat[fi2]!==0) return;
+    setFace(fi2,(n%9===0)?3:1);
+    ftalk[fi2]=Math.round(totF[fi2]*0.55); fabs[fi2]=Math.round(totF[fi2]*0.2);
+    queued++;
+  });
+  toast(qLabel(workQ)+' quase concluída'); renderAll();
+};
+document.getElementById('reset').onclick=()=>{
+  for(let i=0;i<NF;i++) if(fstat[i]) setFace(i,0);
+  queued=0;added=0;openPlace=null;actionOn=null;addForm=null;bulkOn=null;picking=false;tierForce=0;
+  locSource='gps'; workQ=null;workF=null;curQ=null;curF=null;curB=null; setMode('hi');
+};
+let mdrag=null,mmoved=false;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);mdrag={x:e.clientX,y:e.clientY,cx,cy};mmoved=false;});
+cv.addEventListener('pointermove',e=>{ if(!mdrag)return;
+  const dx=e.clientX-mdrag.x,dy=e.clientY-mdrag.y;
+  if(Math.abs(dx)+Math.abs(dy)>3)mmoved=true;
+  cx=mdrag.cx-dx/(KX*k); cy=mdrag.cy+dy/k; draw(); });
+cv.addEventListener('pointerup',()=>{mdrag=null;});
+cv.addEventListener('wheel',e=>{ e.preventDefault();
+  const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  const bx=wx(mx),by=wy(my);
+  k*=Math.exp(-e.deltaY*0.0018); k=Math.max(k0*0.5,Math.min(k0*260,k));
+  cx=bx-(mx-W/2)/(KX*k); cy=by+(my-H/2)/k; draw(); },{passive:false});
+cv.addEventListener('click',e=>{
+  if(mmoved){mmoved=false;return;}
+  const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;
+  if(curQ!==null){
+    const rg=qRange.get(curQ);
+    if(rg){ let best=-1,bd=18*18;
+      for(let i=rg[0];i<rg[1];i++){ const dx=sx(ax[i])-px,dy=sy(ay[i])-py,d=dx*dx+dy*dy; if(d<bd){bd=d;best=i;} }
+      if(best>=0){ goTo(qb[aq[best]],aq[best],af[best]);
+        const p=placesOf(curQ,curF).find(pp=>pp.ids.includes(best));
+        openPlace=p&&p.ids.length>1?p:null; actionOn=p&&p.ids.length===1?best:null;
+        renderAll(); return; } }
+  }
+  const X=wx(px),Y=wy(py);
+  for(let q=0;q<NQ;q++){ const o=q*4;
+    if(X<qbb[o]||X>qbb[o+2]||Y<qbb[o+1]||Y>qbb[o+3])continue;
+    if(inQuadra(q,X,Y)){ goTo(qb[q],q,null); renderAll(); return; } }
+});
+function resize(){
+  const r=cv.getBoundingClientRect(); if(r.width<2||r.height<2)return;
+  DPR=Math.min(2,window.devicePixelRatio||1); W=r.width;H=r.height;
+  const w=Math.round(W*DPR),hh=Math.round(H*DPR);
+  if(cv.width!==w||cv.height!==hh){cv.width=w;cv.height=hh;}
+  if(!fitted)fitted=fit();
+  draw();
+}
+function redrawAll(){tokens();draw();}
+tokens();
+if(window.ResizeObserver) new ResizeObserver(resize).observe(cv);
+resize(); setMode('hi');
+window.addEventListener('resize',resize);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redrawAll);
+new MutationObserver(redrawAll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+console.log('ready in',Date.now()-t0,'ms');

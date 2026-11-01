@@ -1,0 +1,270 @@
+/* ================= geometry helpers ================= */
+const fbb=new Int32Array(NF*4), rbb=new Int32Array(NR*4), ubb=new Int32Array(NU*4);
+function bbInto(arr,off,src,s,e){
+  let x0=2147483647,y0=2147483647,x1=-2147483648,y1=-2147483648;
+  for(let p=s;p<e;p+=2){ const x=src[p],y=src[p+1];
+    if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
+  arr[off]=x0; arr[off+1]=y0; arr[off+2]=x1; arr[off+3]=y1;
+}
+for(let i=0;i<NF;i++) bbInto(fbb,i*4,fgAll,foff[i],foff[i+1]);
+for(let i=0;i<NR;i++) bbInto(rbb,i*4,rgAll,roff[i],roff[i+1]);
+for(let i=0;i<NU;i++) bbInto(ubb,i*4,ugAll,uoff[i],uoff[i+1]);
+
+/* quadra outlines; quadras with no geometry get an honest "roughly here" disc */
+const hulls=new Array(NQ), blobs=new Map();
+(function(){
+  const cross=(ox,oy,axx,ayy,bx,by)=>(axx-ox)*(by-oy)-(ayy-oy)*(bx-ox);
+  for(let q=0;q<NQ;q++){
+    const rows=qFaces.get(q)||[]; const pts=[];
+    for(const r of rows) for(let p=foff[r];p<foff[r+1];p+=2) pts.push([fgAll[p],fgAll[p+1]]);
+    if(pts.length<3){
+      const rg=qRange.get(q);
+      if(rg){ let mx=0,my=0; const n=rg[1]-rg[0];
+        for(let i=rg[0];i<rg[1];i++){ mx+=ax[i]; my+=ay[i]; }
+        mx/=n; my/=n;
+        const ds=[]; for(let i=rg[0];i<rg[1];i++) ds.push(Math.hypot((ax[i]-mx)*KX,ay[i]-my));
+        ds.sort((a,b)=>a-b);
+        blobs.set(q,{x:mx,y:my,r:Math.max(ds[Math.floor(ds.length*0.75)]||0,120)});
+      }
+      hulls[q]=null; continue;
+    }
+    pts.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+    const lo=[],up=[];
+    for(const p of pts){ while(lo.length>=2&&cross(lo[lo.length-2][0],lo[lo.length-2][1],lo[lo.length-1][0],lo[lo.length-1][1],p[0],p[1])<=0)lo.pop(); lo.push(p); }
+    for(let i=pts.length-1;i>=0;i--){ const p=pts[i];
+      while(up.length>=2&&cross(up[up.length-2][0],up[up.length-2][1],up[up.length-1][0],up[up.length-1][1],p[0],p[1])<=0)up.pop(); up.push(p); }
+    lo.pop(); up.pop();
+    const h=lo.concat(up);
+    const flat=new Int32Array(h.length*2);
+    for(let i=0;i<h.length;i++){ flat[i*2]=h[i][0]; flat[i*2+1]=h[i][1]; }
+    hulls[q]=flat;
+  }
+})();
+const qbb=new Int32Array(NQ*4);
+for(let q=0;q<NQ;q++){
+  const h=hulls[q];
+  if(h) bbInto(qbb,q*4,h,0,h.length);
+  else { const b=blobs.get(q);
+    if(b){ qbb[q*4]=b.x-b.r/KX; qbb[q*4+1]=b.y-b.r; qbb[q*4+2]=b.x+b.r/KX; qbb[q*4+3]=b.y+b.r; }
+    else { qbb[q*4]=qcx[q]; qbb[q*4+1]=qcy[q]; qbb[q*4+2]=qcx[q]; qbb[q*4+3]=qcy[q]; } }
+}
+function inQuadra(q,x,y){
+  const b=blobs.get(q);
+  if(b) return Math.hypot((x-b.x)*KX,y-b.y)<=b.r;
+  const h=hulls[q]; if(!h) return false;
+  let ins=false;
+  for(let i=0,j=h.length/2-1;i<h.length/2;j=i++){
+    const xi=h[i*2],yi=h[i*2+1],xj=h[j*2],yj=h[j*2+1];
+    if(((yi>y)!==(yj>y)) && x<(xj-xi)*(y-yi)/(yj-yi+1e-9)+xi) ins=!ins;
+  }
+  return ins;
+}
+/* places (one street number = one entrance) are built per face, on demand */
+const placeCache=new Map();
+function placesOf(q,f){
+  const kk=fkey(q,f); let v=placeCache.get(kk); if(v) return v;
+  const rg=aRange.get(kk); v=[];
+  if(rg){
+    const m=new Map();
+    for(let i=rg[0];i<rg[1];i++){
+      const key=asr[i]+'|'+ANUM.get(i);
+      let p=m.get(key);
+      if(!p){ p={q,f,s:asr[i],n:ANUM.get(i),ids:[],x:0,y:0}; m.set(key,p); v.push(p); }
+      p.ids.push(i);
+    }
+    for(const p of v){ p.x=p.ids.reduce((s,i)=>s+ax[i],0)/p.ids.length;
+                       p.y=p.ids.reduce((s,i)=>s+ay[i],0)/p.ids.length; }
+    const fi=faceIdx.get(kk);
+    if(fi!==undefined && foff[fi+1]>foff[fi]){
+      const x0=fgAll[foff[fi]],y0=fgAll[foff[fi]+1],
+            x1=fgAll[foff[fi+1]-2],y1=fgAll[foff[fi+1]-1];
+      const vx=(x1-x0)*KX, vy=y1-y0, L=Math.hypot(vx,vy)||1;
+      v.sort((a,b)=>(((a.x-x0)*KX*vx+(a.y-y0)*vy)-((b.x-x0)*KX*vx+(b.y-y0)*vy))/L);
+    } else v.sort((a,b)=>{ const na=parseInt(a.n,10),nb=parseInt(b.n,10);
+      if(isNaN(na)&&isNaN(nb)) return String(a.n).localeCompare(String(b.n));
+      if(isNaN(na)) return 1; if(isNaN(nb)) return -1; return na-nb; });
+  }
+  placeCache.set(kk,v); return v;
+}
+/* a household counts as seen because its FACE was walked, never because anyone
+   recorded that door — these derive, they do not store */
+const fstatOf=p=>{ const fi=faceIdx.get(fkey(p.q,p.f)); return fi===undefined?0:fstat[fi]; };
+const pSeen=p=>fstatOf(p)!==0?p.ids.length:0;
+const pDone=p=>FRES[fstatOf(p)]?p.ids.length:0;
+const pPend=p=>fstatOf(p)===0?p.ids.length:0;
+const isGhost=fi=>foff[fi+1]===foff[fi];
+/* coverage colour for a face status */
+const FCOL=v=>v===1?T.contact:v===2?T.partial:v===5?T.muted:T.none;
+
+/* ================= state ================= */
+let curB=null, curQ=null, curF=null, workQ=null, workF=null, locSource='gps';
+let picking=false, openPlace=null, actionOn=null, addForm=null, bulkOn=null, expanded=true;
+const level=()=>curF!==null?'face':(curQ!==null?'quadra':(curB!==null?'bairro':'root'));
+const isWorking=(q,f)=>q===workQ&&f===workF;
+function setWork(q,f,src){ workQ=q; workF=f; if(src) locSource=src;
+  curQ=q; curF=f; if(q!==null) curB=qb[q];
+  picking=false; openPlace=null; actionOn=null; addForm=null; bulkOn=null; }
+function goTo(b,q,f){ curB=b; curQ=q; curF=f; openPlace=null; actionOn=null; addForm=null; bulkOn=null; }
+
+/* ================= map ================= */
+const cv=document.getElementById('pmap'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1,k=1,k0=1,cx=0,cy=0,fitted=false;
+let x0=2147483647,y0=2147483647,x1=-2147483648,y1=-2147483648;
+{ const xs=Int32Array.from(ax).sort(), ys=Int32Array.from(ay).sort();
+  const lo=Math.floor(NA*0.012), hi=Math.floor(NA*0.988);
+  x0=xs[lo]; x1=xs[hi]; y0=ys[lo]; y1=ys[hi]; }   // core, so the islands don't zoom us out
+function fit(){
+  const pad=14,kx=(W-pad*2)/((x1-x0)*KX),ky=(H-pad*2)/(y1-y0);
+  k=Math.min(kx,ky); if(!(k>0))return false;
+  k0=k; cx=(x0+x1)/2; cy=(y0+y1)/2; return true;
+}
+const zoom=()=>k/k0;
+const sx=x=>(x-cx)*KX*k+W/2, sy=y=>H/2-(y-cy)*k;
+const wx=p=>(p-W/2)/(KX*k)+cx, wy=p=>(H/2-p)/k+cy;
+let vx0=0,vy0=0,vx1=0,vy1=0;
+function viewport(){ const mx=50/(KX*k),my=50/k;
+  vx0=wx(0)-mx; vx1=wx(W)+mx; vy0=wy(H)-my; vy1=wy(0)+my; }
+const visBB=(a,o)=>!(a[o+2]<vx0||a[o]>vx1||a[o+3]<vy0||a[o+1]>vy1);
+
+let T={};
+function tokens(){ const s=getComputedStyle(document.documentElement),g=n=>s.getPropertyValue(n).trim();
+  T={surface:g('--surface'),surface3:g('--surface-3'),hair:g('--hair'),hairS:g('--hair-strong'),
+     ink:g('--ink'),ink2:g('--ink-2'),muted:g('--muted'),contact:g('--s-contact'),none:g('--s-none'),
+     partial:g('--partial'),cov4:g('--cov-4'),cov5:g('--cov-5'),focus:g('--focus'),gps:g('--gps'),
+     warn:g('--warn'),rc:g('--road-case'),rf:g('--road-fill'),rmc:g('--road-major-case'),
+     rmf:g('--road-major-fill'),rs:g('--road-svc'),path:g('--path'),mono:g('--font-mono'),sans:g('--font-sans')}; }
+const RW=[6,5.4,4.6,3.8,3.2,2.6,2.4,1.8,1.5,1.1];
+function rstyle(c){ if(c<=2)return[T.rmc,T.rmf]; if(c<=4)return[T.rmc,T.rf];
+  if(c<=6)return[T.rc,T.rf]; if(c===7)return[T.rc,T.rs]; return[T.path,null]; }
+function poly(g,s,e){ ctx.beginPath();
+  for(let p=s;p<e;p+=2){ const X=sx(g[p]),Y=sy(g[p+1]); p===s?ctx.moveTo(X,Y):ctx.lineTo(X,Y); } }
+
+function draw(){
+  if(!fitted)return;
+  const z=zoom();
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.fillStyle=T.surface; ctx.fillRect(0,0,W,H);
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  viewport();
+  if(z>2.2){                                   // unattributed census lines
+    ctx.strokeStyle=T.hair; ctx.lineWidth=1; ctx.setLineDash([2,3]);
+    for(let i=0;i<NU;i++){ if(!visBB(ubb,i*4))continue; poly(ugAll,uoff[i],uoff[i+1]); ctx.stroke(); }
+    ctx.setLineDash([]);
+  }
+  /* below ~1.4x a quadra is a couple of pixels: filling 8.604 hulls buys nothing
+     and costs the whole frame, so the bairro view draws none of them */
+  if(z>1.4) for(let q=0;q<NQ;q++){             // quadra bodies
+    if(!visBB(qbb,q*4))continue;
+    const h=hulls[q]; if(!h)continue;
+    poly(h,0,h.length); ctx.closePath();
+    ctx.fillStyle=q===curQ?T.surface3:T.surface; ctx.globalAlpha=q===curQ?1:0.72; ctx.fill(); ctx.globalAlpha=1;
+    if(q===curQ){ ctx.strokeStyle=T.focus; ctx.lineWidth=2; ctx.stroke(); }
+    else if(q===workQ){ ctx.strokeStyle=T.cov4; ctx.lineWidth=1.3; ctx.stroke(); }
+  }
+  ctx.setLineDash([3,3]);
+  if(z>1.4) blobs.forEach((bl,q)=>{ if(!visBB(qbb,q*4))return;
+    const X=sx(bl.x),Y=sy(bl.y),r=bl.r*k; if(r<2)return;
+    ctx.beginPath(); ctx.arc(X,Y,r,0,6.2832);
+    ctx.strokeStyle=q===curQ?T.focus:T.warn; ctx.lineWidth=q===curQ?2:1;
+    ctx.globalAlpha=q===curQ?0.95:0.4; ctx.stroke(); ctx.globalAlpha=1; });
+  ctx.setLineDash([]);
+  const minC=z<2?3:(z<5?7:9);
+  for(const pass of [0,1]) for(let i=0;i<NR;i++){
+    if(rc[i]>minC||!visBB(rbb,i*4))continue;
+    const col=rstyle(rc[i])[pass]; if(!col)continue;
+    ctx.strokeStyle=col; ctx.lineWidth=pass===0?RW[rc[i]]*Math.min(1,z/3)+1.2:RW[rc[i]]*Math.min(1,z/3);
+    poly(rgAll,roff[i],roff[i+1]); ctx.stroke();
+  }
+  /* the face carries the coverage colour — it is the unit that gets marked */
+  if(z>1.6) for(let i=0;i<NF;i++){            // kerb faces
+    if(isGhost(i)||!visBB(fbb,i*4))continue;
+    const isCur=fq[i]===curQ&&ff[i]===curF, fv=fstat[i];
+    ctx.globalAlpha=fq[i]===curQ?1:0.55;
+    ctx.strokeStyle=isCur?T.focus:(fv?FCOL(fv):T.hairS);
+    ctx.lineWidth=isCur?4.5:(fv?3.2:1);
+    poly(fgAll,foff[i],foff[i+1]); ctx.stroke(); ctx.globalAlpha=1;
+  }
+  /* households stay neutral: they are context and density, not state. Keeping them
+     visible is what makes the 14% on a lineless face reachable at all. */
+  if(curQ!==null && z>2){                      // pins, current quadra only
+    const rg=qRange.get(curQ);
+    if(rg) for(let i=rg[0];i<rg[1];i++){
+      const X=sx(ax[i]),Y=sy(ay[i]);
+      if(X<-6||X>W+6||Y<-6||Y>H+6)continue;
+      ctx.beginPath(); ctx.arc(X,Y,Math.min(4.5,2+z*0.22),0,6.2832);
+      ctx.fillStyle=T.surface; ctx.fill();
+      ctx.strokeStyle=T.none; ctx.lineWidth=1.1; ctx.stroke();
+    }
+  }
+  ctx.setLineDash([7,4]); ctx.lineCap='butt';   // official bairro limits
+  for(let b=0;b<BP.length;b++){
+    ctx.strokeStyle=b===curB?T.focus:T.muted; ctx.lineWidth=b===curB?2.2:1.2;
+    ctx.globalAlpha=b===curB?0.95:0.5;
+    for(const r of BP[b]){ poly(r,0,r.length); ctx.stroke(); }
+  }
+  ctx.setLineDash([]); ctx.globalAlpha=1; ctx.lineCap='round';
+
+  /* labels strictly by zoom — selecting a quadra highlights it, it does not
+     force numbers onto a map that is still showing half the city */
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  const lab=(t,X,Y,f,c)=>{ ctx.font=f; ctx.strokeStyle=T.surface; ctx.lineWidth=3.2; ctx.lineJoin='round';
+    ctx.strokeText(t,X,Y); ctx.fillStyle=c; ctx.fillText(t,X,Y); };
+  if(z<3.5){
+    for(let b=0;b<BN.length;b++){
+      const qs=bQuadras.get(b); if(!qs||!qs.length)continue;
+      let mx=0,my=0; for(const q of qs){ mx+=qcx[q]; my+=qcy[q]; }
+      const X=sx(mx/qs.length),Y=sy(my/qs.length);
+      if(X<24||X>W-24||Y<8||Y>H-8)continue;
+      lab(BN[b],X,Y,(b===curB?'700 ':'600 ')+Math.min(12,8+z)+'px '+T.sans,b===curB?T.focus:T.ink2);
+    }
+  } else if(z<9){
+    const placed=[];
+    for(let q=0;q<NQ;q++){
+      if(!visBB(qbb,q*4))continue;
+      const X=sx(qcx[q]),Y=sy(qcy[q]);
+      if(X<12||X>W-12||Y<10||Y>H-10)continue;
+      if(placed.some(p=>Math.abs(p[0]-X)<30&&Math.abs(p[1]-Y)<12))continue;
+      placed.push([X,Y]);
+      lab(qcode[q],X,Y,(q===curQ?'700 ':'600 ')+(q===curQ?11:9)+'px '+T.mono,
+          q===curQ?T.focus:(q===workQ?T.cov5:T.muted));
+    }
+  } else {
+    const placed=[];
+    for(let i=0;i<NR;i++){
+      if(rn[i]<0||rc[i]>7||!visBB(rbb,i*4))continue;
+      const s=roff[i],e=roff[i+1]; let bi=s,bl=0;
+      for(let p=s;p<e-2;p+=2){ const dx=(rgAll[p+2]-rgAll[p])*KX,dy=rgAll[p+3]-rgAll[p+1],l=dx*dx+dy*dy;
+        if(l>bl){bl=l;bi=p;} }
+      const X=(sx(rgAll[bi])+sx(rgAll[bi+2]))/2, Y=(sy(rgAll[bi+1])+sy(rgAll[bi+3]))/2;
+      if(X<36||X>W-36||Y<10||Y>H-10)continue;
+      if(Math.sqrt(bl)*k<44)continue;
+      if(placed.some(p=>Math.abs(p[0]-X)<64&&Math.abs(p[1]-Y)<13))continue;
+      placed.push([X,Y]);
+      let ang=Math.atan2(sy(rgAll[bi+3])-sy(rgAll[bi+1]),sx(rgAll[bi+2])-sx(rgAll[bi]));
+      if(Math.abs(ang)>Math.PI/2) ang+=Math.PI;
+      ctx.save(); ctx.translate(X,Y); ctx.rotate(ang);
+      lab(ST[rn[i]],0,0,'500 10px '+T.sans,T.ink2); ctx.restore();
+    }
+    if(z>22 && curQ!==null){
+      const rg=qRange.get(curQ), pl=[];
+      if(rg) for(let i=rg[0];i<rg[1];i++){
+        const X=sx(ax[i]),Y=sy(ay[i]);
+        if(X<12||X>W-12||Y<14||Y>H-6)continue;
+        if(pl.some(p=>Math.abs(p[0]-X)<20&&Math.abs(p[1]-Y)<11))continue;
+        pl.push([X,Y]); lab(ANUM.get(i)||'s/n',X,Y-9,'500 9.5px '+T.mono,T.ink);
+      }
+    }
+  }
+  if(gps){
+    const X=sx(gps.x),Y=sy(gps.y),r=Math.max(5,(gps.acc/M_UNIT)*k);
+    ctx.beginPath(); ctx.arc(X,Y,r,0,6.2832);
+    ctx.fillStyle=T.gps; ctx.globalAlpha=.14; ctx.fill(); ctx.globalAlpha=1;
+    ctx.strokeStyle=T.gps; ctx.lineWidth=1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(X,Y,5.5,0,6.2832); ctx.fillStyle=T.gps; ctx.fill();
+    ctx.strokeStyle=T.surface; ctx.lineWidth=2.2; ctx.stroke();
+  }
+  const st=document.getElementById('zlvl');
+  if(st) st.textContent = z<3.5?'bairros':(z<9?'quadras':(z<22?'ruas':'números'));
+}
+/*__UI__*/

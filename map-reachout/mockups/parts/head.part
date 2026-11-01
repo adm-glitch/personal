@@ -1,0 +1,538 @@
+<title>Mutirão — app mockup, Terra Firme</title>
+<style>
+:root{
+  color-scheme: light;
+  --plane:#EEF0ED; --stage:#E2E6E3;
+  --surface:#F7F8F6; --surface-2:#FDFDFC; --surface-3:#EFF2EF;
+  --ink:#101614; --ink-2:#4C5551; --muted:#828B87;
+  --hair:#DDE1DD; --hair-strong:#C6CCC7;
+  --s-contact:#1baf7a; --s-noanswer:#eb6834; --s-none:#A3ABA6;
+  --partial:#2a78d6; --cov-4:#3987e5; --cov-5:#256abf;
+  --focus:#1c5cab; --gps:#1c5cab; --warn:#b4560f;
+  --road-case:#CDD4CE; --road-fill:#FFFFFF;
+  --road-major-case:#D6C596; --road-major-fill:#F8ECCC;
+  --road-svc:#F1F4F1; --path:#AEB7B1;
+  --shell:#1C2320;
+  --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --plane:#0B0D0C; --stage:#141816;
+    --surface:#121614; --surface-2:#191E1C; --surface-3:#1F2422;
+    --ink:#F1F4F2; --ink-2:#A8B0AC; --muted:#7C8480;
+    --hair:#232827; --hair-strong:#333A38;
+    --s-contact:#199e70; --s-noanswer:#d95926; --s-none:#4A524E;
+    --partial:#3987e5; --cov-4:#256abf; --cov-5:#3987e5;
+    --focus:#6da7ec; --gps:#6da7ec; --warn:#e0913f;
+    --road-case:#090C0B; --road-fill:#2F3733;
+    --road-major-case:#5C5441; --road-major-fill:#463F30;
+    --road-svc:#242A27; --path:#414A45;
+    --shell:#000;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0B0D0C; --stage:#141816;
+  --surface:#121614; --surface-2:#191E1C; --surface-3:#1F2422;
+  --ink:#F1F4F2; --ink-2:#A8B0AC; --muted:#7C8480;
+  --hair:#232827; --hair-strong:#333A38;
+  --s-contact:#199e70; --s-noanswer:#d95926; --s-none:#4A524E;
+  --partial:#3987e5; --cov-4:#256abf; --cov-5:#3987e5;
+  --focus:#6da7ec; --gps:#6da7ec; --warn:#e0913f;
+  --road-case:#090C0B; --road-fill:#2F3733;
+  --road-major-case:#5C5441; --road-major-fill:#463F30;
+  --road-svc:#242A27; --path:#414A45;
+  --shell:#000;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--font-sans);line-height:1.55}
+.wrap{max-width:1140px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(16px,3vw,30px) 70px}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font-size:clamp(27px,4.6vw,42px);line-height:1.06;letter-spacing:-.022em;margin:0 0 16px;font-weight:660;text-wrap:balance}
+.lede{font-size:clamp(15.5px,1.5vw,18px);color:var(--ink-2);max-width:64ch;margin:0 0 30px}
+.lede strong{color:var(--ink);font-weight:600}
+h2{font-size:clamp(19px,2.2vw,24px);margin:0 0 8px;font-weight:640;letter-spacing:-.012em;text-wrap:balance}
+p{margin:0 0 13px;max-width:65ch}
+section{margin-top:clamp(34px,5vw,56px)}
+.sub{color:var(--ink-2);max-width:62ch;margin:0 0 20px}
+
+.stage{display:grid;gap:26px;grid-template-columns:1fr;align-items:start;
+  background:var(--stage);border:1px solid var(--hair-strong);border-radius:6px;padding:clamp(18px,3vw,30px)}
+@media(min-width:880px){.stage{grid-template-columns:auto 1fr}}
+
+.phone{width:356px;max-width:100%;background:var(--shell);border-radius:32px;padding:9px;
+  box-shadow:0 20px 50px -22px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.25);margin:0 auto}
+.screen{background:var(--surface);border-radius:24px;overflow:hidden;height:712px;
+  display:flex;flex-direction:column;position:relative}
+.statusbar{background:var(--surface-2);display:flex;align-items:center;gap:6px;padding:6px 14px 5px;
+  font-family:var(--font-mono);font-size:9.5px;color:var(--muted);border-bottom:1px solid var(--hair)}
+.statusbar .sp{margin-left:auto;display:flex;gap:7px}
+.appbar{display:flex;align-items:center;gap:10px;padding:9px 13px;background:var(--surface-2);border-bottom:1px solid var(--hair)}
+.appbar .burger{font-size:17px;color:var(--ink-2);line-height:1}
+.appbar .ttl{font-weight:650;font-size:14.5px;letter-spacing:-.01em;line-height:1.2}
+.appbar .ttl small{display:block;font-weight:500;font-size:10.5px;color:var(--muted);font-family:var(--font-mono);letter-spacing:.04em}
+.appbar .chip{margin-left:auto;font-family:var(--font-mono);font-size:10px;border:1px solid var(--hair-strong);
+  border-radius:10px;padding:2px 7px;color:var(--ink-2)}
+.appbar .chip b{color:var(--focus)}
+.maparea{position:relative;flex:1 1 auto;min-height:120px;display:flex}
+#pmap{display:block;width:100%;flex:1 1 auto;min-height:0}
+.locbar{position:absolute;left:10px;right:10px;top:10px;background:var(--surface-2);
+  border:1px solid var(--hair-strong);border-radius:6px;padding:8px 11px;box-shadow:0 5px 16px -8px rgba(0,0,0,.3)}
+.locbar .k{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.locbar .v{font-size:15.5px;font-weight:660;letter-spacing:-.015em;line-height:1.2;margin-top:2px}
+.locbar .m{font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.locbar.bad{border-color:var(--warn)} .locbar.bad .k{color:var(--warn)}
+.pickers{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.pickers button{text-align:left;font-size:13.5px;font-weight:560;padding:8px 10px;background:var(--surface);
+  border:1px solid var(--hair-strong);border-radius:5px;color:var(--ink);cursor:pointer;font-family:var(--font-sans)}
+.pickers button:hover{border-color:var(--focus)}
+.pickers button small{display:block;font-weight:400;font-size:10.5px;color:var(--muted);font-family:var(--font-mono)}
+.locrow{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;overflow:hidden}
+.locrow .chip{flex:0 1 auto;min-width:0;font-family:var(--font-sans);font-size:11.5px;font-weight:560;
+  padding:5px 9px;border-radius:12px;border:1px solid var(--hair-strong);background:var(--surface);
+  color:var(--ink-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.locrow .chip b{color:var(--ink);font-weight:650}
+.locrow .chip:hover{border-color:var(--focus);color:var(--ink)}
+
+.sheet{background:var(--surface-2);border-top:1px solid var(--hair-strong);display:flex;flex-direction:column;
+  flex:0 0 auto;max-height:66%;box-shadow:0 -6px 18px -12px rgba(0,0,0,.3)}
+.grip{display:flex;align-items:center;gap:9px;padding:8px 13px;cursor:pointer;user-select:none}
+.grip .bar{width:28px;height:3px;border-radius:2px;background:var(--hair-strong);flex:none}
+.grip .t{font-size:13px;font-weight:620;flex:1;line-height:1.3;letter-spacing:-.008em}
+.grip .t small{display:block;font-weight:500;font-size:10.5px;color:var(--muted);font-family:var(--font-mono)}
+.grip .caret{color:var(--muted);font-size:12px}
+.list{overflow-y:auto;border-top:1px solid var(--hair)}
+.list.hidden{display:none}
+.crumb{display:flex;align-items:center;gap:7px;padding:8px 13px;background:var(--surface-3);
+  border-bottom:1px solid var(--hair);font-size:12px;color:var(--ink-2);cursor:pointer}
+.crumb b{color:var(--ink);font-weight:620}
+.fhead{display:flex;align-items:baseline;gap:8px;padding:9px 13px 4px;font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fhead .n{margin-left:auto;color:var(--ink-2);letter-spacing:0}
+.prog{height:3px;background:var(--hair);margin:0 13px 7px;border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--cov-5)}
+.row{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:1px solid var(--hair);cursor:pointer}
+.row:hover{background:var(--surface)}
+.row.sub{padding-left:30px;background:var(--surface-3)}
+.row.open{background:var(--surface)}
+.row .num{font-family:var(--font-mono);font-weight:660;font-size:13.5px;min-width:36px;font-variant-numeric:tabular-nums}
+.row .cmp{flex:1;font-size:12px;color:var(--ink-2);line-height:1.3}
+.row .st{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.row.done{opacity:.5} .row.done .num{text-decoration:line-through}
+.row .fr{font-family:var(--font-mono);font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.badge{font-family:var(--font-mono);font-size:10px;border-radius:9px;padding:1px 6px;font-weight:650;
+  color:#fff;background:var(--s-none)}
+.badge.part{background:var(--partial)} .badge.full{background:var(--s-contact)}
+:root[data-theme="dark"] .badge{color:#08110A}
+.minibar{width:34px;height:4px;border-radius:2px;background:var(--hair);overflow:hidden;flex:none}
+.minibar i{display:block;height:100%;background:var(--cov-5)}
+.tiny{font-family:var(--font-mono);font-size:9px;color:var(--warn);letter-spacing:.05em}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:9px 13px 11px;background:var(--surface);
+  border-bottom:1px solid var(--hair)}
+.acts.sub{padding-left:30px}
+.acts button{font-family:var(--font-sans);font-size:12.5px;font-weight:570;padding:9px 8px;
+  border:1px solid var(--hair-strong);border-radius:5px;background:var(--surface-2);color:var(--ink);
+  cursor:pointer;display:flex;align-items:center;gap:7px}
+.acts button .d{width:9px;height:9px;border-radius:50%;flex:none}
+.acts button:hover{border-color:var(--focus)}
+.acts .full{grid-column:1/-1}
+.addbtn{width:100%;text-align:left;font-family:var(--font-sans);font-size:12.5px;font-weight:560;
+  padding:10px 13px;background:transparent;border:0;border-bottom:1px solid var(--hair);
+  color:var(--focus);cursor:pointer}
+.addbtn.sub{padding-left:30px;background:var(--surface-3)}
+.addbtn:hover{background:var(--surface)}
+.form{padding:11px 13px 13px;background:var(--surface);border-bottom:1px solid var(--hair)}
+.form.sub{padding-left:30px}
+.form .fl{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px}
+.form input{width:100%;font-family:var(--font-mono);font-size:14px;padding:8px 10px;border-radius:5px;
+  border:1px solid var(--hair-strong);background:var(--surface-2);color:var(--ink);margin-bottom:8px}
+.form .where{font-size:11.5px;color:var(--ink-2);background:var(--surface-3);border-radius:4px;
+  padding:6px 9px;margin-bottom:9px;line-height:1.4}
+.form .where b{color:var(--ink)}
+.form .fb{display:flex;gap:7px}
+.form .fb button{flex:1;font-family:var(--font-sans);font-size:12.5px;font-weight:580;padding:9px;
+  border-radius:5px;border:1px solid var(--hair-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+.form .fb button.pri{background:var(--focus);border-color:var(--focus);color:#fff}
+:root[data-theme="dark"] .form .fb button.pri{color:#08110A}
+.empty{padding:15px 13px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.browsing{padding:8px 13px;background:var(--surface-3);border-bottom:1px solid var(--hair);
+  font-size:11.5px;color:var(--ink-2);cursor:pointer;line-height:1.35}
+.browsing b{color:var(--ink)}
+.row.swipe,.row.qhead{touch-action:pan-y;position:relative}
+.row.qhead{background:var(--surface-3);align-items:flex-start}
+.row.here{box-shadow:inset 3px 0 0 var(--focus)}
+.hereb{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.07em;color:var(--focus);
+  border:1px solid var(--focus);border-radius:3px;padding:0 3px;vertical-align:1px}
+button.more{background:transparent;border:0;color:var(--muted);font-size:15px;line-height:1;
+  padding:2px 4px;cursor:pointer;opacity:0;flex:none}
+button.more:focus-visible{opacity:1}
+/* ---- face-level coverage: status chip, tallies, tier affordances ---- */
+.chip{flex:none;font-family:var(--font-mono);font-size:9px;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 5px;border-radius:3px;white-space:nowrap;
+  border:1px solid var(--hair-strong);color:var(--muted);background:var(--surface-2)}
+.chip.s1{color:var(--s-contact);border-color:var(--s-contact)}
+.chip.s2{color:var(--s-noanswer);border-color:var(--s-noanswer)}
+.chip.s3,.chip.s4{color:var(--s-none);border-color:var(--s-none)}
+.chip.s5{color:var(--muted)}
+.tal{display:block;font-family:var(--font-mono);font-size:10px;color:var(--s-contact);margin-top:1px}
+.tierb{font-family:var(--font-mono);font-size:8px;letter-spacing:.06em;color:var(--muted);
+  border:1px solid var(--hair-strong);border-radius:3px;padding:0 3px;vertical-align:1px}
+.tierbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:8px 13px;
+  background:var(--surface-3);border-bottom:1px solid var(--hair)}
+.tierbar>span{font-size:10.5px;color:var(--muted);margin-right:2px}
+.tierbar button{font-family:var(--font-mono);font-size:10px;padding:3px 7px;border-radius:4px;
+  border:1px solid var(--hair-strong);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.tierbar button.on{border-color:var(--focus);color:var(--focus);font-weight:600}
+.tierbar>i{flex-basis:100%;font-style:normal;font-family:var(--font-mono);font-size:9.5px;color:var(--muted)}
+.acts.face{background:var(--surface);border-bottom:1px solid var(--hair);padding:9px 13px 11px}
+.acts.face button.full{display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+  font-family:var(--font-sans);font-size:12.5px;font-weight:560;padding:9px 11px;margin-bottom:5px;
+  border-radius:5px;border:1px solid var(--hair-strong);background:var(--surface-2);
+  color:var(--ink);cursor:pointer}
+.acts.face button.full:hover{border-color:var(--focus)}
+.acts.face button.full.on{border-color:var(--focus);box-shadow:inset 0 0 0 1px var(--focus)}
+.acts.face button.clr{width:100%;font-family:var(--font-sans);font-size:11.5px;padding:7px;
+  border-radius:5px;border:1px dashed var(--hair-strong);background:transparent;
+  color:var(--muted);cursor:pointer}
+.tally{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:8px 0 7px}
+.tally>span{flex-basis:100%;font-size:10.5px;color:var(--muted)}
+.tally .tw{display:flex;align-items:center;gap:5px}
+.tally .tw b{font-size:11px;font-weight:560;color:var(--ink-2)}
+.tally .tw i{font-style:normal;font-family:var(--font-mono);font-size:12px;min-width:18px;
+  text-align:center;color:var(--ink)}
+.tally .tw button{width:24px;height:24px;border-radius:4px;font-size:13px;line-height:1;
+  border:1px solid var(--hair-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+.facehdr{display:flex;align-items:flex-start;gap:9px;padding:10px 13px;
+  background:var(--surface-2);border-bottom:1px solid var(--hair)}
+.rohdr{padding:7px 13px;font-size:10.5px;color:var(--muted);background:var(--surface-3);
+  border-bottom:1px solid var(--hair)}
+.rohdr b{color:var(--ink-2);font-weight:600}
+.row.ro{cursor:default}
+.row.ro .num{color:var(--ink-2)}
+/* ---- diagnostic overlay: testing instrument, not part of the field UI ---- */
+.dbg{position:absolute;inset:0;z-index:60;display:none;flex-direction:column;
+  background:var(--surface);overflow-y:auto;font-family:var(--font-mono);font-size:11px}
+.dbg.on{display:flex}
+.dbg .dh{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;
+  padding:11px 13px;background:var(--ink);color:var(--surface);font-family:var(--font-sans);
+  font-size:13px;font-weight:600}
+.dbg .dh button{background:transparent;border:0;color:var(--surface);font-size:16px;cursor:pointer}
+.dbg .dsec{padding:9px 13px 4px;font-size:9.5px;letter-spacing:.09em;color:var(--muted);
+  border-bottom:1px solid var(--hair)}
+.dbg .dr{display:flex;justify-content:space-between;gap:10px;padding:5px 13px;
+  border-bottom:1px solid var(--hair)}
+.dbg .dr b{font-weight:500;color:var(--ink-2)}
+.dbg .dr i{font-style:normal;color:var(--ink);text-align:right;word-break:break-all}
+.dbg .dr.w i{color:var(--warn);font-weight:600}
+.dbg .dbtn{margin:9px 13px;padding:8px;border-radius:5px;font-family:var(--font-sans);
+  font-size:12px;border:1px solid var(--hair-strong);background:var(--surface-2);
+  color:var(--ink);cursor:pointer}
+.donebar{padding:11px 13px;background:var(--surface-3);border-bottom:1px solid var(--hair)}
+.donebar button{width:100%;font-family:var(--font-sans);font-size:13px;font-weight:600;padding:10px;
+  border-radius:5px;border:1px solid var(--focus);background:var(--focus);color:#fff;cursor:pointer}
+:root[data-theme="dark"] .donebar button{color:#08110A}
+.toast{position:absolute;left:14px;right:14px;bottom:14px;background:var(--ink);color:var(--surface);
+  border-radius:6px;padding:10px 13px;font-size:13px;font-weight:560;display:flex;align-items:center;gap:9px;
+  box-shadow:0 8px 24px -10px rgba(0,0,0,.5);opacity:0;transform:translateY(8px);
+  transition:opacity .18s,transform .18s;pointer-events:none}
+.toast.on{opacity:1;transform:translateY(0)}
+.toast .ok{color:var(--s-contact);font-weight:700}
+
+.panel{align-self:start}
+.panel .grp{margin-bottom:20px}
+.panel .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.seg{display:flex;border:1px solid var(--hair-strong);border-radius:5px;overflow:hidden;background:var(--surface-2)}
+.seg button{flex:1;font-family:var(--font-sans);font-size:12.5px;font-weight:550;padding:8px 6px;background:transparent;
+  border:0;border-right:1px solid var(--hair);color:var(--ink-2);cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.btn{font-family:var(--font-sans);font-size:12.5px;font-weight:550;padding:7px 12px;background:var(--surface-2);
+  border:1px solid var(--hair-strong);border-radius:5px;color:var(--ink-2);cursor:pointer}
+.btn:hover{color:var(--ink)}
+.btn.on{background:var(--focus);border-color:var(--focus);color:#fff}
+:root[data-theme="dark"] .btn.on{color:#08110A}
+.readout{border:1px solid var(--hair);border-radius:5px;background:var(--surface-2);padding:11px 13px}
+.readout .r{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:2px 0}
+.readout .r span:first-child{color:var(--ink-2)}
+.readout .r span:last-child{font-family:var(--font-mono);font-weight:620;font-variant-numeric:tabular-nums}
+.expl{font-size:12.5px;color:var(--ink-2);line-height:1.55;border-left:2px solid var(--hair-strong);padding-left:12px;margin-top:14px}
+.expl strong{color:var(--ink)}
+button:focus-visible,canvas:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--hair);border-radius:5px;background:var(--surface-2)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:430px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--hair);vertical-align:top}
+th{font-family:var(--font-mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+td.n{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:0}
+tr.hl td{background:var(--surface)}
+caption{text-align:left;font-size:12.5px;color:var(--muted);padding:0 0 8px}
+.note{border-left:2px solid var(--hair-strong);padding-left:14px;font-size:14px;color:var(--ink-2);margin:18px 0 0;max-width:66ch}
+.note strong{color:var(--ink)}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:11px;max-width:74ch;line-height:1.5}
+
+.crumbbar{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:7px 13px;
+  background:var(--surface-3);border-bottom:1px solid var(--hair);
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.03em}
+.crumbbar span{color:var(--focus);cursor:pointer}
+.crumbbar span.cur{color:var(--ink);cursor:default;font-weight:650}
+.crumbbar i{color:var(--muted);font-style:normal}
+.pickhdr{display:flex;align-items:center;gap:8px;padding:9px 13px;background:var(--focus);color:#fff;
+  font-size:11.5px;font-weight:560}
+.pickhdr b{font-weight:700}
+.pickhdr button{margin-left:auto;background:transparent;border:0;color:#fff;font-size:15px;cursor:pointer;padding:0 2px}
+:root[data-theme="dark"] .pickhdr{color:#08110A}
+.row .rn{color:var(--ink);font-weight:620;font-size:12.5px}
+.row .sm{font-size:10px;color:var(--muted);font-family:var(--font-mono)}
+.pickb{font-family:var(--font-sans);font-size:11px;font-weight:650;padding:5px 8px;border-radius:4px;
+  border:1px solid var(--focus);background:var(--focus);color:#fff;cursor:pointer;flex:none}
+:root[data-theme="dark"] .pickb{color:#08110A}
+.browsing{font-size:11px;padding:6px 13px}
+.confirmbar{padding:10px 13px;background:var(--surface-3);border-bottom:1px solid var(--hair);
+  display:flex;flex-direction:column;gap:5px}
+.confirmbar button{width:100%;font-family:var(--font-sans);font-size:13.5px;font-weight:640;padding:11px;
+  border-radius:5px;border:1px solid var(--focus);background:var(--focus);color:#fff;cursor:pointer}
+:root[data-theme="dark"] .confirmbar button{color:#08110A}
+.confirmbar span{font-family:var(--font-mono);font-size:10px;color:var(--muted);text-align:center}
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.42);opacity:0;pointer-events:none;
+  transition:opacity .18s;z-index:5}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:absolute;inset:0 28% 0 0;background:var(--surface-2);z-index:6;
+  transform:translateX(-102%);transition:transform .2s;display:flex;flex-direction:column;
+  box-shadow:6px 0 22px -10px rgba(0,0,0,.5)}
+.drawer.on{transform:translateX(0)}
+.dhead{display:flex;align-items:flex-start;gap:8px;padding:13px;border-bottom:1px solid var(--hair);background:var(--surface-3)}
+.dhead .who b{display:block;font-size:13.5px;font-weight:650}
+.dhead .who span{font-family:var(--font-mono);font-size:9.5px;color:var(--muted)}
+.dhead button{margin-left:auto;background:transparent;border:0;color:var(--muted);font-size:14px;cursor:pointer}
+.dbody{overflow-y:auto;padding:6px 0}
+.dgrp{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);padding:11px 13px 4px}
+.ditem{display:flex;align-items:center;gap:9px;padding:9px 13px;font-size:12.5px;cursor:pointer;color:var(--ink)}
+.ditem:hover{background:var(--surface)}
+.ditem .ic{width:16px;text-align:center;flex:none;opacity:.75}
+.ditem .n{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
+.ditem .n.hot{color:var(--focus);font-weight:700}
+.ditem.warn{color:var(--warn)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Mockup v5 · dados reais · 6 bairros, 427 quadras</p>
+  <h1>Bairro, quadra, face, endereço, domicílio</h1>
+  <p class="lede">Now <strong>31.204 endereços</strong> em <strong>427 quadras</strong> across <strong>six official bairros</strong> — Montese (Terra&nbsp;Firme), Marco, Guamá, Canudos, Universitário and Curió-Utinga — with the real IBGE bairro limits drawn as dashed lines. It also shows the holes: <strong>60 quadras with no outline</strong> and <strong>497 faces with no line on the map</strong>, which between them carry <strong>7.066 real addresses</strong>.</p>
+</header>
+
+<div class="stage">
+  <div class="phone">
+    <div class="screen">
+      <div class="statusbar"><span>18:04</span><span class="sp"><span id="sb-gps">GPS</span><span>87%</span></span></div>
+      <div class="appbar">
+        <span class="burger" id="burger" role="button" tabindex="0">☰</span>
+        <span class="ttl">Terra Firme<small id="ab-sub">—</small></span>
+        <span class="chip" id="ab-chip">↑ <b>0</b></span>
+      </div>
+      <div class="maparea">
+        <canvas id="pmap" aria-label="Map of the current quadra"></canvas>
+        <div class="locbar" id="locbar">
+          <div class="k" id="loc-k">Você está em</div>
+          <div class="v" id="loc-v">—</div>
+          <div class="m" id="loc-m"></div>
+          <div class="pickers" id="loc-pick"></div>
+        </div>
+      </div>
+      <div class="sheet">
+        <div class="grip" id="grip" role="button" tabindex="0" aria-expanded="true">
+          <span class="bar"></span>
+          <span class="t" id="grip-t">—<small id="grip-s"></small></span>
+          <span class="caret" id="grip-c">▾</span>
+        </div>
+        <div class="list" id="list"></div>
+      </div>
+      <div class="toast" id="toast"><span class="ok">✓</span><span id="toast-t"></span></div>
+      <div class="dbg" id="dbg" aria-hidden="true"></div>
+      <div class="drawer" id="drawer" aria-hidden="true">
+        <div class="dhead">
+          <div class="who"><b>Rai Nascimento</b><span>agente · Terra Firme / Montese</span></div>
+          <button id="drawer-x" aria-label="fechar">✕</button>
+        </div>
+        <div class="dbody" id="dbody"></div>
+      </div>
+      <div class="scrim" id="scrim"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="grp">
+      <div class="lbl">Sinal de GPS</div>
+      <div class="seg" role="group" aria-label="GPS">
+        <button id="g-hi" aria-pressed="true">Preciso ±8 m</button>
+        <button id="g-lo" aria-pressed="false">Impreciso ±110 m</button>
+        <button id="g-off" aria-pressed="false">Desligado</button>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:9px;flex-wrap:wrap">
+        <button class="btn" id="walk">Andar pela passagem</button>
+        <button class="btn" id="fill">Preencher quadra 001</button>
+        <button class="btn" id="reset">Reiniciar</button>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="lbl">Cobertura</div>
+      <div class="readout">
+        <div class="r"><span>Quadra de trabalho</span><span id="c-q">—</span></div>
+        <div class="r"><span>Visitados (qualquer status)</span><span id="c-seen">—</span></div>
+        <div class="r"><span>Resolvidos / censo</span><span id="c-res">—</span></div>
+        <div class="r"><span>Faces sem nenhuma visita</span><span id="c-untouched">—</span></div>
+        <div class="r"><span>Portas adicionadas em campo</span><span id="c-added">0</span></div>
+      </div>
+      <div class="readout" style="margin-top:10px">
+        <div class="r"><span>Bairros nesta área</span><span id="g-bairros">—</span></div>
+        <div class="r"><span>Quadras sem contorno</span><span id="g-nogeo">—</span></div>
+        <div class="r"><span>Faces sem linha no mapa</span><span id="g-ghost">—</span></div>
+        <div class="r"><span>Endereços nessas faces</span><span id="g-ghostaddr">—</span></div>
+        <div class="r"><span>Nº repetido a &lt;50 m</span><span id="g-dup">—</span></div>
+      </div>
+      <p class="expl"><strong>Two numerators, on purpose.</strong> <em>Visitados</em> counts any recorded status — that is what paints the map, because somebody physically passed. <em>Resolvidos</em> is the stricter one the denominator can close on. A field team wants the first; a manager wants the second.</p>
+    </div>
+    <div class="grp">
+      <div class="lbl">Bateria estimada · turno de 4 h</div>
+      <div class="readout">
+        <div class="r"><span>GPS</span><span id="b-gps">—</span></div>
+        <div class="r"><span>Tela (35% do tempo)</span><span id="b-scr">—</span></div>
+        <div class="r"><span>Total</span><span id="b-tot">—</span></div>
+      </div>
+      <p class="expl" id="b-expl"></p>
+    </div>
+  </div>
+</div>
+
+<figcaption>Tapping a face swaps the list contents in place — the sheet does not leap open. Tapping a row opens its actions directly beneath it. An address with several homes expands into its own indented sub-list, and its badge is grey, blue or green for none, some or all done.</figcaption>
+
+<section>
+  <h2>“Every face freely reordered” — what that meant</h2>
+  <p class="sub">Badly explained last time. Three ways to sequence the same 100 km of kerb in Terra Firme, and the only thing that varies is the order you walk the pieces in.</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Three walking orders over identical geometry</caption>
+    <thead><tr><th>Order</th><th>What it means on the ground</th><th class="n">Walk</th><th class="n">m/home</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong> census circuit,<br>quadras by number</td><td>Go round quadra 001 kerb by kerb, then round quadra 002, and so on in numeric order.</td><td class="n">137.9 km</td><td class="n">7.1</td></tr>
+      <tr><td><strong>B</strong> census circuit,<br>quadras by geography</td><td>Same circuit inside each block, but visit the blocks nearest-first instead of by number.</td><td class="n">137.8 km</td><td class="n">7.1</td></tr>
+      <tr class="hl"><td><strong>C</strong> every face<br>freely reordered</td><td>Forget blocks. Treat all 1,687 kerbs as a loose pile and walk them in whatever order is shortest — which in practice means zig-zagging across a 3 m passagem doing both sides as you go, instead of circling the block to come back up the other side.</td><td class="n">111.1 km</td><td class="n">5.7</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><strong>So the answer to “quadra or street?” is: neither is the win.</strong> A→B is <strong>0.0%</strong> — reordering blocks buys nothing. B→C is <strong>19%</strong>, and all of it comes from crossing the alley rather than going round the block. Against door density that varies <strong>10×</strong> between faces, 19% is noise. Walk the census circuit and spend the effort on choosing which faces to walk at all.</p>
+</section>
+
+<section>
+  <h2>The recenseador tracks, in three cities</h2>
+  <p class="sub">You asked whether a denser city would teach us more. It does not — and the reason is worth knowing.</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Trajetos dos Recenseadores, Censo 2022</caption>
+    <thead><tr><th>City</th><th class="n">Traces</th><th class="n">Vertices</th><th class="n">Total</th><th class="n">Median trace</th><th class="n">Vertex spacing</th><th class="n">Under 200 m</th></tr></thead>
+    <tbody>
+      <tr><td>Belém</td><td class="n">2,555</td><td class="n">11,654</td><td class="n">495 km</td><td class="n">103 m</td><td class="n">40 m</td><td class="n">73%</td></tr>
+      <tr><td>São Paulo</td><td class="n">10,608</td><td class="n">50,453</td><td class="n">1,896 km</td><td class="n">116 m</td><td class="n">39 m</td><td class="n">73%</td></tr>
+      <tr><td>Belo Horizonte</td><td class="n">974</td><td class="n">4,694</td><td class="n">179 km</td><td class="n">112 m</td><td class="n">39 m</td><td class="n">73%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><strong>Identical fingerprint in all three.</strong> Median trace ~110 m, exactly 73% of traces under 200 m, vertex spacing pinned at 39–40 m everywhere. That is not three cities with three data-quality stories — it is one deliberately decimated sample. São Paulo's 1,896 km covers a city with roughly 4.5 million households. <strong>There is no route to learn here, in any city.</strong> The routing knowledge is in the <code>CD_FACE</code> circuit, which we already verified holds for 84% of Belém's quadras.</p>
+</section>
+
+<section>
+  <h2>Números repetidos, na cidade inteira</h2>
+  <p class="sub">Every row states its own denominator — the previous version mixed two of them in one “share” column, which made 12% and 3,6% look contradictory. They were measured against different bases.</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Same rua + número in more than one quadra — all of Belém</caption>
+    <thead><tr><th>Measure</th><th class="n">Count</th><th class="n">Share</th><th>of what</th></tr></thead>
+    <tbody>
+      <tr><td>Distinct rua + número pairs (numbered)</td><td class="n">276.834</td><td class="n">—</td><td>—</td></tr>
+      <tr><td>Appearing in more than one quadra</td><td class="n">27.759</td><td class="n">10,0%</td><td>of the 276.834 pairs</td></tr>
+      <tr><td>…more than 50 m apart — two streets sharing a name</td><td class="n">24.327</td><td class="n">88%</td><td>of the 27.759</td></tr>
+      <tr class="hl"><td>…<strong>under 50 m apart</strong> — a real ambiguity</td><td class="n">3.432</td><td class="n">12%</td><td>of the 27.759</td></tr>
+      <tr><td>Households on one of those close pairs</td><td class="n">19.219</td><td class="n">3,6%</td><td><strong>of the 528.686 households</strong></td></tr>
+      <tr><td>Households the app actually flags (&lt;50 m)</td><td class="n">13.490</td><td class="n">2,6%</td><td>of the 528.686 households</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><strong>12% and 3,6% are both right.</strong> 3.432 ÷ 27.759 = 12% — a share of the <em>colliding pairs</em>. 19.219 ÷ 528.686 = 3,6% — a share of <em>all households in Belém</em>. One pair drags several households with it (a number can hide nine dwellings), which is why the household figure is larger in absolute terms while being a much smaller slice of the city. The column now names its base on every row.</p>
+</section>
+
+<section>
+  <h2>How far apart are they, really</h2>
+  <p class="sub">Distance between the two closest entrances sharing a rua + número across quadras. 27.759 pairs, 106.483 households.</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Separation histogram, with the share of pairs that fall inside a single census setor</caption>
+    <thead><tr><th>Distance</th><th class="n">Pairs</th><th class="n">%</th><th class="n">Cumulative</th><th class="n">Households</th><th class="n">Same setor</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>0–5 m</td><td class="n">269</td><td class="n">1,0%</td><td class="n">1,0%</td><td class="n">1.178</td><td class="n">64%</td></tr>
+      <tr class="hl"><td>5–10 m</td><td class="n">400</td><td class="n">1,4%</td><td class="n">2,4%</td><td class="n">2.220</td><td class="n">67%</td></tr>
+      <tr class="hl"><td>10–15 m</td><td class="n">390</td><td class="n">1,4%</td><td class="n">3,8%</td><td class="n">1.916</td><td class="n">64%</td></tr>
+      <tr class="hl"><td>15–20 m</td><td class="n">366</td><td class="n">1,3%</td><td class="n">5,1%</td><td class="n">2.006</td><td class="n">60%</td></tr>
+      <tr><td>20–25 m</td><td class="n">326</td><td class="n">1,2%</td><td class="n">6,3%</td><td class="n">1.803</td><td class="n">61%</td></tr>
+      <tr><td>25–30 m</td><td class="n">325</td><td class="n">1,2%</td><td class="n">7,5%</td><td class="n">1.768</td><td class="n">61%</td></tr>
+      <tr><td>30–40 m</td><td class="n">637</td><td class="n">2,3%</td><td class="n">9,8%</td><td class="n">3.348</td><td class="n">62%</td></tr>
+      <tr><td>40–50 m</td><td class="n">719</td><td class="n">2,6%</td><td class="n">12,4%</td><td class="n">4.980</td><td class="n">63%</td></tr>
+      <tr><td>50–60 m</td><td class="n">621</td><td class="n">2,2%</td><td class="n">14,6%</td><td class="n">2.766</td><td class="n">62%</td></tr>
+      <tr><td>60–70 m</td><td class="n">540</td><td class="n">1,9%</td><td class="n">16,5%</td><td class="n">2.372</td><td class="n">54%</td></tr>
+      <tr><td>70–80 m</td><td class="n">509</td><td class="n">1,8%</td><td class="n">18,4%</td><td class="n">2.416</td><td class="n">60%</td></tr>
+      <tr><td>80–100 m</td><td class="n">1.096</td><td class="n">3,9%</td><td class="n">22,3%</td><td class="n">5.312</td><td class="n">55%</td></tr>
+      <tr><td>100–150 m</td><td class="n">2.138</td><td class="n">7,7%</td><td class="n">30,0%</td><td class="n">8.795</td><td class="n">55%</td></tr>
+      <tr><td>150–200 m</td><td class="n">1.537</td><td class="n">5,5%</td><td class="n">35,6%</td><td class="n">5.774</td><td class="n">43%</td></tr>
+      <tr><td>200–300 m</td><td class="n">1.599</td><td class="n">5,8%</td><td class="n">41,3%</td><td class="n">5.971</td><td class="n">26%</td></tr>
+      <tr><td>300–500 m</td><td class="n">1.902</td><td class="n">6,9%</td><td class="n">48,2%</td><td class="n">6.856</td><td class="n">15%</td></tr>
+      <tr><td>500 m–1 km</td><td class="n">2.064</td><td class="n">7,4%</td><td class="n">55,6%</td><td class="n">8.160</td><td class="n">4%</td></tr>
+      <tr><td>1–2 km</td><td class="n">2.230</td><td class="n">8,0%</td><td class="n">63,6%</td><td class="n">8.851</td><td class="n">1%</td></tr>
+      <tr><td>2 km+</td><td class="n">10.091</td><td class="n">36,4%</td><td class="n">100%</td><td class="n">29.991</td><td class="n">0%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><strong>There is no valley — but there is a signal, and it is not distance.</strong> The <em>same setor</em> column falls from 64–67% below 20 m to 55% at 100 m, 26% at 200–300 m, 4% beyond 500 m and 0% past 2 km. A census setor holds a few hundred households, so two entrances inside one are almost certainly on the same physical street; different setores far apart are two streets that merely share a name. That collapse, not the distance histogram, is what separates the two populations.</p>
+  <p class="note"><strong>Your 70 m question, answered directly: no.</strong> 99% of these records are field-captured GPS (<code>NV_GEO_COORD=1</code>), accurate to roughly 5–10 m, so two readings of the same door land within about 20 m at the outside. A 70 m gap is real separation, not instrument error — most likely a long passagem whose numbering continues across a quadra boundary. The band that GPS error <em>can</em> explain is <strong>0–20 m: 1.625 pairs</strong>, 64% of them inside one setor. Tightening the rule to <em>same setor and under 20 m</em> flags <strong>3.344 households (0,63%)</strong> instead of 13.490 — a far cleaner review queue, and the rule I would ship.</p>
+  <p class="note"><strong>One test that failed, worth recording.</strong> I expected matching <code>COMPLEMENTO</code> to identify true duplicates. It does not: the “same complemento” rate sits at 55–65% in <em>every</em> distance band, including 2 km+ where the two are certainly different streets. It is just the base rate of addresses with no complemento at all. The field cannot do this job.</p>
+</section>
+
+<section>
+  <h2>The holes, citywide</h2>
+  <p class="sub">The 23% you flagged was a local peak. Here is the whole city — and the gaps land exactly where the periphery is.</p>
+  <div class="tbl-wrap">
+  <table>
+    <caption>Census geometry coverage, all of Belém</caption>
+    <thead><tr><th>Gap</th><th class="n">Count</th><th class="n">Share</th></tr></thead>
+    <tbody>
+      <tr><td>Households on a face with no line in the base</td><td class="n">75.813</td><td class="n">14,3%</td></tr>
+      <tr><td>Households in a quadra with no outline at all</td><td class="n">41.565</td><td class="n">7,9%</td></tr>
+      <tr><td>Quadras with no geometry</td><td class="n">878</td><td class="n">10,8%</td></tr>
+      <tr><td>Census lines with no quadra/face attributes</td><td class="n">9.441</td><td class="n">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-wrap" style="margin-top:14px">
+  <table>
+    <caption>Worst and best localities (≥3.000 households)</caption>
+    <thead><tr><th>Locality</th><th class="n">On a face with no line</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Maracacuera</td><td class="n">53,6%</td></tr>
+      <tr><td>Campina</td><td class="n">35,6%</td></tr>
+      <tr><td>Pratinha</td><td class="n">34,6%</td></tr>
+      <tr><td>Águas Lindas</td><td class="n">32,9%</td></tr>
+      <tr><td>Tapanã</td><td class="n">29,4%</td></tr>
+      <tr><td>Umarizal</td><td class="n">2,2%</td></tr>
+      <tr><td>Sacramenta</td><td class="n">2,1%</td></tr>
+      <tr><td>Batista Campos</td><td class="n">0,6%</td></tr>
+      <tr><td>Jurunas</td><td class="n">0,3%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note"><strong>Same pattern as the building footprints, and the same pattern as the GPS fixes.</strong> Jurunas 0,3%, Batista Campos 0,6% — the formal city is drawn. Maracacuera 53,6%, Tapanã 29,4% — the periphery is not. Every layer of this data thins out in the same places, which is the strongest argument there is for the table being the primary interface and the map being the confirmation.</p>
+</section>
+
+</div>
